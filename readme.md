@@ -1,0 +1,1 @@
+A prototype responsive web interface for an ecommerce site.
