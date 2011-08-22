@@ -1,0 +1,6 @@
+html,body{margin:0;padding:0;}
+body{width:90%; margin:auto; background: #f4f4f5; font:100% sans-serif; color:#49494a;}
+#sidebar{width:31.25%; margin:0 2.0833333333333% 0 0; height: 500px;border:1px solid #49494a; float:left;}
+#product_list{float:left; width:66.666666666667%;}
+.hproduct{border-bottom: 1px solid #cdcdcd; overflow: hidden; position: relative;}
+.hproduct figure{float:left;}
