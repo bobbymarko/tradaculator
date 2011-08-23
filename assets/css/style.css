@@ -1,6 +1,8 @@
 html,body{margin:0;padding:0;}
 body{width:90%; margin:auto; background: #f4f4f5; font:100% sans-serif; color:#49494a;}
-#sidebar{width:31.25%; margin:0 2.0833333333333% 0 0; height: 500px;border:1px solid #49494a; float:left;}
-#product_list{float:left; width:66.666666666667%;}
+#sidebar, #sidebar ul{list-style-type: none; margin:0; padding:0;}
+#sidebar{width:31.25%;/* 300px / 960px = 0.3125 */ margin:0 2.083333333% 0 0; float:left;}
+#product_list{float:left; width:66.66666667%;}
 .hproduct{border-bottom: 1px solid #cdcdcd; overflow: hidden; position: relative;}
 .hproduct figure{float:left;}
+#price_block{float:right; width:18.75%; background: #c4c4c5;}
