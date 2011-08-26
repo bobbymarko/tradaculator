@@ -1,6 +1,6 @@
 $(function(){
 	$.ajax({
-	  url: "http://api.remix.bestbuy.com/v1/products?page=1&sort=salePrice&format=json&apiKey=amfnpjxnz6c9wzfu4h663z6w",
+	  url: "http://api.remix.bestbuy.com/v1/products?page=1&format=json&apiKey=amfnpjxnz6c9wzfu4h663z6w",
 	  dataType: "jsonp",
 	  cache:true,
 	  success: function(data){
