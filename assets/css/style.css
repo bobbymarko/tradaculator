@@ -1,8 +1,13 @@
-html,body{margin:0;padding:0;}
-body{width:90%; margin:auto; background: #f4f4f5; font:100% sans-serif; color:#49494a;}
-#sidebar, #sidebar ul{list-style-type: none; margin:0; padding:0;}
-#sidebar{width:31.25%;/* 300px / 960px = 0.3125 */ margin:0 2.083333333% 0 0; float:left;}
-#product_list{float:left; width:66.66666667%;}
-.hproduct{border-bottom: 1px solid #cdcdcd; overflow: hidden; position: relative;}
-.hproduct figure{float:left;}
-#price_block{float:right; width:18.75%; background: #c4c4c5;}
+html,body{}
+body{margin:auto; background: #e2e2e2; font:100% sans-serif; color:#49494a;}
+h1{font-size:.875em; color:#077083; font-weight: bold; margin:0;}
+p{margin:0;}
+#masthead{background:#595959;}
+#search_options{background:#fff;}
+#product_list{position: relative; overflow: hidden; width:960px; margin:0 auto;}
+.hproduct{position:relative; text-align: center; width:200px; display: inline-block; vertical-align: top; margin:0 0 -90px; padding:0 10px 100px; border-right:1px solid #d4d3d3; border-left:1px solid #f7f5f5;}
+.hproduct figure{height:140px; display: table-cell; vertical-align: bottom; width:200px; line-height: 0;}
+.hproduct header p{font-size:12px; font-weight: bold;}
+#price_block{}
+
+.hproduct:nth-child(4n+0):before{position: absolute; bottom:0px; left:-780px; width:960px; height:1px; border-bottom:1px solid green; background: red; display: block; content:'';}
