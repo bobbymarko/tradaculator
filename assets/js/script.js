@@ -8,9 +8,8 @@ $(function(){
 
 function get_games(query){
 	$.ajax({
-	  //url: 'assets/js/sample_response.js',
-	  //url: "http://api.remix.bestbuy.com/v1/products(search="+query+"&type=game)?page=1&format=json&apiKey=amfnpjxnz6c9wzfu4h663z6w",
-	  url: 'http://0.0.0.0:9292/values/'+query+'/1',
+	  //url: 'http://0.0.0.0:9292/values/'+query+'/1',
+	  url: 'http://strong-ice-535.heroku.com/values/'+query+'/1',
 	  dataType: "jsonp",
 	  cache:true,
 	  success: function(data){
