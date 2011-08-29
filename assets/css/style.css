@@ -1,20 +1,23 @@
 html,body{margin:0; padding:0;}
-body{background: #e2e2e2; font:100% sans-serif; color:#49494a;}
-h1{font-size:.875em; color:#077083; font-weight: bold; margin:0; height:2.25em; overflow: hidden;}
-p{margin:0;}
-#masthead{background:#595959; color:#dedbc1; border:2px solid #535252; position: relative; overflow: hidden; font:100 italic 1em museo-slab-1,museo-slab-2,Georgia,serif;}
-#branding{font:bold italic 300% museo-slab-1,museo-slab-2,Georgia,serif; float: left; text-shadow: 0 1px 0 #fff;}
-#masthead form{position: absolute; top:50%; right:10px;}
-#search_options{background:#fff;}
-#product_list{position: relative; overflow: hidden; border-top:20px solid #707070;;}
 
-.hproduct{position:relative; text-align: center; width:200px; display: inline-block; vertical-align: top; margin:0 0 10px; padding:0 10px 10px; border-right:1px solid #d4d3d3; border-left:1px solid #f7f5f5;}
+body{background: #e2e2e2 url(../img/bg.jpg); font:100% sans-serif; color:#49494a;}
+h1{font-size:.875em; color:#077083; font-weight: bold; margin:.5em 0 .3em; height:2.25em; overflow: hidden;}
+p{margin:0;}
+#masthead{background:#595959; color:#dedbc1; border:2px solid #535252; position: relative; overflow: hidden; padding:10px; font:100 italic 1em museo-slab-1,museo-slab-2,Georgia,serif; box-shadow: 0 2px 0 #535353, 0 12px 0 #707070, 0 1px 0 #797979;}
+#branding{font:bold italic 300% museo-slab-1,museo-slab-2,Georgia,serif; float: left; text-shadow: 0 1px 0 #3a3a3a;}
+#masthead p{width:250px;position: relative;float:left; left:30px; padding-left:20px; top:10px; border-left:1px solid #707070;}
+#masthead form{position: absolute; top:50%; right:10px; margin-top:-10px; width:100%;}
+	input[type="search"]{width:30%; float:right; max-width: 240px; font-size:2em; font-style: italic; background: #ececec;}
+#search_options{background:#fff;}
+#product_list{position: relative; overflow: hidden; margin:40px 0;}
+
+.hproduct{position:relative; text-align: center; width:200px; display: inline-block; vertical-align: top; margin:0 0 20px; padding:0 10px 10px; border-right:1px solid #d4d3d3; border-left:1px solid #f7f5f5;}
 
 .hproduct figure{height:140px; display: table-cell; vertical-align: bottom; width:200px; line-height: 0;}
 
-.hproduct header p{font-size:12px; font-weight: bold;}
+.hproduct header p{font-size:12px; font-weight: bold; margin:0 0 .5em;}
 
-.price_block_wrapper{padding:.3em; background: rgba(0,0,0,.1); display: inline-block;-webkit-border-radius:1em; -moz-border-radius: 1em; border-radius:1em;}
+.price_block_wrapper{padding:.4em; background: rgba(0,0,0,.1); display: inline-block;-webkit-border-radius:1.5em; -moz-border-radius: 1.5em; border-radius:1.5em;}
 
 .price_block{ font-size:.75em; color:#fff; text-shadow:0 1px 0 #000; overflow: hidden; position: relative;
 -webkit-border-radius:1.25em; -moz-border-radius: 1.25em; border-radius:1.25em;
@@ -28,5 +31,5 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#46a9ba', end
 background: linear-gradient(top, #46a9ba 2%,#1b95aa 2%,#06687a 100%); /* W3C */
 }
 
-.vendor_name{border-right:1px solid #234a56; float:left; padding:.8em;}
-.trade_in_value{font-size:14px;font-weight: bold; color:#252a32; border-left:1px solid #198b9f; float:left; padding:.6em; text-shadow: 0 1px 0 #629ca7;}
+.vendor_name{border-right:1px solid #234a56; float:left; padding:.8em .8em .8em 1em;}
+.trade_in_value{font-size:14px;font-weight: bold; color:#252a32; border-left:1px solid #198b9f; float:left; padding:.6em .8em .6em .6em; text-shadow: 0 1px 0 #629ca7;}
