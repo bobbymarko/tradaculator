@@ -3,13 +3,13 @@ html,body{margin:0; padding:0;}
 body{background: #e2e2e2 url(../img/bg.jpg); font:100% sans-serif; color:#49494a;}
 h1{font-size:.875em; color:#077083; font-weight: bold; margin:.5em 0 .3em; height:2.25em; overflow: hidden;}
 p{margin:0;}
-#masthead{background:#595959; color:#dedbc1; border:2px solid #535252; position: relative; overflow: hidden; padding:10px; font:100 italic 1em museo-slab-1,museo-slab-2,Georgia,serif; box-shadow: 0 2px 0 #535353, 0 12px 0 #707070, 0 1px 0 #797979;}
+#masthead{background:#595959; color:#dedbc1; position: relative; overflow: hidden; padding:10px; font:100 italic 1em museo-slab-1,museo-slab-2,Georgia,serif; box-shadow: 0 2px 0 #535353, 0 12px 0 #707070, 0 1px 0 #797979;}
 #branding{font:bold italic 300% museo-slab-1,museo-slab-2,Georgia,serif; float: left; text-shadow: 0 1px 0 #3a3a3a;}
 #masthead p{width:250px;position: relative;float:left; left:30px; padding-left:20px; top:10px; border-left:1px solid #707070;}
 #masthead form{position: absolute; top:50%; right:10px; margin-top:-10px; width:100%;}
-	input[type="search"]{width:30%; float:right; max-width: 240px; font-size:2em; font-style: italic; background: #ececec;}
+	input[type="search"]{width:30%; float:right; max-width: 240px; font-style: italic; background: #ececec;}
 #search_options{background:#fff;}
-#product_list{position: relative; overflow: hidden; margin:40px 0 0; padding:0 0 40px;}
+#product_list{position: relative; overflow: hidden; margin:40px auto 0; padding:0 0 40px; max-width:890px;}
 
 .hproduct{position:relative; text-align: center; width:200px; display: inline-block; vertical-align: top; margin:0 0 20px; padding:0 10px 10px; border-right:1px solid #d4d3d3; border-left:1px solid #f7f5f5;}
 
@@ -29,14 +29,13 @@ background: -webkit-gradient(linear, left top, left bottom, color-stop(2%,#46a9b
 background: -webkit-linear-gradient(top, #46a9ba 2%,#1b95aa 2%,#06687a 100%); /* Chrome10+,Safari5.1+ */
 background: -o-linear-gradient(top, #46a9ba 2%,#1b95aa 2%,#06687a 100%); /* Opera11.10+ */
 background: -ms-linear-gradient(top, #46a9ba 2%,#1b95aa 2%,#06687a 100%); /* IE10+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#46a9ba', endColorstr='#06687a',GradientType=0 ); /* IE6-9 */
 background: linear-gradient(top, #46a9ba 2%,#1b95aa 2%,#06687a 100%); /* W3C */}
 
 .vendor_name{border-right:1px solid #234a56; float:left; padding:.8em .8em .8em 1em;}
 .trade_in_value{font-size:14px;font-weight: bold; color:#252a32; border-left:1px solid #198b9f; float:left; padding:.6em .8em .6em .6em; text-shadow: 0 1px 0 #629ca7; text-decoration: none;}
 
 .hproduct:hover .drop_down{display: block;}
-.drop_down{position: absolute; top:33px; left:2px; background: #f2f2f2; box-shadow: 0 2px 10px rgba(0,0,0,.2); z-index:98; -webkit-border-radius: 4px; -moz-border-radius:4px; border-radius: 4px; font-size:.75em; line-height: 1.4; font-weight: bold; list-style-type: none; text-align: left; margin:0; padding:1em; width:110px; display: none;}
+.drop_down{position: absolute; top:43px; left:2px; background: #f2f2f2; box-shadow: 0 2px 10px rgba(0,0,0,.2); z-index:98; -webkit-border-radius: 4px; -moz-border-radius:4px; border-radius: 4px; font-size:.75em; line-height: 1.4; font-weight: bold; list-style-type: none; text-align: left; margin:0; padding:1em; width:110px; display: none;}
 	.drop_down_li{font-size:100%;}
 		.drop_down a{color:#234a56; text-decoration: none; display: block;}
 			.drop_down a:hover{text-decoration: underline;}
@@ -46,3 +45,12 @@ background: linear-gradient(top, #46a9ba 2%,#1b95aa 2%,#06687a 100%); /* W3C */}
 
 #utility{text-align: center; font-size:1em; padding:0 0 50px; }
 	#load_more{padding:.7em 4em; text-decoration: none; display: none;}
+	
+@media (min-width:1280px) {
+	#branding{-webkit-transform:matrix(1, -0.2, .1, 1, .8, 0); float:none; display: block; position: relative; top:30px; }
+	#masthead{ box-shadow: none; overflow: visible;  position: absolute; position: fixed; top:0; bottom:0; width:350px;}
+		#masthead p{float:none; border:none; margin:100px auto 0; position: static; text-align: center; padding:0; }
+		#masthead form{position: static; width:auto; text-align: center;}
+			input[type="search"] {float:none; width:200px; margin:20px 0; max-width: none;}
+	#product_list{width:auto; margin-left:370px;}
+}
