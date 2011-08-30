@@ -2,6 +2,7 @@ html,body{margin:0; padding:0;}
 
 body{background: #e2e2e2 url(../img/bg.jpg); font:100% sans-serif; color:#49494a;}
 h1{font-size:.875em; color:#077083; font-weight: bold; margin:.5em 0 .3em; height:2.25em; overflow: hidden;}
+h3{ text-align: center; color:#f7f5f5; text-shadow:0 1px 0 #d4d3d3; font-size:3em; font:100 italic 3em museo-slab-1,museo-slab-2,Georgia,serif;}/*nothing found */
 p{margin:0;}
 #masthead{background:#595959; color:#dedbc1; position: relative; overflow: hidden; padding:10px; font:100 italic 1em museo-slab-1,museo-slab-2,Georgia,serif; box-shadow: 0 2px 0 #535353, 0 12px 0 #707070, 0 1px 0 #797979;}
 #branding{font:bold italic 300% museo-slab-1,museo-slab-2,Georgia,serif; float: left; text-shadow: 0 1px 0 #3a3a3a;}
@@ -41,7 +42,7 @@ background: linear-gradient(top, #46a9ba 2%,#1b95aa 2%,#06687a 100%); /* W3C */}
 			.drop_down a:hover{text-decoration: underline;}
 			.drop_down span{float:right;}
 
-#product_list h3{ text-align: center; color:#f7f5f5; text-shadow:0 1px 0 #d4d3d3; font-size:3em; font:100 italic 3em museo-slab-1,museo-slab-2,Georgia,serif;}/*nothing found */
+
 
 #utility{text-align: center; font-size:1em; padding:0 0 50px; }
 	#load_more{padding:.7em 4em; text-decoration: none; display: none;}
@@ -57,13 +58,14 @@ background: linear-gradient(top, #46a9ba 2%,#1b95aa 2%,#06687a 100%); /* W3C */}
 
 @media (max-width:450px){
 	h1{height:auto;}
+	h3{font-size:2em;}
 	#masthead{text-align: center;}
 		#masthead p{display: none;}
 		#branding{float:none;}
-		#masthead form{position: static;}
-		input[type="search"]{float:none;}
+		#masthead form{position: static; margin:0;}
+		input[type="search"]{float:none; width:320px;}
 	#product_list{margin:12px 0 0;}
-	.hproduct{text-align: left; float:none; border-left:none; border-right:none; border-bottom:1px solid #f7f5f5; border-top:1px solid #d4d3d3; width:100%; margin:0; padding:0; display: block; float:left;}
-	figure{float:left; width:80px; height: auto;}
-		figure img{max-width:100%;}
+	.hproduct{text-align: left; float:none; border-left:none; border-right:none; border-bottom:1px solid #f7f5f5; border-top:1px solid #d4d3d3; width:94%; margin:0 3%; padding:10px 0; display: block; float:left;}
+	figure{float:left; width:80px;   height: auto; margin:0 20px 0 0;}
+		figure img{max-width:100%; display: block;}
 }
