@@ -34,7 +34,8 @@ $(function(){
 });
 
 function get_games(query,page){
-	$('#product_list').append('<h3 id="loading">&#x203B;</h3>');
+	$('h3').remove();
+	$('#product_list').after('<h3 id="loading">&#x203B;</h3>');
 	$.ajax({
 	  //url: 'http://0.0.0.0:9292/values/'+query+'/'+page,
 	  url: 'http://tradaculator.heroku.com/values/'+query+'/'+page,
@@ -58,9 +59,10 @@ function get_games(query,page){
 	    	
 	    	if (v.tradeInValue){
 	   		    html += '<article class="hproduct">';
-				html += '<figure><div>';
+	   		    html += '<div class="prod_wrap">';
+				html += '<figure>';
 				html += 	'<img src="'+v.image+'" alt="" />';
-				html += '</div></figure>';
+				html += '</figure>';
 				html += '<header>';
 				html += 	'<h1>'+v.name.split(' - ')[0]+'</h1>';
 				html += 	'<p>'+v.name.split(' - ')[1]+'</p>';
@@ -71,7 +73,7 @@ function get_games(query,page){
 					html += '<li><a href="'+v.tradeInValue.amazon.url+'">Amazon <span>'+v.tradeInValue.amazon.value+'</span></a></li>';
 				}
 				html += '</ul>';
-				html += '</div>';
+				html += '</div></div>';
 				html += '</article>';
 			}
 	    });
@@ -80,7 +82,7 @@ function get_games(query,page){
 		    //$('#load_more').show();
 		    loading = false;
 	    }else{
-	    	$('#product_list').append("<h3>That's all there is.</h3>");
+	    	$('#product_list').after("<h3>That's all there is.</h3>");
 	    	loading = true;
 	    }
 
