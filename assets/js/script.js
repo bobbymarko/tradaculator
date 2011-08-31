@@ -1,6 +1,9 @@
+var loading = true;
 $(function(){
 	var query = 'Call of Duty',
-		page = 1;
+		page = 1,
+		w = $(window),
+		p = $('#product_list');
 	
 	get_games(query,1);
 	
@@ -8,24 +11,33 @@ $(function(){
 		query = $('input',this).val();
 		page = 1;
 		$('#product_list').html('');
-		$('#load_more').hide();
+		//$('#load_more').hide();
 		get_games(query,page);
 		e.preventDefault();
 	});
 	
-	$('#load_more').click(function(e){
+	/*$('#load_more').click(function(e){
 		page++;
 		get_games(query,page);
 		e.preventDefault();
+	});*/
+
+	w.scroll(function(){
+		if ((w.scrollTop() + w.height()) > (p.height() + p.offset().top) && !loading){
+			console.log('infinite scroll');
+			page++;
+			get_games(query,page);
+			loading = true;
+		}
 	});
 	
 });
 
 function get_games(query,page){
-	$('#product_list').append('<h3 id="loading">Loading Trade-In Values</h3>');
+	$('#product_list').append('<h3 id="loading">&#x203B;</h3>');
 	$.ajax({
 	  //url: 'http://0.0.0.0:9292/values/'+query+'/'+page,
-	  url: 'http://strong-ice-535.heroku.com/values/'+query+'/'+page,
+	  url: 'http://tradaculator.heroku.com/values/'+query+'/'+page,
 	  dataType: "jsonp",
 	  cache:true,
 	  success: function(data){
@@ -65,11 +77,12 @@ function get_games(query,page){
 	    });
 	    if (html !== ''){
 		    $('#product_list').append(html);
-		    $('#load_more').show();
+		    //$('#load_more').show();
+		    loading = false;
 	    }else{
-	    	$('#product_list').append("<h3>We couldn't find any games with "+query+" in the title.</h3>");
+	    	$('#product_list').append("<h3>That's all there is.</h3>");
+	    	loading = true;
 	    }
-	    
 
 	  }
 	});
