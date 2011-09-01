@@ -37,8 +37,8 @@ function get_games(query,page){
 	$('h3').remove();
 	$('#product_list').after('<h3 id="loading">&#x203B;</h3>');
 	$.ajax({
-	  url: 'http://0.0.0.0:9292/values/'+query+'/'+page,
-	  //url: 'http://tradaculator.com/values/'+query+'/'+page,
+	  //url: 'http://0.0.0.0:9292/values/'+query+'/'+page,
+	  url: 'http://tradaculator.com/values/'+query+'/'+page,
 	  dataType: "jsonp",
 	  cache:true,
 	  success: function(data){
@@ -73,7 +73,7 @@ function get_games(query,page){
 					html += '<li><a target="_blank" href="'+v.tradeInValue.amazon.url+'">Amazon <span>'+v.tradeInValue.amazon.value+'</span></a></li>';
 				}
 				if (v.tradeInValue.glyde.value !== ''){
-					html += '<li><a target="_blank" href="'+v.tradeInValue.glyde.url+'">Amazon <span>'+v.tradeInValue.glyde.value+'</span></a></li>';
+					html += '<li><a target="_blank" href="'+v.tradeInValue.glyde.url+'">Glyde <span>'+v.tradeInValue.glyde.value+'</span></a></li>';
 				}
 				html += '</ul>';
 				html += '</div></div>';
