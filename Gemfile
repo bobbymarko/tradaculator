@@ -1,6 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'sinatra'
+gem 'rack-cache'
 gem 'remixr'
 gem 'amazon_product'
 gem 'json'

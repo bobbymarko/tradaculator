@@ -3,10 +3,17 @@ require 'remixr'
 require "amazon_product"
 require 'json'
 require 'nokogiri'
+require 'rack/cache'
 
 class TradeIn < Sinatra::Base
   set :root, File.expand_path("#{File.dirname(__FILE__)}/")
   enable :static
+  
+  use Rack::Cache,
+	:verbose => true,
+	:metastore => 'file:/var/cache/rack/meta',
+	:entitystore => 'file:/var/cache/rack/body'
+  
 #    set :sessions, true
 #    set :foo, 'bar'
   get '/' do
@@ -14,6 +21,8 @@ class TradeIn < Sinatra::Base
   end
   
   get '/values/:search/:page' do
+  	cache_control :public, :max_age => 8 * 60
+  	
     callback = params[:callback] # jsonp
     
     Remixr.api_key = ENV['BBY_KEY']
