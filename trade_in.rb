@@ -21,7 +21,7 @@ class TradeIn < Sinatra::Base
   end
   
   get '/values/:search/:page' do
-  	cache_control :public, :max_age => 8 * 60
+  	cache_control :public, :max_age => 8 * 60 * 60 #8 hours
   	
     callback = params[:callback] # jsonp
     
