@@ -2,6 +2,7 @@ require 'sinatra'
 require 'remixr'
 require "amazon_product"
 require 'json'
+require 'nokogiri'
 
 class TradeIn < Sinatra::Base
   set :root, File.expand_path("#{File.dirname(__FILE__)}/")
@@ -17,14 +18,27 @@ class TradeIn < Sinatra::Base
     
     Remixr.api_key = ENV['BBY_KEY']
     bby = Remixr::Client.new
-    products = bby.products({:search => params[:search], :type => 'game', :tradeInValue => {'$gt' => 0}, :active => false}).fetch(:page => params[:page], :show => 'url,tradeInValue,image,name,upc', :sort => {'releaseDate'=>'desc'}).products
+    products = bby.products({:search => params[:search], :type => 'game', :tradeInValue => {'$gt' => 0}, :active => false}).fetch(:page => params[:page], :show => 'tradeInValue,image,name,upc', :sort => {'releaseDate'=>'desc'}).products
     
     upcs = []
     products.each_with_index do |product,index|
     	upcs << product.upc
     	#reorganize trade in values
-    	best_buy_trade_in_value = product['tradeInValue'] rescue ''
-    	products[index]['tradeInValue'] = {:best_buy => {:value => "$#{best_buy_trade_in_value}0", :url => product['url']}, :amazon => {:value => '', :url => ''}}
+    	best_buy_trade_in_value = product.tradeInValue rescue ''
+    	products[index]['tradeInValue'] = {
+    	  :best_buy => {
+    	    :value => "$#{best_buy_trade_in_value}0",
+    	    :url => "http://www.bestbuytradein.com/bb/QuoteCalculatorVideoGames.cfm?kw=#{product.upc}&pf=all"
+    	   },
+    	  :amazon => {
+    	    :value => '',
+    	    :url => ''
+    	   },
+    	   :glyde => {
+    	   	:value => '',
+    	   	:url => ''
+    	   }
+    	}
     end
     #puts upcs.join(',').inspect
     
@@ -48,6 +62,11 @@ class TradeIn < Sinatra::Base
     #puts amazon['Item'].length
     #puts amazon.to_hash.to_json
     upcs.each_with_index do |upc, index|
+    	glyde = JSON.parse(Nokogiri::HTML(open("http://api.glyde.com/price/upc/#{upc}?api_key=ENV['GLYDE_KEY']&v=1&responseType=application/json")))
+    	if glyde['is_sellable']
+    		products[index]['tradeInValue']['glyde'] = {:value => "$#{glyde['suggested_price']['cents']/100.0}", :url => "http://glyde.com/products/#{glyde['glu_id']}"}
+    	end
+    	
 	    amazon.each('Item') do |item|
 	    	if upc == item["ItemAttributes"]["UPC"]
 	    		if item["ItemAttributes"]["IsEligibleForTradeIn"] == "1"
@@ -58,13 +77,13 @@ class TradeIn < Sinatra::Base
 	    		
 	    		#puts amazon_trade_in_value
 	    		
-	    		
-	    		products[index]['tradeInValue']['amazon'] = {:value => amazon_trade_in_value, :url => item["DetailPageURL"]}
+	    		products[index]['tradeInValue']['amazon'] = {:value => amazon_trade_in_value, :url => "https://www.amazon.com/gp/tradein/add-to-cart.html/ref=trade_new_dp_trade_btn?ie=UTF8&asin=#{item['ASIN']}"}
 				break #if we found it then stop
 	    	end
 	    end
 	    
     end
+    
     
     bby_json = products.to_json
     

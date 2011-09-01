@@ -37,8 +37,8 @@ function get_games(query,page){
 	$('h3').remove();
 	$('#product_list').after('<h3 id="loading">&#x203B;</h3>');
 	$.ajax({
-	  //url: 'http://0.0.0.0:9292/values/'+query+'/'+page,
-	  url: 'http://tradaculator.heroku.com/values/'+query+'/'+page,
+	  url: 'http://0.0.0.0:9292/values/'+query+'/'+page,
+	  //url: 'http://tradaculator.com/values/'+query+'/'+page,
 	  dataType: "jsonp",
 	  cache:true,
 	  success: function(data){
@@ -56,7 +56,7 @@ function get_games(query,page){
 	    		top_value_url = v.tradeInValue.amazon.url;
 	    		top_value_vendor = "Amazon"; 
 	    	}
-	    	
+
 	    	if (v.tradeInValue){
 	   		    html += '<article class="hproduct">';
 	   		    html += '<div class="prod_wrap">';
@@ -67,10 +67,13 @@ function get_games(query,page){
 				html += 	'<h1>'+v.name.split(' - ')[0]+'</h1>';
 				html += 	'<p>'+v.name.split(' - ')[1]+'</p>';
 				html += '</header>';
-				html += '<div class="price_block_wrapper"><div class="price_block button"><span class="vendor_name">'+top_value_vendor+'</span> <a class="trade_in_value" href="'+top_value_url+'">'+top_value+'<a></div>';
-				html += '<ul class="drop_down"><li><a href="'+v.tradeInValue.best_buy.url+'">Best Buy <span>'+v.tradeInValue.best_buy.value+'</span></a></li>';
+				html += '<div class="price_block_wrapper"><div class="price_block button"><span class="vendor_name">'+top_value_vendor+'</span> <a class="trade_in_value" target="_blank" href="'+top_value_url+'">'+top_value+'</a></div>';
+				html += '<ul class="drop_down"><li><a target="_blank" href="'+v.tradeInValue.best_buy.url+'">Best Buy <span>'+v.tradeInValue.best_buy.value+'</span></a></li>';
 				if (v.tradeInValue.amazon.value !== ''){
-					html += '<li><a href="'+v.tradeInValue.amazon.url+'">Amazon <span>'+v.tradeInValue.amazon.value+'</span></a></li>';
+					html += '<li><a target="_blank" href="'+v.tradeInValue.amazon.url+'">Amazon <span>'+v.tradeInValue.amazon.value+'</span></a></li>';
+				}
+				if (v.tradeInValue.glyde.value !== ''){
+					html += '<li><a target="_blank" href="'+v.tradeInValue.glyde.url+'">Amazon <span>'+v.tradeInValue.glyde.value+'</span></a></li>';
 				}
 				html += '</ul>';
 				html += '</div></div>';
