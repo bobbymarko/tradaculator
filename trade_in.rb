@@ -4,9 +4,14 @@ require "amazon_product"
 require 'json'
 
 class TradeIn < Sinatra::Base
+  set :root, File.expand_path("#{File.dirname(__FILE__)}/")
+  enable :static
 #    set :sessions, true
 #    set :foo, 'bar'
-
+  get '/' do
+  	 File.read(File.join('public', 'index.html'))  
+  end
+  
   get '/values/:search/:page' do
     callback = params[:callback] # jsonp
     
