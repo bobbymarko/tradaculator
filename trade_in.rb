@@ -4,6 +4,7 @@ require "amazon_product"
 require 'json'
 require 'nokogiri'
 require 'rack/cache'
+require './helpers.rb'
 
 class TradeIn < Sinatra::Base
   set :root, File.expand_path("#{File.dirname(__FILE__)}/")
@@ -36,7 +37,7 @@ class TradeIn < Sinatra::Base
     	best_buy_trade_in_value = product.tradeInValue rescue ''
     	products[index]['tradeInValue'] = {
     	  :best_buy => {
-    	    :value => "$#{best_buy_trade_in_value}0",
+    	    :value => currency(best_buy_trade_in_value),
     	    :url => "http://www.bestbuytradein.com/bb/QuoteCalculatorVideoGames.cfm?kw=#{product.upc}&pf=all"
     	   },
     	  :amazon => {
@@ -73,20 +74,19 @@ class TradeIn < Sinatra::Base
     upcs.each_with_index do |upc, index|
     	glyde = JSON.parse(Nokogiri::HTML(open("http://api.glyde.com/price/upc/#{upc}?api_key=ENV['GLYDE_KEY']&v=1&responseType=application/json")))
     	if glyde['is_sellable'] 
-    		products[index]['tradeInValue']['glyde'] = {:value => "$#{glyde['suggested_price']['cents']/100.00}", :url => "http://glyde.com/sell?hash=%21by%2Fproduct%2Flineup%2Fgames%2F#{glyde['glu_id']}#!by/product/lineup/games/#{glyde['glu_id']}"}
+    		products[index]['tradeInValue']['glyde'] = {:value => "#{currency(glyde['suggested_price']['cents']/100.0)}", :url => "http://glyde.com/sell?hash=%21by%2Fproduct%2Flineup%2Fgames%2F#{glyde['glu_id']}#!by/product/lineup/games/#{glyde['glu_id']}"}
     	end
     	
 	    amazon.each('Item') do |item|
 	    	if upc == item["ItemAttributes"]["UPC"]
 	    		if item["ItemAttributes"]["IsEligibleForTradeIn"] == "1"
-	    			amazon_trade_in_value = item["ItemAttributes"]["TradeInValue"]["FormattedPrice"]
-	    		else
-	    			amazon_trade_in_value = ''
+	    			amazon_trade_in_value = item["ItemAttributes"]["TradeInValue"]["Amount"].to_i
+	    			products[index]['tradeInValue']['amazon'] = {:value => currency(amazon_trade_in_value / 100.0), :url => "https://www.amazon.com/gp/tradein/add-to-cart.html/ref=trade_new_dp_trade_btn?ie=UTF8&asin=#{item['ASIN']}"}
 	    		end
 	    		
 	    		#puts amazon_trade_in_value
 	    		
-	    		products[index]['tradeInValue']['amazon'] = {:value => amazon_trade_in_value, :url => "https://www.amazon.com/gp/tradein/add-to-cart.html/ref=trade_new_dp_trade_btn?ie=UTF8&asin=#{item['ASIN']}"}
+	    		
 				break #if we found it then stop
 	    	end
 	    end

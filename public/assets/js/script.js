@@ -35,8 +35,8 @@ function get_games(query,page){
 	$('h3').remove();
 	$('#product_list').after('<h3 id="loading">&#x203B;</h3>');
 	$.ajax({
-	  //url: 'http://0.0.0.0:9292/values/'+query+'/'+page,
-	  url: 'http://tradaculator.com/values/'+query+'/'+page,
+	  url: 'http://0.0.0.0:9292/values/'+query+'/'+page,
+	  //url: 'http://tradaculator.com/values/'+query+'/'+page,
 	  dataType: "jsonp",
 	  cache:true,
 	  success: function(data){
@@ -44,16 +44,14 @@ function get_games(query,page){
 	    //console.log(data);
 	    var html = '';
 	    $.each(data, function(k,v){
-	    	var top_value,top_value_url,top_value_vendor;
-	    	if (parseInt(v.tradeInValue.best_buy.value.replace(/[\$\.]/g,''),10) > parseInt(v.tradeInValue.amazon.value.replace(/[\$\.]/g,''),10) || v.tradeInValue.amazon.value == ''){
-	    		top_value = v.tradeInValue.best_buy.value;
-	    		top_value_url = v.tradeInValue.best_buy.url;
-	    		top_value_vendor = "Best Buy"; 
-	    	} else {
-	    		top_value = v.tradeInValue.amazon.value;
-	    		top_value_url = v.tradeInValue.amazon.url;
-	    		top_value_vendor = "Amazon"; 
-	    	}
+	    	var sortable = [];
+	    	$.each(v.tradeInValue, function(k,v){
+	    		if (v.value) {
+ 		    		v.vendor = k;
+	    			sortable.push(v);
+	    		}
+	    	});
+	    	sortable.sort(function(a, b) { return parseInt(b.value.replace(/[\$\.]/g,''),10) - parseInt(a.value.replace(/[\$\.]/g,''),10) });
 
 	    	if (v.tradeInValue){
 	   		    html += '<article class="hproduct">';
@@ -65,14 +63,11 @@ function get_games(query,page){
 				html += 	'<h1>'+v.name.split(' - ')[0]+'</h1>';
 				html += 	'<p>'+v.name.split(' - ')[1]+'</p>';
 				html += '</header>';
-				html += '<div class="price_block_wrapper"><div class="price_block button"><span class="vendor_name">Trade It In <span class="up"></span><span class="down"></span></span> <a class="trade_in_value" target="_blank" href="'+top_value_url+'">'+top_value+'</a></div>';
-				html += '<ul class="drop_down"><li><a target="_blank" href="'+v.tradeInValue.best_buy.url+'">Best Buy <span>'+v.tradeInValue.best_buy.value+'</span></a></li>';
-				if (v.tradeInValue.amazon.value !== ''){
-					html += '<li><a target="_blank" href="'+v.tradeInValue.amazon.url+'">Amazon <span>'+v.tradeInValue.amazon.value+'</span></a></li>';
-				}
-				if (v.tradeInValue.glyde.value !== ''){
-					html += '<li><a target="_blank" href="'+v.tradeInValue.glyde.url+'">Glyde <span>'+v.tradeInValue.glyde.value+'</span></a></li>';
-				}
+				html += '<div class="price_block_wrapper"><div class="price_block button"><span class="vendor_name">Trade It In <span class="up"></span><span class="down"></span></span> <a class="trade_in_value" target="_blank" href="'+sortable[0].url+'">'+sortable[0].value+'</a></div>';
+				html += '<ul class="drop_down">';
+				$.each(sortable, function(k,v){
+					html += '<li><a target="_blank" href="'+v.url+'">'+v.vendor.replace('_',' ') +' <span>'+v.value+'</span></a></li>';
+				});
 				html += '</ul>';
 				html += '</div></div>';
 				html += '</article>';
