@@ -9,10 +9,10 @@ class TradeIn < Sinatra::Base
   set :root, File.expand_path("#{File.dirname(__FILE__)}/")
   enable :static
   
-  use Rack::Cache,
-	:verbose => true,
-	:metastore => 'file:/var/cache/rack/meta',
-	:entitystore => 'file:/var/cache/rack/body'
+  #use Rack::Cache,
+#	:verbose => true,
+#	:metastore => 'file:/var/cache/rack/meta',
+#	:entitystore => 'file:/var/cache/rack/body'
   
 #    set :sessions, true
 #    set :foo, 'bar'
@@ -73,7 +73,7 @@ class TradeIn < Sinatra::Base
     upcs.each_with_index do |upc, index|
     	glyde = JSON.parse(Nokogiri::HTML(open("http://api.glyde.com/price/upc/#{upc}?api_key=ENV['GLYDE_KEY']&v=1&responseType=application/json")))
     	if glyde['is_sellable'] 
-    		products[index]['tradeInValue']['glyde'] = {:value => "$#{glyde['suggested_price']['cents']/100.0}", :url => "http://glyde.com/sell?hash=%21by%2Fproduct%2Flineup%2Fgames%2F#{glyde['glu_id']}#!by/product/lineup/games/#{glyde['glu_id']}"}
+    		products[index]['tradeInValue']['glyde'] = {:value => "$#{glyde['suggested_price']['cents']/100.00}", :url => "http://glyde.com/sell?hash=%21by%2Fproduct%2Flineup%2Fgames%2F#{glyde['glu_id']}#!by/product/lineup/games/#{glyde['glu_id']}"}
     	end
     	
 	    amazon.each('Item') do |item|

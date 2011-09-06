@@ -16,19 +16,17 @@ $(function(){
 		e.preventDefault();
 	});
 	
-	/*$('#load_more').click(function(e){
-		page++;
-		get_games(query,page);
-		e.preventDefault();
-	});*/
-
 	w.scroll(function(){
 		if ((w.scrollTop() + w.height()) > (p.height() + p.offset().top) && !loading){
-			console.log('infinite scroll');
+			//console.log('infinite scroll');
 			page++;
 			get_games(query,page);
 			loading = true;
 		}
+	});
+	
+	$('.hproduct').live('click',function(){
+		$(this).toggleClass('active').siblings().removeClass('active');
 	});
 	
 });
@@ -67,7 +65,7 @@ function get_games(query,page){
 				html += 	'<h1>'+v.name.split(' - ')[0]+'</h1>';
 				html += 	'<p>'+v.name.split(' - ')[1]+'</p>';
 				html += '</header>';
-				html += '<div class="price_block_wrapper"><div class="price_block button"><span class="vendor_name">'+top_value_vendor+'</span> <a class="trade_in_value" target="_blank" href="'+top_value_url+'">'+top_value+'</a></div>';
+				html += '<div class="price_block_wrapper"><div class="price_block button"><span class="vendor_name">Trade It In <span class="up"></span><span class="down"></span></span> <a class="trade_in_value" target="_blank" href="'+top_value_url+'">'+top_value+'</a></div>';
 				html += '<ul class="drop_down"><li><a target="_blank" href="'+v.tradeInValue.best_buy.url+'">Best Buy <span>'+v.tradeInValue.best_buy.value+'</span></a></li>';
 				if (v.tradeInValue.amazon.value !== ''){
 					html += '<li><a target="_blank" href="'+v.tradeInValue.amazon.url+'">Amazon <span>'+v.tradeInValue.amazon.value+'</span></a></li>';
