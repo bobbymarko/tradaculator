@@ -35,8 +35,8 @@ function get_games(query,page){
 	$('h3').remove();
 	$('#product_list').after('<h3 id="loading">&#x203B;</h3>');
 	$.ajax({
-	  url: 'http://0.0.0.0:9292/values/'+query+'/'+page,
-	  //url: 'http://tradaculator.com/values/'+query+'/'+page,
+	  //url: 'http://0.0.0.0:9292/values/'+query+'/'+page,
+	  url: 'http://tradaculator.com/values/'+query+'/'+page,
 	  dataType: "jsonp",
 	  cache:true,
 	  success: function(data){
