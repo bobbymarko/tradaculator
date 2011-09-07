@@ -47,7 +47,7 @@ figure{height:140px; display: table-cell; vertical-align: bottom; width:200px; l
 
 .price_block_wrapper{padding:.4em; background: rgba(0,0,0,.1); display: inline-block;-webkit-border-radius:1.5em; -moz-border-radius: 1.5em; border-radius:1.5em; position: relative; cursor: pointer;}
 
-.button{font-size:12px; color:#fff; text-shadow:0 1px 0 #000; position: relative; }
+.button{font-size:12px; color:#fff; text-shadow:0 1px 0 #000; position: relative; overflow: hidden; }
 
 .button a{
 text-decoration: none; padding:10px;
@@ -120,7 +120,7 @@ font-weight: bold; color:#252a32; border-left:1px solid #198b9f; float:left; pad
 }
 
 @media (max-width:768px){
-	h1{height:auto; margin-top:0;}
+	h1{margin-top:0;}
 	h3{font-size:2em;}
 	#masthead{text-align: center;}
 		#masthead div{width:auto;}
@@ -131,9 +131,17 @@ font-weight: bold; color:#252a32; border-left:1px solid #198b9f; float:left; pad
 	#product_list{margin:12px 0 0; width:auto;}
 	.hproduct{text-align: left; float:none;  width:92%; margin:0 4%; padding:10px 0; display: block; float:left;}
 		.prod_wrap{border-left:none; border-right:none; padding:0;}
-		.hproduct:first-child{border-top:none;}
-		.hproduct:last-child{border-bottom: none;}
+
 	figure{float:left; width:80px;   height: auto; margin:0 20px 0 0;}
 		figure img{max-width:100%; display: block;}
 	.drop_down{font-size:1em; line-height: 2; width:160px;}
+}
+@media (min-width:551px) and (max-width:768px) {
+	.hproduct{float:left; width:46%; margin:0 2%; height:105px; }
+	#masthead div, #product_list{width:auto;}
+}
+@media (max-width:550px){
+	h1{height:auto;}
+	.hproduct:first-child{border-top:none;}
+	.hproduct:last-child{border-bottom: none;}
 }
