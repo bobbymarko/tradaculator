@@ -13,7 +13,7 @@
 
 html,body{margin:0; padding:0;}
 
-body{background: #e2e2e2 url(../img/bg_3.jpg); font:100% sans-serif; color:#49494a;}
+body{background: #e2e2e2 url(../img/bg_3.jpg); font:100% sans-serif; color:#49494a; -webkit-text-size-adjust:100%;}
 h1{font-size:.875em; color:#077083; font-weight: bold; margin:.5em 0 .3em; height:2.25em; overflow: hidden;}
 h3{ text-align: center; color:#f7f5f5; text-shadow:0 1px 0 #d4d3d3; font-size:3em; font:100 italic 3em museo-slab-1,museo-slab-2,Georgia,serif; margin:0 0 40px;}/*nothing found */
 
@@ -43,7 +43,7 @@ p{margin:0;}
 
 figure{height:140px; display: table-cell; vertical-align: bottom; width:200px; line-height: 0;}
 
-.hproduct header p{font-size:12px; font-weight: bold; margin:0 0 .5em; -webkit-text-size-adjust:none;}
+.hproduct header p{font-size:12px; font-weight: bold; margin:0 0 .5em;}
 
 .price_block_wrapper{padding:.4em; background: rgba(0,0,0,.1); display: inline-block;-webkit-border-radius:1.5em; -moz-border-radius: 1.5em; border-radius:1.5em; position: relative; cursor: pointer;}
 
