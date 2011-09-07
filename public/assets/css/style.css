@@ -26,15 +26,16 @@ h3{ text-align: center; color:#f7f5f5; text-shadow:0 1px 0 #d4d3d3; font-size:3e
 	
 p{margin:0;}
 #masthead{background:#595959; color:#dedbc1; padding:10px; font:100 italic 1em museo-slab-1,museo-slab-2,Georgia,serif;-webkit-box-shadow: 0 2px 0 #535353, 0 12px 0 #707070, 0 1px 0 #797979; box-shadow: 0 2px 0 #535353, 0 12px 0 #707070, 0 1px 0 #797979;}
-	#masthead div{max-width:890px; margin:0 auto; position: relative; overflow: hidden;}
+	#masthead div{width:890px; margin:0 auto; position: relative; overflow: hidden;}
 #branding{font:bold italic 300% museo-slab-1,museo-slab-2,Georgia,serif; float: left; text-shadow: 0 1px 0 #3a3a3a;}
 #masthead p{width:250px;position: relative;float:left; left:30px; padding-left:20px; top:10px; border-left:1px solid #707070;}
-#masthead form{position: absolute; top:50%; right:10px; margin-top:-10px; width:100%;}
+#masthead form{float:right;margin-top: 20px; position: relative;}
 	::-webkit-input-placeholder { color: #8b8b8b;}
 	:-moz-placeholder { color: #8b8b8b;}
-	#search{width:200px; float:right; font-size:.875em;  font-style: italic; background: #ececec; -webkit-appearance: textfield; -webkit-border-radius:1em; -moz-border-radius:1em; border-radius:1em; border:none; }
-#search_options{background:#fff;}
-#product_list{position: relative; margin:20px auto; padding:0; max-width:890px;}
+	#search{width:200px; font-size:.875em;  font-style: italic; background: #ececec; -webkit-appearance: textfield; -webkit-border-radius:1em; -moz-border-radius:1em; border-radius:1em; border:none; padding-left:10px; }
+		#search:focus{outline:none;}
+	#m{position: absolute; left: 5px; top:4px;}
+#product_list{position: relative; margin:20px auto; padding:0; width:890px;}
 
 .hproduct{position:relative; text-align: center; width:220px; display: inline-block; vertical-align: top; margin:0; padding:20px 0;  border-bottom:1px solid #f7f5f5; border-top:1px solid #d4d3d3;}
 	
@@ -90,7 +91,7 @@ border-right:1px solid #234a56; float:left; padding:.8em .8em .8em 1em; position
 -webkit-border-top-right-radius: 1.25em;-webkit-border-bottom-right-radius: 1.25em;
 -moz-border-radius-topright: 1.25em;-moz-border-radius-bottomright: 1.25em;
 border-top-right-radius: 1.25em;border-bottom-right-radius: 1.25em;
-font-size:1.2em;font-weight: bold; color:#252a32; border-left:1px solid #198b9f; float:left; padding:.6em .8em .6em 1.4em; text-shadow: 0 1px 0 #629ca7;}
+font-size:14px;font-weight: bold; color:#252a32; border-left:1px solid #198b9f; float:left; padding:.6em .8em .6em 1.4em; text-shadow: 0 1px 0 #629ca7;}
 	.trade_in_value:before,.trade_in_value:after{position: absolute; left:.5em; top:.5em; content:''; width:0; height: 0; border-style:solid; border-width: 4px; border-color:transparent transparent #252A32;}
 	.trade_in_value:after{ border-color:#252A32 transparent transparent; top:1.2em; }
 
@@ -101,7 +102,7 @@ font-size:1.2em;font-weight: bold; color:#252a32; border-left:1px solid #198b9f;
 			.drop_down a:hover{text-decoration: underline;}
 			.drop_down span{float:right;}
 	
-@media (min-width:1280px) {
+/*@media (min-width:1280px) {
 	#branding{ float:none; display: block; position: relative; top:30px; }
 	#masthead{-webkit-box-shadow: none; box-shadow: none; overflow: visible;  position: absolute; position: fixed; top:0; bottom:0; width:350px;}
 		#masthead div{width:auto;}
@@ -109,23 +110,24 @@ font-size:1.2em;font-weight: bold; color:#252a32; border-left:1px solid #198b9f;
 		#masthead form{position: static; width:auto; text-align: center;}
 			#search{float:none; width:200px; margin:20px 0; max-width: none;}
 	#product_list{width:auto; margin-left:370px;}
-}
+}*/
 
-@media(min-width:481px) and (max-width:1279px){
+@media(min-width:769px){
 	.hproduct:nth-child(-n+4){border-top:none;}
 	.hproduct:nth-last-child(-n+4){border-bottom: none;}
 	.hproduct:nth-child(4n+1) .prod_wrap{border-left:none;}
 	.hproduct:nth-child(4n+4) .prod_wrap{border-right:none;}
 }
 
-@media (max-width:480px){
+@media (max-width:768px){
 	h1{height:auto; margin-top:0;}
 	h3{font-size:2em;}
 	#masthead{text-align: center;}
+		#masthead div{width:auto;}
 		#masthead p{display: none;}
 		#branding{float:none; font-size:2.2em;}
-		#masthead form{position: static; margin:0;}
-		#search{float:none; width:90%;}
+		#masthead form{float: none;}
+		#search{float:none; width:100%;}
 	#product_list{margin:12px 0 0;}
 	.hproduct{text-align: left; float:none;  width:92%; margin:0 4%; padding:10px 0; display: block; float:left;}
 		.prod_wrap{border-left:none; border-right:none; padding:0;}
