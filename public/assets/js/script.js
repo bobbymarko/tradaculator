@@ -11,22 +11,21 @@ $(function(){
 		query = $('input',this).val();
 		page = 1;
 		$('#product_list').html('');
-		//$('#load_more').hide();
 		get_games(query,page);
 		e.preventDefault();
 	});
 	
 	w.scroll(function(){
 		if ((w.scrollTop() + w.height()) > (p.height() + p.offset().top) && !loading){
-			//console.log('infinite scroll');
 			page++;
 			get_games(query,page);
 			loading = true;
 		}
 	});
 	
-	$('.hproduct').live('click',function(){
-		$(this).toggleClass('active').siblings().removeClass('active');
+	$('.trade_in_value').live('click',function(e){
+		$(this).closest('.hproduct').toggleClass('active').siblings().removeClass('active');
+		e.preventDefault();
 	});
 	
 });
@@ -63,7 +62,7 @@ function get_games(query,page){
 				html += 	'<h1>'+v.name.split(' - ')[0]+'</h1>';
 				html += 	'<p>'+v.name.split(' - ')[1]+'</p>';
 				html += '</header>';
-				html += '<div class="price_block_wrapper"><div class="price_block button"><span class="vendor_name">Trade It In <span class="up"></span><span class="down"></span></span> <a class="trade_in_value" target="_blank" href="'+sortable[0].url+'">'+sortable[0].value+'</a></div>';
+				html += '<div class="price_block_wrapper"><div class="price_block button"><a class="vendor_name" target="_blank" href="'+sortable[0].url+'">Trade It In</a><a href="#" class="trade_in_value">'+sortable[0].value+'</a></div>';
 				html += '<ul class="drop_down">';
 				$.each(sortable, function(k,v){
 					html += '<li><a target="_blank" href="'+v.url+'">'+v.vendor.replace('_',' ') +' <span>'+v.value+'</span></a></li>';

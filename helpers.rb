@@ -5,7 +5,7 @@ def currency(number, opts = {})
   precision = opts[:precision] || 2
   separator = opts[:separator] || ', '
 
-  ret = "%s %.#{ Integer(precision) }f" % [unit, number]
+  ret = "%s%.#{Integer(precision)}f" % [unit,number]
   parts = ret.split('.')
   parts[0].gsub!(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1#{separator}")
   parts.join('.')
