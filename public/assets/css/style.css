@@ -43,7 +43,7 @@ p{margin:0;}
 
 figure{height:140px; display: table-cell; vertical-align: bottom; width:200px; line-height: 0;}
 
-.hproduct header p{font-size:12px; font-weight: bold; margin:0 0 .5em;}
+.hproduct header p{font-size:12px; font-weight: bold; margin:0 0 .5em; -webkit-text-size-adjust:none;}
 
 .price_block_wrapper{padding:.4em; background: rgba(0,0,0,.1); display: inline-block;-webkit-border-radius:1.5em; -moz-border-radius: 1.5em; border-radius:1.5em; position: relative; cursor: pointer;}
 
