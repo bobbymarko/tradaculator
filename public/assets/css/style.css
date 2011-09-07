@@ -111,11 +111,7 @@ font-size:1.2em;font-weight: bold; color:#252a32; border-left:1px solid #198b9f;
 	#product_list{width:auto; margin-left:370px;}
 }
 
-@media(min-width:660px) and (max-width:960px){
-	.hproduct{display:none;}
-}
-
-@media(min-width:481px) and (max-width:659px){
+@media(min-width:481px) and (max-width:1279px){
 	.hproduct:nth-child(-n+4){border-top:none;}
 	.hproduct:nth-last-child(-n+4){border-bottom: none;}
 	.hproduct:nth-child(4n+1) .prod_wrap{border-left:none;}
