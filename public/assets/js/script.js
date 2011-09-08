@@ -8,7 +8,9 @@ $(function(){
 	get_games(query,1);
 	
 	$('form').submit(function(e){
-		query = $('input',this).val();
+		input = $('input',this);
+		query = input.val();
+		input.blur();
 		page = 1;
 		$('#product_list').html('');
 		get_games(query,page);
