@@ -102,7 +102,7 @@ font-weight: bold; color:#252a32; border-left:1px solid #198b9f; float:left; pad
 			.drop_down a:hover{text-decoration: underline;}
 			.drop_down span{float:right;}
 			
-footer{text-align: center;font:100 italic .825em museo-slab-1,museo-slab-2,Georgia,serif;}
+footer{text-align: center;font:100 italic .825em museo-slab-1,museo-slab-2,Georgia,serif; padding:0 0 20px;}
 	
 /*@media (min-width:1280px) {
 	#branding{ float:none; display: block; position: relative; top:30px; }
