@@ -32,7 +32,7 @@ class TradeIn < Sinatra::Base
     Remixr.api_key = ENV['BBY_KEY']
     bby = Remixr::Client.new
     
-    search_parameters = {:type => 'game', :tradeInValue => {'$gt' => 0}, :active => *}
+    search_parameters = {:type => 'game', :tradeInValue => {'$gt' => 0}, :active => "*"}
     search_parameters['search'] = query if query
     
     products = bby.products(search_parameters).fetch(:page => page, :show => 'tradeInValue,image,name,upc', :sort => {'releaseDate'=>'desc'})
