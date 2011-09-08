@@ -1,6 +1,6 @@
 var loading = true;
 $(function(){
-	var query = 'Call of Duty',
+	var query = '',
 		page = 1,
 		w = $(window),
 		p = $('#product_list');
@@ -42,7 +42,6 @@ function get_games(query,page){
 	  cache:true,
 	  success: function(data){
 	  	$('#loading').remove();
-	    //console.log(data);
 	    var html = '';
 	    $.each(data, function(k,v){
 	    	var sortable = [];
@@ -76,7 +75,6 @@ function get_games(query,page){
 	    });
 	    if (html !== ''){
 		    $('#product_list').append(html);
-		    //$('#load_more').show();
 		    loading = false;
 	    }else{
 	    	$('#product_list').after("<h3>That's all there is.</h3>");

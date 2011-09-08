@@ -21,14 +21,22 @@ class TradeIn < Sinatra::Base
   	 File.read(File.join('public', 'index.html'))  
   end
   
-  get '/values/:search/:page' do
+  get '/values/?:search?/?:page?' do
+  	query = params[:search]
+  	page = params[:page] || 1
+  	
   	cache_control :public, :max_age => 8 * 60 * 60 #8 hours
   	
     callback = params[:callback] # jsonp
     
     Remixr.api_key = ENV['BBY_KEY']
     bby = Remixr::Client.new
-    products = bby.products({:search => params[:search], :type => 'game', :tradeInValue => {'$gt' => 0}, :active => false}).fetch(:page => params[:page], :show => 'tradeInValue,image,name,upc', :sort => {'releaseDate'=>'desc'}).products
+    
+    search_parameters = {:type => 'game', :tradeInValue => {'$gt' => 0}, :active => false}
+    search_parameters['search'] = query if query
+    
+    products = bby.products(search_parameters).fetch(:page => page, :show => 'tradeInValue,image,name,upc', :sort => {'releaseDate'=>'desc'})
+.products
     
     upcs = []
     products.each_with_index do |product,index|

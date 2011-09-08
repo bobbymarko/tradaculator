@@ -13,6 +13,7 @@
 
 html,body{margin:0; padding:0;}
 body{background: #e2e2e2 url(../img/bg_3.jpg); font:100% sans-serif; color:#49494a; -webkit-text-size-adjust:100%;}
+a{color:#46a9ba;}
 h1{font-size:.875em; color:#077083; font-weight: bold; margin:.5em 0 .3em; height:2.25em; overflow: hidden;}
 h3{ text-align: center; color:#f7f5f5; text-shadow:0 1px 0 #d4d3d3; font-size:3em; font:100 italic 3em museo-slab-1,museo-slab-2,Georgia,serif; margin:0 0 40px;}/*nothing found */
 
@@ -26,7 +27,7 @@ h3{ text-align: center; color:#f7f5f5; text-shadow:0 1px 0 #d4d3d3; font-size:3e
 p{margin:0;}
 #masthead{background:#595959; color:#dedbc1; padding:10px; font:100 italic 1em museo-slab-1,museo-slab-2,Georgia,serif;-webkit-box-shadow: 0 2px 0 #535353, 0 12px 0 #707070, 0 1px 0 #797979; box-shadow: 0 2px 0 #535353, 0 12px 0 #707070, 0 1px 0 #797979;}
 	#masthead div{width:890px; margin:0 auto; position: relative; overflow: hidden;}
-#branding{font:bold italic 300% museo-slab-1,museo-slab-2,Georgia,serif; float: left; text-shadow: 0 1px 0 #3a3a3a;}
+#branding{font:bold italic 300% museo-slab-1,museo-slab-2,Georgia,serif; float: left; text-shadow: 0 1px 0 #3a3a3a; color:#dedbc1;}
 #masthead p{width:250px;position: relative;float:left; left:30px; padding-left:20px; top:10px; border-left:1px solid #707070;}
 #masthead form{float:right;margin-top: 20px; position: relative;}
 	::-webkit-input-placeholder { color: #8b8b8b;}
@@ -100,6 +101,8 @@ font-weight: bold; color:#252a32; border-left:1px solid #198b9f; float:left; pad
 		.drop_down a{color:#234a56; text-decoration: none; display: block;}
 			.drop_down a:hover{text-decoration: underline;}
 			.drop_down span{float:right;}
+			
+footer{text-align: center;font:100 italic .825em museo-slab-1,museo-slab-2,Georgia,serif;}
 	
 /*@media (min-width:1280px) {
 	#branding{ float:none; display: block; position: relative; top:30px; }
