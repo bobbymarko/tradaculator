@@ -3,7 +3,7 @@ $(function(){
 	var query = '',
 		page = 1,
 		w = $(window),
-		p = $('#product_list');
+		p = $('#pl');
 	
 	get_games(query,1);
 	
@@ -12,7 +12,7 @@ $(function(){
 		query = input.val();
 		input.blur();
 		page = 1;
-		$('#product_list').html('');
+		$('#pl').html('');
 		get_games(query,page);
 		e.preventDefault();
 	});
@@ -25,8 +25,8 @@ $(function(){
 		}
 	});
 	
-	$('.trade_in_value').live('click',function(e){
-		$(this).closest('.hproduct').toggleClass('active').siblings().removeClass('active');
+	$('.tv').live('click',function(e){
+		$(this).closest('.p').toggleClass('active').siblings().removeClass('active');
 		e.preventDefault();
 	});
 	
@@ -34,7 +34,7 @@ $(function(){
 
 function get_games(query,page){
 	$('h3').remove();
-	$('#product_list').after('<h3 id="loading">&#x203B;</h3>');
+	$('#pl').after('<h3 id="loading">&#x203B;</h3>');
 	$.ajax({
 	  //url: 'http://0.0.0.0:9292/values/'+query+'/'+page,
 	  url: 'http://tradaculator.com/values/'+query+'/'+page,
@@ -55,7 +55,7 @@ function get_games(query,page){
 
 	    	if (v.tradeInValue){
 	    		var n = v.name.split(' - ');
-	   		    html += '<article class="hproduct">';
+	   		    html += '<article class="p">';
 	   		    html += '<div class="prod_wrap">';
 				html += '<figure>';
 				html += 	'<img src="'+v.image+'" alt="" />';
@@ -64,8 +64,8 @@ function get_games(query,page){
 				html += 	'<h1>'+n[0]+'</h1>';
 				html += 	'<p>'+n[n.length - 1]+'</p>';
 				html += '</header>';
-				html += '<div class="price_block_wrapper"><div class="price_block button"><a class="vendor_name" target="_blank" href="'+sortable[0].url+'">Trade It In</a><a href="#" class="trade_in_value">'+sortable[0].value+'</a></div>';
-				html += '<ul class="drop_down">';
+				html += '<div class="pbw"><div class="b"><a class="vn" target="_blank" href="'+sortable[0].url+'">Trade It In</a><a href="#" class="tv">'+sortable[0].value+'</a></div>';
+				html += '<ul class="dd">';
 				$.each(sortable, function(k,v){
 					html += '<li><a target="_blank" href="'+v.url+'">'+v.vendor.replace('_',' ') +' <span>'+v.value+'</span></a></li>';
 				});
@@ -75,10 +75,10 @@ function get_games(query,page){
 			}
 	    });
 	    if (html !== ''){
-		    $('#product_list').append(html);
+		    $('#pl').append(html);
 		    loading = false;
 	    }else{
-	    	$('#product_list').after("<h3>That's all there is.</h3>");
+	    	$('#pl').after("<h3>That's all there is.</h3>");
 	    	loading = true;
 	    }
 
