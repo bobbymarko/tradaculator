@@ -56,7 +56,7 @@ function get_games(query,page){
 	    	if (v.tradeInValue){
 	    		var n = v.name.split(' - ');
 	   		    html += '<article class="p">';
-	   		    html += '<div class="prod_wrap">';
+	   		    html += '<div class="pw">';
 				html += '<figure>';
 				html += 	'<img src="'+v.image+'" alt="" />';
 				html += '</figure>';
