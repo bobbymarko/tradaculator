@@ -54,14 +54,15 @@ function get_games(query,page){
 	    	sortable.sort(function(a, b) { return parseInt(b.value.replace(/[\$\.]/g,''),10) - parseInt(a.value.replace(/[\$\.]/g,''),10) });
 
 	    	if (v.tradeInValue){
+	    		var n = v.name.split(' - ');
 	   		    html += '<article class="hproduct">';
 	   		    html += '<div class="prod_wrap">';
 				html += '<figure>';
 				html += 	'<img src="'+v.image+'" alt="" />';
 				html += '</figure>';
 				html += '<header>';
-				html += 	'<h1>'+v.name.split(' - ')[0]+'</h1>';
-				html += 	'<p>'+v.name.split(' - ')[1]+'</p>';
+				html += 	'<h1>'+n[0]+'</h1>';
+				html += 	'<p>'+n[n.length - 1]+'</p>';
 				html += '</header>';
 				html += '<div class="price_block_wrapper"><div class="price_block button"><a class="vendor_name" target="_blank" href="'+sortable[0].url+'">Trade It In</a><a href="#" class="trade_in_value">'+sortable[0].value+'</a></div>';
 				html += '<ul class="drop_down">';
