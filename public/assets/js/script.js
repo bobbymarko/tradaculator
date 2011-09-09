@@ -18,7 +18,7 @@ $(function(){
 	});
 	
 	w.scroll(function(){
-		if ((w.scrollTop() + w.height()) > (p.height() + p.offset().top) && !loading){
+		if ((w.scrollTop() + w.height()) > (p.height() + p.offset().top - 100) && !loading){
 			page++;
 			get_games(query,page);
 			loading = true;
