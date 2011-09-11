@@ -63,7 +63,7 @@ function get_games(query,page){
 	loading = true;
 	$.ajax({
 	  //url: 'http://0.0.0.0:9292/values/'+query+'/'+page,
-	  url: 'http://tradaculator.com/values/'+query+'/'+page,
+	  url: 'http://beta.tradaculator.com/values/'+query+'/'+page,
 	  dataType: "jsonp",
 	  cache:true,
 	  timeout:10000,
