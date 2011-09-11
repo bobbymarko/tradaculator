@@ -4,10 +4,10 @@ $(function(){
 		page = 1,
 		w = $(window),
 		p = $('#pl'),
-		pse = typeof history.pushState == 'function';
+		push_state_enabled = typeof history.pushState == 'function';
 	
 	
-	if ( pse ){
+	if ( push_state_enabled ){
 		var popped = ('state' in window.history), initialURL = location.href;
 		$(window).bind("popstate", function(e){
 			var initialPop = !popped && location.href == initialURL;
@@ -34,7 +34,7 @@ $(function(){
 		page = 1;
 		$('#pl').html('');
 		get_games(query,page);
-		if (pse) history.pushState({}, query, '#!/'+query);
+		if (push_state_enabled) history.pushState({}, query, '#!/'+query);
 		e.preventDefault();
 	});
 	
@@ -58,8 +58,8 @@ function get_games(query,page){
 	$('#pl').after('<h3 id="loading">&#x203B;</h3>');
 	loading = true;
 	$.ajax({
-	  url: 'http://0.0.0.0:9292/values/'+query+'/'+page,
-	  //url: 'http://tradaculator.com/values/'+query+'/'+page,
+	  //url: 'http://0.0.0.0:9292/values/'+query+'/'+page,
+	  url: 'http://tradaculator.com/values/'+query+'/'+page,
 	  dataType: "jsonp",
 	  cache:true,
 	  timeout:10000,
