@@ -1,31 +1,25 @@
 var loading = false;
 $(function(){
-	var query = window.location.hash.split('#!/')[1] || '',
-		page = 1,
+	var page = 1,
 		w = $(window),
+		query = get_hash() || '',
 		p = $('#pl'),
 		push_state_enabled = typeof history.pushState == 'function';
 	
-	
-	if ( push_state_enabled ){
-		var popped = ('state' in window.history), initialURL = location.href;
-		$(window).bind("popstate", function(e){
-			var initialPop = !popped && location.href == initialURL;
+	if (push_state_enabled){
+		var popped = ('state' in window.history), initial_url = location.href;
+		w.bind("popstate", function(e){
+			var initial_pop = !popped && location.href == initial_url;
 			popped = true;
-			if ( initialPop ) return;
+			if ( initial_pop ) return;
 			
-			query = window.location.hash.split('#!/')[1] || '';
-			$('#s').val(query);
-			page = 1;
+			query = get_hash(w) || '';
 			$('#pl').html('');
-			get_games(query,page);
+			before_get_games(query,page = 1);
 		});
 	}
 	
-	if (!loading){
-		$('#s').val(query);
-		get_games(query,page);
-	} 
+	if (!loading) before_get_games(query,page);
 	
 	$('form').submit(function(e){
 		input = $('#s');
@@ -53,9 +47,19 @@ $(function(){
 	
 });
 
+function get_hash(){
+	var hash = window.location.hash.split('#!/')[1];
+	if (hash) return hash.replace(/%20/g,' ');
+}
+
+function before_get_games(query,page){
+	$('#s').val(query);
+	get_games(query,page);
+}
+
 function get_games(query,page){
 	$('h3').remove();
-	$('#pl').after('<h3 id="loading">&#x203B;</h3>');
+	$('#pl').after('<h3 id="l">&#x203B;</h3>');
 	loading = true;
 	$.ajax({
 	  //url: 'http://0.0.0.0:9292/values/'+query+'/'+page,
@@ -64,11 +68,11 @@ function get_games(query,page){
 	  cache:true,
 	  timeout:10000,
 	  error: function(data){
-	  	$('#loading').remove();
-	  	$('#pl').after("<h3>Something exploded.</h3>");
+	  	$('#l').remove();
+	  	$('#pl').after("<h3>Something exploded</h3>");
 	  },
 	  success: function(data){
-	  	$('#loading').remove();
+	  	$('#l').remove();
 	    var html = '';
 	    $.each(data, function(k,v){
 	    	var sortable = [];
@@ -82,11 +86,11 @@ function get_games(query,page){
 
 	    	if (v.tradeInValue){
 	    		var n = v.name.split(' - ');
-	   		    html += '<article class="p">';
+	   		    html += '<div class="p">';
 	   		    html += '<div class="pw">';
-				html += '<figure>';
+				html += '<div class="f">';
 				html += 	'<img src="'+v.image+'" alt="" />';
-				html += '</figure>';
+				html += '</div>';
 				html += '<header>';
 				html += 	'<h1>'+n[0]+'</h1>';
 				html += 	'<p>'+n[n.length - 1]+'</p>';
@@ -98,14 +102,14 @@ function get_games(query,page){
 				});
 				html += '</ul>';
 				html += '</div></div>';
-				html += '</article>';
+				html += '</div>';
 			}
 	    });
 	    if (html !== ''){
 		    $('#pl').append(html);
 		    loading = false;
 	    }else{
-	    	$('#pl').after("<h3>That's all there is.</h3>");
+	    	$('#pl').after("<h3>That's all</h3>");
 	    }
 
 	  }
