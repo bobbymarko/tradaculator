@@ -1,24 +1,45 @@
-var loading = true;
+var loading = false;
 $(function(){
-	var query = '',
+	var query = window.location.hash.split('#!/')[1] || '',
 		page = 1,
 		w = $(window),
-		p = $('#pl');
+		p = $('#pl'),
+		pse = typeof history.pushState == 'function';
 	
-	get_games(query,1);
+	
+	if ( pse ){
+		var popped = ('state' in window.history), initialURL = location.href;
+		$(window).bind("popstate", function(e){
+			var initialPop = !popped && location.href == initialURL;
+			popped = true;
+			if ( initialPop ) return;
+			
+			query = window.location.hash.split('#!/')[1] || '';
+			$('#s').val(query);
+			page = 1;
+			$('#pl').html('');
+			get_games(query,page);
+		});
+	}
+	
+	if (!loading){
+		$('#s').val(query);
+		get_games(query,page);
+	} 
 	
 	$('form').submit(function(e){
-		input = $('input',this);
+		input = $('#s');
 		query = input.val();
 		input.blur();
 		page = 1;
 		$('#pl').html('');
 		get_games(query,page);
+		if (pse) history.pushState({}, query, '#!/'+query);
 		e.preventDefault();
 	});
 	
 	w.scroll(function(){
-		if ((w.scrollTop() + w.height()) > (p.height() + p.offset().top - 100) && !loading){
+		if ((w.scrollTop() + w.height()) > (p.height() + p.offset().top - 200) && !loading){
 			page++;
 			get_games(query,page);
 			loading = true;
@@ -35,11 +56,17 @@ $(function(){
 function get_games(query,page){
 	$('h3').remove();
 	$('#pl').after('<h3 id="loading">&#x203B;</h3>');
+	loading = true;
 	$.ajax({
-	  //url: 'http://0.0.0.0:9292/values/'+query+'/'+page,
-	  url: 'http://tradaculator.com/values/'+query+'/'+page,
+	  url: 'http://0.0.0.0:9292/values/'+query+'/'+page,
+	  //url: 'http://tradaculator.com/values/'+query+'/'+page,
 	  dataType: "jsonp",
 	  cache:true,
+	  timeout:10000,
+	  error: function(data){
+	  	$('#loading').remove();
+	  	$('#pl').after("<h3>Something exploded.</h3>");
+	  },
 	  success: function(data){
 	  	$('#loading').remove();
 	    var html = '';
@@ -79,7 +106,6 @@ function get_games(query,page){
 		    loading = false;
 	    }else{
 	    	$('#pl').after("<h3>That's all there is.</h3>");
-	    	loading = true;
 	    }
 
 	  }

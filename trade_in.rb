@@ -46,7 +46,7 @@ class TradeIn < Sinatra::Base
     	products[index]['tradeInValue'] = {
     	  :best_buy => {
     	    :value => currency(best_buy_trade_in_value),
-    	    :url => "http://www.bestbuytradein.com/bb/QuoteCalculatorVideoGames.cfm?kw=#{product.upc}&pf=all"
+    	    :url => "http://www.bestbuytradein.com/bb/QuoteCalculatorVideoGames.cfm?kw=#{product.upc}&pf=all&af=9a029aae-d650-44f8-a1c7-c33aa7fd0e27"
     	   },
     	  :amazon => {
     	    :value => '',
@@ -81,8 +81,9 @@ class TradeIn < Sinatra::Base
     #puts amazon.to_hash.to_json
     upcs.each_with_index do |upc, index|
     	glyde = JSON.parse(Nokogiri::HTML(open("http://api.glyde.com/price/upc/#{upc}?api_key=ENV['GLYDE_KEY']&v=1&responseType=application/json")))
-    	if glyde['is_sellable'] 
-    		products[index]['tradeInValue']['glyde'] = {:value => "#{currency(glyde['suggested_price']['cents']/100.0)}", :url => "http://glyde.com/sell?hash=%21by%2Fproduct%2Flineup%2Fgames%2F#{glyde['glu_id']}#!by/product/lineup/games/#{glyde['glu_id']}"}
+    	if glyde['is_sellable']
+    		glyde_value = "#{currency(  (glyde['suggested_price']['cents'] * 0.88  - 125)  / 100.0 )}"
+    		products[index]['tradeInValue']['glyde'] = {:value => glyde_value, :url => "http://glyde.com/sell?hash=%21by%2Fproduct%2Flineup%2Fgames%2F#{glyde['glu_id']}#!show/product/#{glyde['glu_id']}"}
     	end
     	
 	    amazon.each('Item') do |item|
