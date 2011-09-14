@@ -80,7 +80,7 @@ class TradeIn < Sinatra::Base
     #puts amazon['Item'].length
     #puts amazon.to_hash.to_json
     upcs.each_with_index do |upc, index|
-    	glyde = JSON.parse(Nokogiri::HTML(open("http://api.glyde.com/price/upc/#{upc}?api_key=ENV['GLYDE_KEY']&v=1&responseType=application/json")))
+    	glyde = JSON.parse(Nokogiri::HTML(open("http://api.glyde.com/price/upc/#{upc}?api_key=#{ENV['GLYDE_KEY']}&v=1&responseType=application/json")))
     	if glyde['is_sellable']
     		glyde_value = "#{currency(  (glyde['suggested_price']['cents'] * 0.88  - 125)  / 100.0 )}"
     		products[index]['tradeInValue']['glyde'] = {:value => glyde_value, :url => "http://glyde.com/sell?hash=%21by%2Fproduct%2Flineup%2Fgames%2F#{glyde['glu_id']}#!show/product/#{glyde['glu_id']}"}
