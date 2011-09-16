@@ -65,7 +65,7 @@ function get_games(query,page){
 	loading = true;
 	
 	$.ajax({
-		url:'http://api.remix.bestbuy.com/v1/products(tradeInValue%3E0&active=*&type=game)?format=json&page='+page+'&show=tradeInValue,image,name,upc&apiKey=amfnpjxnz6c9wzfu4h663z6w',
+		url:'http://jsonpify.heroku.com/?resource=http://api.remix.bestbuy.com/v1/products(search='+query+'&tradeInValue%3E0&active=*&type=game)?format=xml&page='+page+'&show=tradeInValue,image,name,upc&apiKey=amfnpjxnz6c9wzfu4h663z6w',
 		dataType:'jsonp',
 		cache:true,
 		success:function(data) {
@@ -82,15 +82,25 @@ function get_games(query,page){
 				    		//}
 				    	//});
 				    	//sortable.sort(function(a, b) { return parseInt(b.value.replace(/[\$\.]/g,''),10) - parseInt(a.value.replace(/[\$\.]/g,''),10) });
+				    	
+				    	$.ajax({
+				    		url:'http://jsonpify.heroku.com/?resource=http://xmltojsonp.appspot.com/onca/json?Operation=ItemLookup&SearchIndex=VideoGames&IdType=UPC&ItemId='+v.upc+'&ResponseGroup=ItemAttributes',
+				    		dataType:'jsonp',
+				    		cache:true,
+				    		success:function(data){
+				    			sortable[1] = {url:'',value:data.ItemLookupResponse.Items.Item.ItemAttributes.TradeInValue.FormattedPrice, vendor:'Amazon'}
+console.log(data.ItemLookupResponse.Items.Item.ItemAttributes.TradeInValue.FormattedPrice);
+				    		}
+				    	});
 					
 						$.ajax({
 							url:'http://jsonpify.heroku.com/?resource=http://api.glyde.com/price/upc/'+v.upc+'?api_key=tradaculat_u8mBCp87&v=1&responseType=application/json',
 							dataType:'jsonp',
 							cache:true,
 							success:function(data){
-								console.log(data);
+								//console.log(data);
 								if (data.is_sellable){
-									sortable[1] = {url:'',value:'$'+((data.suggested_price.cents/100)-1.25 * .88), vendor:'Glyde'}
+									sortable[2] = {url:'',value:'$'+((data.suggested_price.cents/100)-1.25 * .88), vendor:'Glyde'}
 									var n = v.name.split(' - ');
 						   		    html += '<div class="p">';
 						   		    html += '<div class="pw">';
