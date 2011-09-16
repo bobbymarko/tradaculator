@@ -65,7 +65,7 @@ function get_games(query,page){
 	loading = true;
 	
 	$.ajax({
-		url:'http://jsonpify.heroku.com/?resource=http://api.remix.bestbuy.com/v1/products(search='+query+'&tradeInValue%3E0&active=*&type=game)?format=xml&page='+page+'&show=tradeInValue,image,name,upc&apiKey=amfnpjxnz6c9wzfu4h663z6w',
+		url:'http://jsonpify.heroku.com/?callback=?&resource=http://api.remix.bestbuy.com/v1/products(search='+query+'active=*&type=game&tradeInValue!=0)?page='+page+'&apiKey=amfnpjxnz6c9wzfu4h663z6w',
 		dataType:'jsonp',
 		cache:true,
 		success:function(data) {
