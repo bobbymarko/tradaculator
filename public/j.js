@@ -2,7 +2,7 @@ var loading = false;
 $(function(){
 	var page = 1,
 		w = $(window),
-		query = get_hash() || '',
+		query = get_hash() || 'hello',
 		p = $('#pl'),
 		push_state_enabled = typeof history.pushState == 'function';
 	
@@ -44,6 +44,8 @@ $(function(){
 		$(this).closest('.p').toggleClass('active').siblings().removeClass('active');
 		e.preventDefault();
 	});
+
+	
 	
 });
 
@@ -72,33 +74,57 @@ function get_games(query,page){
 			if (data.products){
 				$.each(data.products, function(k,v){
 					if (v.tradeInValue){
-			    		var n = v.name.split(' - ');
-			   		    html += '<div class="p">';
-			   		    html += '<div class="pw">';
-						html += '<div class="f">';
-						html += 	'<img src="'+v.image+'" alt="" />';
-						html += '</div>';
-						html += '<header>';
-						html += 	'<h1>'+n[0]+'</h1>';
-						html += 	'<p>'+n[n.length - 1]+'</p>';
-						html += '</header>';
-						html += '<div class="pbw"><div class="b"><a class="vn" target="_blank" href="'+sortable[0].url+'">Trade It In</a><a href="#" class="tv">'+sortable[0].value+'</a></div>';
-						html += '<ul class="dd">';
-						$.each(sortable, function(k,v){
-							html += '<li><a target="_blank" href="'+v.url+'">'+v.vendor.replace('_',' ') +' <span>'+v.value+'</span></a></li>';
+						var sortable = [];
+				    	//$.each(v.tradeInValue, function(k,v){
+				    		//if (v.value) {
+				    			sortable[0] = {url:v.url,value:'$'+v.tradeInValue+'.00', vendor:'Best Buy'}
+				    			//sortable.push(v);
+				    		//}
+				    	//});
+				    	//sortable.sort(function(a, b) { return parseInt(b.value.replace(/[\$\.]/g,''),10) - parseInt(a.value.replace(/[\$\.]/g,''),10) });
+					
+						$.ajax({
+							url:'http://jsonpify.heroku.com/?resource=http://api.glyde.com/price/upc/'+v.upc+'?api_key=tradaculat_u8mBCp87&v=1&responseType=application/json',
+							dataType:'jsonp',
+							cache:true,
+							success:function(data){
+								console.log(data);
+								if (data.is_sellable){
+									sortable[1] = {url:'',value:'$'+((data.suggested_price.cents/100)-1.25 * .88), vendor:'Glyde'}
+									var n = v.name.split(' - ');
+						   		    html += '<div class="p">';
+						   		    html += '<div class="pw">';
+									html += '<div class="f">';
+									html += 	'<img src="'+v.image+'" alt="" />';
+									html += '</div>';
+									html += '<header>';
+									html += 	'<h1>'+n[0]+'</h1>';
+									html += 	'<p>'+n[n.length - 1]+'</p>';
+									html += '</header>';
+									html += '<div class="pbw"><div class="b"><a class="vn" target="_blank" href="'+sortable[0].url+'">Trade It In</a><a href="#" class="tv">'+sortable[0].value+'</a></div>';
+									html += '<ul class="dd">';
+									$.each(sortable, function(k,v){
+										html += '<li><a target="_blank" href="'+v.url+'">'+v.vendor +' <span>'+v.value+'</span></a></li>';
+									});
+									html += '</ul>';
+									html += '</div></div>';
+									html += '</div>';
+						
+									if (html !== ''){
+									    $('#pl').append(html);
+									    loading = false;
+								    }else{
+								    	$('#pl').after("<h3>That's all</h3>");
+								    }
+								}
+							}
 						});
-						html += '</ul>';
-						html += '</div></div>';
-						html += '</div>';
+						
+
 					}
 				});
 			}
-			if (html !== ''){
-			    $('#pl').append(html);
-			    loading = false;
-		    }else{
-		    	$('#pl').after("<h3>That's all</h3>");
-		    }
+
 		}
 	});
 	
