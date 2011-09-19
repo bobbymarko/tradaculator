@@ -45,151 +45,167 @@ $(function(){
 		e.preventDefault();
 	});
 
-	
-	
-});
-
-function get_hash(){
-	var hash = window.location.hash.split('#!/')[1];
-	if (hash) return hash.replace(/%20/g,' ');
-}
-
-function before_get_games(query,page){
-	$('#s').val(query);
-	get_games(query,page);
-}
-
-function get_games(query,page){
-	$('h3').remove();
-	$('#pl').after('<h3 id="l">&#x203B;</h3>');
-	loading = true;
-	
-	$.ajax({
-		url:'http://api.remix.bestbuy.com/v1/products(search='+query+'&tradeInValue%3E0&active=*&type=game)?page='+page+'&format=json&apiKey=amfnpjxnz6c9wzfu4h663z6w',
-		dataType:'jsonp',
-		cache:true,
-		success:function(data) {
-			$('#l').remove()
-			html = '';
-			if (data.products){
-				$.each(data.products, function(k,v){
-					if (v.tradeInValue){
-						var sortable = [];
-				    	//$.each(v.tradeInValue, function(k,v){
-				    		//if (v.value) {
-				    			sortable[0] = {url:v.url,value:'$'+v.tradeInValue+'.00', vendor:'Best Buy'}
-				    			//sortable.push(v);
-				    		//}
-				    	//});
-				    	//sortable.sort(function(a, b) { return parseInt(b.value.replace(/[\$\.]/g,''),10) - parseInt(a.value.replace(/[\$\.]/g,''),10) });
-				    	
-				    	$.ajax({
-				    		url:'http://jsonpify.heroku.com/?resource=http://xmltojsonp.appspot.com/onca/json?Operation=ItemLookup&SearchIndex=VideoGames&IdType=UPC&ItemId='+v.upc+'&ResponseGroup=ItemAttributes',
-				    		dataType:'jsonp',
-				    		cache:true,
-				    		success:function(data){
-				    			sortable[1] = {url:'',value:data.ItemLookupResponse.Items.Item.ItemAttributes.TradeInValue.FormattedPrice, vendor:'Amazon'}
-console.log(data.ItemLookupResponse.Items.Item.ItemAttributes.TradeInValue.FormattedPrice);
-				    		}
-				    	});
-					
-						$.ajax({
-							url:'http://jsonpify.heroku.com/?resource=http://api.glyde.com/price/upc/'+v.upc+'?api_key=tradaculat_u8mBCp87&v=1&responseType=application/json',
-							dataType:'jsonp',
-							cache:true,
-							success:function(data){
-								//console.log(data);
-								if (data.is_sellable){
-									sortable[2] = {url:'',value:'$'+((data.suggested_price.cents/100)-1.25 * .88), vendor:'Glyde'}
-									var n = v.name.split(' - ');
-						   		    html += '<div class="p">';
-						   		    html += '<div class="pw">';
-									html += '<div class="f">';
-									html += 	'<img src="'+v.image+'" alt="" />';
-									html += '</div>';
-									html += '<header>';
-									html += 	'<h1>'+n[0]+'</h1>';
-									html += 	'<p>'+n[n.length - 1]+'</p>';
-									html += '</header>';
-									html += '<div class="pbw"><div class="b"><a class="vn" target="_blank" href="'+sortable[0].url+'">Trade It In</a><a href="#" class="tv">'+sortable[0].value+'</a></div>';
-									html += '<ul class="dd">';
-									$.each(sortable, function(k,v){
-										html += '<li><a target="_blank" href="'+v.url+'">'+v.vendor +' <span>'+v.value+'</span></a></li>';
-									});
-									html += '</ul>';
-									html += '</div></div>';
-									html += '</div>';
-						
-									if (html !== ''){
-									    $('#pl').append(html);
-									    loading = false;
-								    }else{
-								    	$('#pl').after("<h3>That's all</h3>");
-								    }
-								}
-							}
-						});
-						
-
-					}
-				});
-			}
-
-		}
+	$('body').ajaxComplete(function() {
+	  console.log('Triggered ajaxComplete handler.');
 	});
 	
+	function get_hash(){
+		var hash = window.location.hash.split('#!/')[1];
+		if (hash) return hash.replace(/%20/g,' ');
+	}
 	
-	/*$.ajax({
-	  url: 'http://0.0.0.0:9292/values/'+query+'/'+page,
-	  url: 'http://beta.tradaculator.com/values/'+query+'/'+page,
-	  dataType: "jsonp",
-	  cache:true,
-	  timeout:10000,
-	  error: function(data){
-	  	$('#l').remove();
-	  	$('#pl').after("<h3>Something exploded</h3>");
-	  },
-	  success: function(data){
-	  	$('#l').remove();
-	    var html = '';
-	    $.each(data, function(k,v){
-	    	var sortable = [];
-	    	$.each(v.tradeInValue, function(k,v){
-	    		if (v.value) {
- 		    		v.vendor = k;
-	    			sortable.push(v);
-	    		}
-	    	});
-	    	sortable.sort(function(a, b) { return parseInt(b.value.replace(/[\$\.]/g,''),10) - parseInt(a.value.replace(/[\$\.]/g,''),10) });
-
-	    	if (v.tradeInValue){
-	    		var n = v.name.split(' - ');
-	   		    html += '<div class="p">';
-	   		    html += '<div class="pw">';
-				html += '<div class="f">';
-				html += 	'<img src="'+v.image+'" alt="" />';
-				html += '</div>';
-				html += '<header>';
-				html += 	'<h1>'+n[0]+'</h1>';
-				html += 	'<p>'+n[n.length - 1]+'</p>';
-				html += '</header>';
-				html += '<div class="pbw"><div class="b"><a class="vn" target="_blank" href="'+sortable[0].url+'">Trade It In</a><a href="#" class="tv">'+sortable[0].value+'</a></div>';
-				html += '<ul class="dd">';
-				$.each(sortable, function(k,v){
-					html += '<li><a target="_blank" href="'+v.url+'">'+v.vendor.replace('_',' ') +' <span>'+v.value+'</span></a></li>';
-				});
-				html += '</ul>';
-				html += '</div></div>';
-				html += '</div>';
+	function before_get_games(query,page){
+		$('#s').val(query);
+		get_games(query,page);
+	}
+	
+	function get_games(query,page){
+		$('h3').remove();
+		$('#pl').after('<h3 id="l">&#x203B;</h3>');
+		loading = true;
+	
+		get_best_buy(query, page);
+		
+		
+			
+	
+			
+		
+		/*$.ajax({
+		  url: 'http://0.0.0.0:9292/values/'+query+'/'+page,
+		  url: 'http://beta.tradaculator.com/values/'+query+'/'+page,
+		  dataType: "jsonp",
+		  cache:true,
+		  timeout:10000,
+		  error: function(data){
+		  	$('#l').remove();
+		  	$('#pl').after("<h3>Something exploded</h3>");
+		  },
+		  success: function(data){
+		  	$('#l').remove();
+		    var html = '';
+		    $.each(data, function(k,v){
+		    	var sortable = [];
+		    	$.each(v.tradeInValue, function(k,v){
+		    		if (v.value) {
+	 		    		v.vendor = k;
+		    			sortable.push(v);
+		    		}
+		    	});
+		    	sortable.sort(function(a, b) { return parseInt(b.value.replace(/[\$\.]/g,''),10) - parseInt(a.value.replace(/[\$\.]/g,''),10) });
+	
+		    	if (v.tradeInValue){
+		    		var n = v.name.split(' - ');
+		   		    html += '<div class="p">';
+		   		    html += '<div class="pw">';
+					html += '<div class="f">';
+					html += 	'<img src="'+v.image+'" alt="" />';
+					html += '</div>';
+					html += '<header>';
+					html += 	'<h1>'+n[0]+'</h1>';
+					html += 	'<p>'+n[n.length - 1]+'</p>';
+					html += '</header>';
+					html += '<div class="pbw"><div class="b"><a class="vn" target="_blank" href="'+sortable[0].url+'">Trade It In</a><a href="#" class="tv">'+sortable[0].value+'</a></div>';
+					html += '<ul class="dd">';
+					$.each(sortable, function(k,v){
+						html += '<li><a target="_blank" href="'+v.url+'">'+v.vendor.replace('_',' ') +' <span>'+v.value+'</span></a></li>';
+					});
+					html += '</ul>';
+					html += '</div></div>';
+					html += '</div>';
+				}
+		    });
+		    if (html !== ''){
+			    $('#pl').append(html);
+			    loading = false;
+		    }else{
+		    	$('#pl').after("<h3>That's all</h3>");
+		    }
+	
+		  }
+		});*/
+	}
+	
+	function get_best_buy(query, page){
+		get_json('http://api.remix.bestbuy.com/v1/products(search='+query+'&tradeInValue%3E0&active=*&type=game)?format=json&apiKey=amfnpjxnz6c9wzfu4h663z6w', 
+			function(data){
+				console.log(data);
+				$('#l').remove()
+				html = '';
+				if (data.products){
+					$.each(data.products, function(k,v){
+						if (v.tradeInValue){
+							return {value:v.tradeInValue,vendor:"Best Buy", name:v.name}
+						}
+					});
+				}
+			}, false);
+	
+	}
+	
+	function get_glyde(){
+		$.ajax({
+			url:'http://jsonpify.heroku.com/?resource=http://api.glyde.com/price/upc/'+v.upc+'?api_key=tradaculat_u8mBCp87&v=1&responseType=application/json',
+			dataType:'jsonp',
+			cache:true,
+			success:function(data){
+				//console.log(data);
+				if (data.is_sellable){
+					sortable[2] = {url:'',value:'$'+((data.suggested_price.cents/100)-1.25 * .88), vendor:'Glyde'}
+					var n = v.name.split(' - ');
+		   		    html += '<div class="p">';
+		   		    html += '<div class="pw">';
+					html += '<div class="f">';
+					html += 	'<img src="'+v.image+'" alt="" />';
+					html += '</div>';
+					html += '<header>';
+					html += 	'<h1>'+n[0]+'</h1>';
+					html += 	'<p>'+n[n.length - 1]+'</p>';
+					html += '</header>';
+					html += '<div class="pbw"><div class="b"><a class="vn" target="_blank" href="'+sortable[0].url+'">Trade It In</a><a href="#" class="tv">'+sortable[0].value+'</a></div>';
+					html += '<ul class="dd">';
+					$.each(sortable, function(k,v){
+						html += '<li><a target="_blank" href="'+v.url+'">'+v.vendor +' <span>'+v.value+'</span></a></li>';
+					});
+					html += '</ul>';
+					html += '</div></div>';
+					html += '</div>';
+		
+					if (html !== ''){
+					    $('#pl').append(html);
+					    loading = false;
+				    }else{
+				    	$('#pl').after("<h3>That's all</h3>");
+				    }
+				}
 			}
-	    });
-	    if (html !== ''){
-		    $('#pl').append(html);
-		    loading = false;
-	    }else{
-	    	$('#pl').after("<h3>That's all</h3>");
-	    }
+		});
+	}
+	
+	function get_amazon(){
+		$.ajax({
+			url:'http://jsonpify.heroku.com/?resource=http://xmltojsonp.appspot.com/onca/json?Operation=ItemLookup&SearchIndex=VideoGames&IdType=UPC&ItemId='+v.upc+'&ResponseGroup=ItemAttributes',
+			dataType:'jsonp',
+			cache:true,
+			success:function(data){
+				sortable[1] = {url:'',value:data.ItemLookupResponse.Items.Item.ItemAttributes.TradeInValue.FormattedPrice, vendor:'Amazon'}
+			console.log(data.ItemLookupResponse.Items.Item.ItemAttributes.TradeInValue.FormattedPrice);
+			}
+		});
+	}
+	
+	function get_json(url, cbfunc, proxy){
+		if (proxy) url = 'http://jsonpify.heroku.com/?resource=' + url;
+		$.ajax({
+			url:url,
+			dataType:'jsonp',
+			cache:true,
+			success:function(data) {
+				cbfunc(data);
+			}
+		});
+		
+		
+	}
 
-	  }
-	});*/
-}
+});
