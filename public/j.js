@@ -32,21 +32,17 @@ $(function(){
 		e.preventDefault();
 	});
 	
-	w.scroll(function(){
+	/*w.scroll(function(){
 		if ((w.scrollTop() + w.height()) > (p.height() + p.offset().top - 200) && !loading){
 			page++;
 			get_games(query,page);
 			loading = true;
 		}
-	});
+	});*/
 	
 	$('.tv').live('click',function(e){
 		$(this).closest('.p').toggleClass('active').siblings().removeClass('active');
 		e.preventDefault();
-	});
-
-	$('body').ajaxComplete(function() {
-	  console.log('Triggered ajaxComplete handler.');
 	});
 	
 	function get_hash(){
@@ -127,15 +123,27 @@ $(function(){
 	}
 	
 	function get_best_buy(query, page){
-		get_json('http://api.remix.bestbuy.com/v1/products(search='+query+'&tradeInValue%3E0&active=*&type=game)?format=json&apiKey=amfnpjxnz6c9wzfu4h663z6w', 
+		get_json('http://api.remix.bestbuy.com/v1/products(search='+query+'&tradeInValue%3E0&active=*&type=game)?page='+page+'&format=json&apiKey=amfnpjxnz6c9wzfu4h663z6w', 
 			function(data){
-				console.log(data);
+				//console.log(data);
 				$('#l').remove()
-				html = '';
 				if (data.products){
 					$.each(data.products, function(k,v){
 						if (v.tradeInValue){
-							return {value:v.tradeInValue,vendor:"Best Buy", name:v.name}
+							var sortable = [];
+							sortable.push({value:'$'+v.tradeInValue+'.00',vendor:"Best Buy",url:"http://www.bestbuytradein.com/bb/QuoteCalculatorVideoGames.cfm?kw="+v.upc+"&pf=all&af=9a029aae-d650-44f8-a1c7-c33aa7fd0e27"});
+							//product = {name:v.name, values: {value:'$'+v.tradeInValue+'.00',vendor:"Best Buy"}};
+							get_glyde(v.upc);
+							get_amazon(v.upc);
+							var count = 0;
+							$('body').bind('custom_loaded_'+v.upc, function(data){
+								if (sortable.value) sortable.push(data);
+								count++;
+								if (count >= 2){
+									sortable.sort(function(a, b) { return parseInt(b.value.replace(/[\$\.]/g,''),10) - parseInt(a.value.replace(/[\$\.]/g,''),10) });
+									render(v.name,v.image,sortable);
+								}
+							});
 						}
 					});
 				}
@@ -143,53 +151,33 @@ $(function(){
 	
 	}
 	
-	function get_glyde(){
+	function get_glyde(upc){
 		$.ajax({
-			url:'http://jsonpify.heroku.com/?resource=http://api.glyde.com/price/upc/'+v.upc+'?api_key=tradaculat_u8mBCp87&v=1&responseType=application/json',
+			url:'http://jsonpify.heroku.com/?resource=http://api.glyde.com/price/upc/'+upc+'?api_key=tradaculat_u8mBCp87&v=1&responseType=application/json',
 			dataType:'jsonp',
 			cache:true,
 			success:function(data){
-				//console.log(data);
-				if (data.is_sellable){
-					sortable[2] = {url:'',value:'$'+((data.suggested_price.cents/100)-1.25 * .88), vendor:'Glyde'}
-					var n = v.name.split(' - ');
-		   		    html += '<div class="p">';
-		   		    html += '<div class="pw">';
-					html += '<div class="f">';
-					html += 	'<img src="'+v.image+'" alt="" />';
-					html += '</div>';
-					html += '<header>';
-					html += 	'<h1>'+n[0]+'</h1>';
-					html += 	'<p>'+n[n.length - 1]+'</p>';
-					html += '</header>';
-					html += '<div class="pbw"><div class="b"><a class="vn" target="_blank" href="'+sortable[0].url+'">Trade It In</a><a href="#" class="tv">'+sortable[0].value+'</a></div>';
-					html += '<ul class="dd">';
-					$.each(sortable, function(k,v){
-						html += '<li><a target="_blank" href="'+v.url+'">'+v.vendor +' <span>'+v.value+'</span></a></li>';
-					});
-					html += '</ul>';
-					html += '</div></div>';
-					html += '</div>';
-		
-					if (html !== ''){
-					    $('#pl').append(html);
-					    loading = false;
-				    }else{
-				    	$('#pl').after("<h3>That's all</h3>");
-				    }
+				if (data.suggested_price){
+					$('body').trigger({type:'custom_loaded_'+upc, value:'$'+((Math.round(data.suggested_price.cents * .88)/100) - 1.25), vendor:"Glyde", url:"http://glyde.com/sell?hash=%21by%2Fproduct%2Flineup%2Fgames%2F"+data.glu_id+"#!show/product/"+data.glu_id+"" });
+				} else {
+					$('body').trigger({type:'custom_loaded_'+upc});
 				}
 			}
 		});
 	}
 	
-	function get_amazon(){
+	function get_amazon(upc){
 		$.ajax({
-			url:'http://jsonpify.heroku.com/?resource=http://xmltojsonp.appspot.com/onca/json?Operation=ItemLookup&SearchIndex=VideoGames&IdType=UPC&ItemId='+v.upc+'&ResponseGroup=ItemAttributes',
+			url:'http://jsonpify.heroku.com/?resource=http://xmltojsonp.appspot.com/onca/json?Operation=ItemLookup&SearchIndex=VideoGames&IdType=UPC&ItemId='+upc+'&ResponseGroup=ItemAttributes',
 			dataType:'jsonp',
 			cache:true,
 			success:function(data){
-				sortable[1] = {url:'',value:data.ItemLookupResponse.Items.Item.ItemAttributes.TradeInValue.FormattedPrice, vendor:'Amazon'}
-			console.log(data.ItemLookupResponse.Items.Item.ItemAttributes.TradeInValue.FormattedPrice);
+				data = data.ItemLookupResponse.Items.Item;
+				if (data) {
+					$('body').trigger({type:'custom_loaded_'+upc, value:data.ItemAttributes.TradeInValue.FormattedPrice, vendor:"Amazon", url:"https://www.amazon.com/gp/tradein/add-to-cart.html/ref=trade_new_dp_trade_btn?ie=UTF8&asin="+data.ASIN });
+				}else{
+					$('body').trigger({type:'custom_loaded_'+upc});
+				}
 			}
 		});
 	}
@@ -204,8 +192,36 @@ $(function(){
 				cbfunc(data);
 			}
 		});
-		
-		
+	}
+	
+	function render(name, image, sortable){
+		//console.log(data);
+			var n = name.split(' - ');
+			var html = '';
+			html += '<div class="p">';
+			html += '<div class="pw">';
+			html += '<div class="f">';
+			html += 	'<img src="'+image+'" alt="" />';
+			html += '</div>';
+			html += '<header>';
+			html += 	'<h1>'+n[0]+'</h1>';
+			html += 	'<p>'+n[n.length - 1]+'</p>';
+			html += '</header>';
+			html += '<div class="pbw"><div class="b"><a class="vn" target="_blank" href="'+/*sortable[0].url+*/'">Trade It In</a><a href="#" class="tv">'+sortable[0].value+'</a></div>';
+			html += '<ul class="dd">';
+			$.each(sortable, function(k,v){
+				html += '<li><a target="_blank" href="'+/*v.url+*/'">'+v.vendor +' <span>'+v.value+'</span></a></li>';
+			});
+			html += '</ul>';
+			html += '</div></div>';
+			html += '</div>';
+	
+			if (html !== ''){
+			    $('#pl').append(html);
+			    loading = false;
+		    }else{
+		    	$('#pl').after("<h3>That's all</h3>");
+		    }
 	}
 
 });
