@@ -16,7 +16,7 @@
 }
 
 html,body{margin:0; padding:0;}
-body{background: #eee url(bg.jpg); font:100% sans-serif; color:#444; -webkit-text-size-adjust:100%;}
+body{background: #eee; font:100% sans-serif; color:#444; -webkit-text-size-adjust:100%;}
 a{color:#4ab;}
 h1{font-size:.875em; color:#078; font-weight: bold; margin:.5em 0 .3em; height:2.3em; max-height:2.3em; overflow: hidden;}
 h3{ text-align: center; color:#777; text-shadow:0 1px 0 #fff; font-size:3em; font:100 italic 3em museo-slab-1,museo-slab-2,Georgia,serif; margin:0 auto 40px;clear:both; }
@@ -36,18 +36,17 @@ p{margin:0;}
 #mh form{float:right;margin-top: 20px; position: relative;}
 	::-webkit-input-placeholder { color: #888;font-style: italic;}
 	:-moz-placeholder { color: #888;font-style: italic;}
-	#s{width:200px; font-size:.875em; background: #ececec; -webkit-appearance: none; border-radius:.8em; border:none; padding-left:10px; color:#444;}
+	#s{width:200px; font-size:.875em; background: #ececec; border-radius:.8em; border:none; padding-left:10px; color:#444;}
 		#s:focus{outline:none;background: #fff;}
-	#m{position: absolute; right: 5px; top:50%; margin-top:-7px}
 #pl{position: relative; margin:20px auto; padding:0; width:890px;}
 
 .p{position:relative; text-align: center; width:220px; display: inline-block; vertical-align: top; margin:0; padding:20px 0;  border-bottom:1px solid #f7f5f5; border-top:1px solid #d4d3d3;}
 	
 .pw{border-right:1px solid #d4d3d3; border-left:1px solid #f7f5f5; padding:0 10px;}
 
-.f{height:140px; display: table-cell; vertical-align: bottom; width:200px; line-height: 0;}
+.f{height:160px; display: table-cell; vertical-align: bottom; width:200px; line-height: 0;}
 
-.p header p{font-size:.75em; font-weight: bold; margin:0 0 .5em; height:1em;}
+.p header p{font-size:.75em; font-weight: bold; margin:0 0 .5em; height:1.25em; overflow: hidden;}
 
 .pbw{padding:.4em; background: rgba(0,0,0,.1); display: inline-block; border-radius:1.5em; position: relative; cursor: pointer;}
 

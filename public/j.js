@@ -2,7 +2,7 @@ var loading = false;
 $(function(){
 	var page = 1,
 		w = $(window),
-		query = get_hash() || 'hello',
+		query = '',
 		p = $('#pl'),
 		push_state_enabled = typeof history.pushState == 'function';
 	
@@ -32,13 +32,13 @@ $(function(){
 		e.preventDefault();
 	});
 	
-	/*w.scroll(function(){
+	w.scroll(function(){
 		if ((w.scrollTop() + w.height()) > (p.height() + p.offset().top - 200) && !loading){
 			page++;
 			get_games(query,page);
 			loading = true;
 		}
-	});*/
+	});
 	
 	$('.tv').live('click',function(e){
 		$(this).closest('.p').toggleClass('active').siblings().removeClass('active');
@@ -60,8 +60,8 @@ $(function(){
 		$('#pl').after('<h3 id="l">&#x203B;</h3>');
 		loading = true;
 	
-		get_best_buy(query, page);
-		
+		//get_best_buy(query, page);
+		search_amazon(query,page);
 		
 			
 	
@@ -121,69 +121,103 @@ $(function(){
 		  }
 		});*/
 	}
-	
-	function get_best_buy(query, page){
-		get_json('http://api.remix.bestbuy.com/v1/products(search='+query+'&tradeInValue%3E0&active=*&type=game)?page='+page+'&format=json&apiKey=amfnpjxnz6c9wzfu4h663z6w', 
+	/*
+	function get_best_buy(upc){
+		get_json('http://api.remix.bestbuy.com/v1/products(upc='+upc+')?format=json&apiKey=amfnpjxnz6c9wzfu4h663z6w', 
 			function(data){
-				//console.log(data);
-				$('#l').remove()
+				console.log(data);
+				
 				if (data.products){
 					$.each(data.products, function(k,v){
 						if (v.tradeInValue){
-							var sortable = [];
-							sortable.push({value:'$'+v.tradeInValue+'.00',vendor:"Best Buy",url:"http://www.bestbuytradein.com/bb/QuoteCalculatorVideoGames.cfm?kw="+v.upc+"&pf=all&af=9a029aae-d650-44f8-a1c7-c33aa7fd0e27"});
-							//product = {name:v.name, values: {value:'$'+v.tradeInValue+'.00',vendor:"Best Buy"}};
-							get_glyde(v.upc);
-							get_amazon(v.upc);
-							var count = 0;
-							$('body').bind('custom_loaded_'+v.upc, function(data){
-								if (sortable.value) sortable.push(data);
-								count++;
-								if (count >= 2){
-									sortable.sort(function(a, b) { return parseInt(b.value.replace(/[\$\.]/g,''),10) - parseInt(a.value.replace(/[\$\.]/g,''),10) });
-									render(v.name,v.image,sortable);
-								}
-							});
+
+							sortable.push({});
+							$('body').trigger({type:'custom_loaded_'+upc, value:'$'+v.tradeInValue+'.00',vendor:"Best Buy",url:"http://www.bestbuytradein.com/bb/QuoteCalculatorVideoGames.cfm?kw="+v.upc+"&pf=all&af=9a029aae-d650-44f8-a1c7-c33aa7fd0e27" });
+						}else{
+							$('body').trigger({type:'custom_loaded_'+upc});
 						}
 					});
 				}
 			}, false);
+	}*/
 	
-	}
+	/*function get_best_buy(upcs){
+		get_json('http://api.remix.bestbuy.com/v1/products(upc in('+upcs+'))?format=json&apiKey=amfnpjxnz6c9wzfu4h663z6w', 
+			function(data){
+				console.log(data);
+				
+				if (data.products){
+					$.each(data.products, function(k,v){
+						if (v.tradeInValue){
+
+							sortable.push({});
+							$('body').trigger({type:'custom_loaded_'+upc, value:'$'+v.tradeInValue+'.00',vendor:"Best Buy",url:"http://www.bestbuytradein.com/bb/QuoteCalculatorVideoGames.cfm?kw="+v.upc+"&pf=all&af=9a029aae-d650-44f8-a1c7-c33aa7fd0e27" });
+						}else{
+							$('body').trigger({type:'custom_loaded_'+upc});
+						}
+					});
+				}
+			}, false);
+	}*/
 	
 	function get_glyde(upc){
-		$.ajax({
-			url:'http://jsonpify.heroku.com/?resource=http://api.glyde.com/price/upc/'+upc+'?api_key=tradaculat_u8mBCp87&v=1&responseType=application/json',
-			dataType:'jsonp',
-			cache:true,
-			success:function(data){
-				if (data.suggested_price){
-					$('body').trigger({type:'custom_loaded_'+upc, value:'$'+((Math.round(data.suggested_price.cents * .88)/100) - 1.25), vendor:"Glyde", url:"http://glyde.com/sell?hash=%21by%2Fproduct%2Flineup%2Fgames%2F"+data.glu_id+"#!show/product/"+data.glu_id+"" });
+		get_json('http://api.glyde.com/price/upc/'+upc+'?api_key=tradaculat_u8mBCp87&v=1&responseType=application/json',function(data){
+				//console.log(data);
+				if (data.suggested_price.cents > 0){
+					var value = data.suggested_price.cents * .88 / 100 - 1.25;
+					$('body').trigger({type:'custom_loaded_'+upc, value:'$'+value.toFixed(2), vendor:"Glyde", url:"http://glyde.com/sell?hash=%21by%2Fproduct%2Flineup%2Fgames%2F"+data.glu_id+"#!show/product/"+data.glu_id+"" });
 				} else {
 					$('body').trigger({type:'custom_loaded_'+upc});
 				}
-			}
-		});
+			});
 	}
 	
-	function get_amazon(upc){
-		$.ajax({
-			url:'http://jsonpify.heroku.com/?resource=http://xmltojsonp.appspot.com/onca/json?Operation=ItemLookup&SearchIndex=VideoGames&IdType=UPC&ItemId='+upc+'&ResponseGroup=ItemAttributes',
-			dataType:'jsonp',
-			cache:true,
-			success:function(data){
-				data = data.ItemLookupResponse.Items.Item;
-				if (data) {
-					$('body').trigger({type:'custom_loaded_'+upc, value:data.ItemAttributes.TradeInValue.FormattedPrice, vendor:"Amazon", url:"https://www.amazon.com/gp/tradein/add-to-cart.html/ref=trade_new_dp_trade_btn?ie=UTF8&asin="+data.ASIN });
+	function search_amazon(query,page){
+		//console.log(page);
+		if (query) query = '&Title=' + query;
+		get_json('http://xmltojsonp.appspot.com/onca/json?Operation=ItemSearch'+query+'&ItemPage='+page+'&BrowseNode=979418011&SearchIndex=VideoGames&ResponseGroup=ItemAttributes,Images', function(data){
+				//console.log("page",data);
+				if (data = data.ItemSearchResponse.Items.Item){	
+					//console.log(data);
+					var upcs = '';
+					$.each(data, function(index, item){
+						var image = item.MediumImage.URL;
+						var asin = item.ASIN;
+						item = item.ItemAttributes;
+						//console.log(item);
+						if (item.TradeInValue){
+							var sortable = [];
+							upcs += item.UPC + ',';
+							sortable.push({value:item.TradeInValue.FormattedPrice, vendor:"Amazon", url:"https://www.amazon.com/gp/tradein/add-to-cart.html/ref=trade_new_dp_trade_btn?ie=UTF8&asin="+asin});
+							//console.log(sortable);
+							get_glyde(item.UPC);
+							
+							var count = 0;
+							$('body').bind('custom_loaded_'+item.UPC, function(data){
+								if (data.value) sortable.push(data);
+								count++;
+								if (count >= 1){
+									sortable.sort(function(a, b) { return parseInt(b.value.replace(/[\$\.]/g,''),10) - parseInt(a.value.replace(/[\$\.]/g,''),10) });
+									$('#l').remove()
+									render(item.Title,item.Platform,image, sortable);
+									$('body').unbind('custom_loaded_'+item.UPC);
+								}
+							});
+							
+						}
+					});
 				}else{
-					$('body').trigger({type:'custom_loaded_'+upc});
-				}
-			}
-		});
+					$('#l').remove()
+					$('#pl').after("<h3>That's all</h3>");
+					loading=true;
+				};
+				//get_best_buy(upcs);
+				
+			});
 	}
 	
 	function get_json(url, cbfunc, proxy){
-		if (proxy) url = 'http://jsonpify.heroku.com/?resource=' + url;
+		url = 'http://jsonpify.heroku.com/?resource=' + url;
 		$.ajax({
 			url:url,
 			dataType:'jsonp',
@@ -194,9 +228,8 @@ $(function(){
 		});
 	}
 	
-	function render(name, image, sortable){
+	function render(name, platform, image, sortable){
 		//console.log(data);
-			var n = name.split(' - ');
 			var html = '';
 			html += '<div class="p">';
 			html += '<div class="pw">';
@@ -204,24 +237,20 @@ $(function(){
 			html += 	'<img src="'+image+'" alt="" />';
 			html += '</div>';
 			html += '<header>';
-			html += 	'<h1>'+n[0]+'</h1>';
-			html += 	'<p>'+n[n.length - 1]+'</p>';
+			html += 	'<h1>'+name+'</h1>';
+			html += 	'<p>'+platform+'</p>';
 			html += '</header>';
-			html += '<div class="pbw"><div class="b"><a class="vn" target="_blank" href="'+/*sortable[0].url+*/'">Trade It In</a><a href="#" class="tv">'+sortable[0].value+'</a></div>';
+			html += '<div class="pbw"><div class="b"><a class="vn" target="_blank" href="'+sortable[0].url+'">Trade It In</a><a href="#" class="tv">'+sortable[0].value+'</a></div>';
 			html += '<ul class="dd">';
 			$.each(sortable, function(k,v){
-				html += '<li><a target="_blank" href="'+/*v.url+*/'">'+v.vendor +' <span>'+v.value+'</span></a></li>';
+				html += '<li><a target="_blank" href="'+v.url+'">'+v.vendor +' <span>'+v.value+'</span></a></li>';
 			});
 			html += '</ul>';
 			html += '</div></div>';
 			html += '</div>';
 	
-			if (html !== ''){
-			    $('#pl').append(html);
-			    loading = false;
-		    }else{
-		    	$('#pl').after("<h3>That's all</h3>");
-		    }
+		    $('#pl').append(html);
+		    loading = false;
 	}
 
 });
