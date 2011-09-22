@@ -83,8 +83,7 @@ function get_games(query,page){
 	    		}
 	    	});
 	    	sortable.sort(function(a, b) { return parseInt(b.value.replace(/[\$\.]/g,''),10) - parseInt(a.value.replace(/[\$\.]/g,''),10) });
-
-	    	if (v.tradeInValue){
+	    	if (v.tradeInValue && sortable.length > 0){
 	    		var n = v.name.split(' - ');
 	   		    html += '<div class="p">';
 	   		    html += '<div class="pw">';
