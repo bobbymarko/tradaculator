@@ -35,8 +35,7 @@ class TradeIn < Sinatra::Base
     search_parameters = {:type => 'game', :tradeInValue => {'$gt' => 0}, :active => "*"}
     search_parameters['search'] = query if query
     
-    products = bby.products(search_parameters).fetch(:page => page, :show => 'tradeInValue,image,name,upc', :sort => {'releaseDate'=>'desc'})
-.products
+    products = bby.products(search_parameters).fetch(:page => page, :show => 'tradeInValue,image,name,upc', :sort => {'releaseDate'=>'desc'}).products
     
     upcs = []
     products.each_with_index do |product,index|
