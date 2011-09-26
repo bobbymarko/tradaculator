@@ -1,11 +1,4 @@
-require 'rubygems'
-require 'bundler'
-require 'yaml'
-require './lib/no_www.rb'
+# This file is used by Rack-based servers to start the application.
 
-YAML::ENGINE.yamler= 'syck'
-Bundler.require
-
-use NoWWW
-require './trade_in'
-run TradeIn
+require ::File.expand_path('../config/environment',  __FILE__)
+run Tradaculator::Application
