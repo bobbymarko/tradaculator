@@ -56,7 +56,7 @@ namespace :deploy do
   task :symlink_db, :roles => :app do
     puts "deploying to #{deploy_to}"
     puts "releasing to #{release_path}"
-    run "ln -fs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml && ln -fs #{deploy_to}/shared/config/api_keys.yml #{release_path}/config/api_keys.yml"
+    run "ln -fs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml"
   end
 end
 
