@@ -23,7 +23,11 @@ gem 'remixr'
 gem 'amazon_product'
 gem 'json'
 gem 'nokogiri'
-gem 'hoe', '~> 1.5.1'
+
+gem 'hoe', '~> 1.5.1' #weird rubygems version issue
+gem 'execjs' #javascript runtime requirement for assets precompiling
+gem 'therubyracer' #javascript runtime requirement for assets precompiling
+
 gem 'capistrano'
 gem 'rack-cache'
 
