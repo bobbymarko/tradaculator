@@ -44,7 +44,6 @@ namespace :deploy do
 end
 
 after 'deploy:update_code', 'deploy:symlink_db'
-
 namespace :deploy do
   desc "Symlinks the database.yml"
   task :symlink_db, :roles => :app do
