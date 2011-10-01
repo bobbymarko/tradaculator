@@ -23,7 +23,7 @@ gem 'remixr'
 gem 'amazon_product'
 gem 'json'
 gem 'nokogiri'
-
+gem 'hoe', '~> 1.5.1'
 gem 'capistrano'
 gem 'rack-cache'
 

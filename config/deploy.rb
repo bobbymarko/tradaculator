@@ -1,4 +1,11 @@
+#cap staging deploy:check
+#cap staging deploy
+# or 
+#cap production deploy:check
+#cap production deploy
 require "bundler/capistrano"
+load 'deploy/assets'
+
 ssh_options[:forward_agent] = true
 
 set :application, "tradaculator"
