@@ -48,16 +48,15 @@ namespace :deploy do
    task :restart, :roles => :app, :except => { :no_release => true } do
      run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
    end
+    desc "Symlinks the database.yml"
+    task :symlink_db, :roles => :app do
+      puts "deploying to #{deploy_to}"
+      puts "releasing to #{release_path}"
+      run "ln -fs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml && ln -fs #{deploy_to}/shared/config/api_keys.yml #{release_path}/config/api_keys.yml"
+    end
 end
 
-after 'deploy:update_code', 'deploy:symlink_db'
-namespace :deploy do
-  desc "Symlinks the database.yml"
-  task :symlink_db, :roles => :app do
-    puts "deploying to #{deploy_to}"
-    puts "releasing to #{release_path}"
-    run "ln -fs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml"
-  end
-end
+after 'deploy:symlink', 'deploy:symlink_db'
+
 
 after "deploy", "deploy:cleanup"
