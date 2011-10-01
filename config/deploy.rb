@@ -54,7 +54,10 @@ after 'deploy:update_code', 'deploy:symlink_db'
 namespace :deploy do
   desc "Symlinks the database.yml"
   task :symlink_db, :roles => :app do
-    run "ln -fs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml"
-    run "ln -fs #{deploy_to}/shared/config/api_keys.yml #{release_path}/config/api_keys.yml"
+    puts "deploying to #{deploy_to}"
+    puts "releasing to #{release_path}"
+    run "ln -fs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml && ln -fs #{deploy_to}/shared/config/api_keys.yml #{release_path}/config/api_keys.yml"
   end
 end
+
+after "deploy", "deploy:cleanup"
