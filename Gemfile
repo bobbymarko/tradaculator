@@ -21,6 +21,12 @@ gem 'jquery-rails'
 
 gem 'remixr'
 gem 'amazon_product'
+gem 'json'
+gem 'nokogiri'
+
+gem 'capistrano'
+gem 'rack-cache'
+
 
 # Use unicorn as the web server
 # gem 'unicorn'

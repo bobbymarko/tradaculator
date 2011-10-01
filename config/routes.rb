@@ -1,4 +1,6 @@
 Tradaculator::Application.routes.draw do
+  match 'search(/:query(/page/:page))' => 'trade_in_values#show', :as => 'trade_in_values'
+#  match "search/:query" => "trade_in_values#index", :as => :trade_in_values, :via => [:post]
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -48,7 +50,7 @@ Tradaculator::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'site#index'
+  root :to => 'trade_in_values#index'
 
   # See how all your routes lay out with "rake routes"
 

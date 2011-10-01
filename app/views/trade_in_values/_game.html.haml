@@ -1,0 +1,22 @@
+- sorted = sort_values(game[:trade_in_value])
+.p>
+  .pw
+    .f
+      %img{:src=>game[:image]}
+    %header
+      %h1= game[:title]
+      %p= game[:platform]
+    .pbw
+      .b
+        %a.vn{:href=>sorted.first[1][:url]}
+          Trade It In
+        %a.tv
+          = sorted.first[1][:value]
+      %ul.dd
+        - sorted.each do |item|
+          - unless item[1][:value].blank?
+            %li
+              %a{:href=>item[1][:url] }
+                = item[0].to_s.gsub('_',' ')
+                %span
+                  = item[1][:value]

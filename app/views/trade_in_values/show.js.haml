@@ -1,0 +1,2 @@
+$("#pl").append("#{j(render :partial => "game", :collection => @results[:products])}");
+$("#pl").after("#{j next_page(@query,@results[:next_page])}");

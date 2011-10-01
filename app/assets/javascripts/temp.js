@@ -1,5 +1,10 @@
 var loading = false;
 $(function(){
+	$('.tv').live('click',function(e){
+		$(this).closest('.p').toggleClass('active').siblings().removeClass('active');
+		e.preventDefault();
+	});
+	return
 	var page = 1,
 		w = $(window),
 		query = get_hash() || '',
@@ -38,11 +43,6 @@ $(function(){
 			get_games(query,page);
 			loading = true;
 		}
-	});
-	
-	$('.tv').live('click',function(e){
-		$(this).closest('.p').toggleClass('active').siblings().removeClass('active');
-		e.preventDefault();
 	});
 	
 });

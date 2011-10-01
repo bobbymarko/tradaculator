@@ -12,10 +12,11 @@
     %div
       %a#b{:href=>root_url} Tradaculator
       %p Calculating game trade-in values from across the web
-      %form
-        %input{:type=>"text", :id=>"s", :placeholder=> "search…"}
+      = form_tag root_url do
+        %input{:type=>"text", :id=>"s", :name=>"query", :placeholder=> "search…", :value=>@query}
         %input{:id=>"m", :type=>"image", :src=>asset_path('search.png')}
   %section#pl
     = yield
+  = yield(:product_list_meta)
   %footer
     = "From #{link_to "@bobbymarko", "http://twitter.com/bobbymarko"} and #{link_to "@nathanmueller", "http://twitter.com/nathanmueller"}. Follow the project #{link_to "@tradaculator", "http://twitter.com/tradaculator"}.".html_safe

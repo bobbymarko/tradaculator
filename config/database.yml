@@ -31,12 +31,20 @@ test:
   password:
   socket: /tmp/mysql.sock
 
+stage:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: tradaculator_stage
+  pool: 5
+  username: tradaculator
+  password: PUo5KxcO0XAr83r
+
 production:
   adapter: mysql2
   encoding: utf8
   reconnect: false
   database: tradaculator_production
   pool: 5
-  username: root
-  password:
-  socket: /tmp/mysql.sock
+  username: tradaculator
+  password: PUo5KxcO0XAr83r
