@@ -4,7 +4,7 @@
 #cap production deploy:check
 #cap production deploy
 require "bundler/capistrano"
-load 'deploy/assets'
+#load 'deploy/assets'
 
 ssh_options[:forward_agent] = true
 
