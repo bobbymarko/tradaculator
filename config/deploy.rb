@@ -3,10 +3,10 @@
 # or 
 #cap production deploy:check
 #cap production deploy
-$:.unshift(File.expand_path('./lib', ENV['rvm_path']))
-require 'rvm/capistrano'
-set :rvm_ruby_string, '1.9.2-p180'
-set :rvm_type, :root
+#$:.unshift(File.expand_path('./lib', ENV['rvm_path']))
+#require 'rvm/capistrano'
+#set :rvm_ruby_string, '1.9.2-p180'
+#set :rvm_type, :root
 
 require "bundler/capistrano"
 #load 'deploy/assets'
