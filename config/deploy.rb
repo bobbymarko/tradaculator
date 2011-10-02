@@ -53,7 +53,7 @@ namespace :deploy do
       puts "deploying to #{deploy_to}"
       puts "releasing to #{release_path}"
       run "ln -fs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml && ln -fs #{deploy_to}/shared/config/api_keys.yml #{release_path}/config/api_keys.yml"
-      run "RAILS_ENV=stage bundle exec rake assets:precompile"
+      run "cd #{release_path}; RAILS_ENV=#{rails_env} bundle exec rake assets:precompile"
     end
 end
 
