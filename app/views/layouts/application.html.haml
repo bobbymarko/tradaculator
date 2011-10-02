@@ -6,6 +6,9 @@
     %title Tradaculator
     = stylesheet_link_tag    "application"
     = javascript_include_tag "application"
+    = javascript_include_tag "http://use.typekit.com/eqp1oco.js"
+    :javascript
+        try{Typekit.load();}catch(e){}
     = csrf_meta_tags
 %body
   %header#mh
