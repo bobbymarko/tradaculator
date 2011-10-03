@@ -3,13 +3,11 @@
 # or 
 #cap production deploy:check
 #cap production deploy
+
 $:.unshift(File.expand_path('./lib', ENV['rvm_path']))
 require 'rvm/capistrano'
 set :rvm_ruby_string, 'ruby-1.9.2-p180@tradaculator'
 set :rvm_type, :root
-
-require "bundler/capistrano"
-#load 'deploy/assets'
 
 ssh_options[:forward_agent] = true
 
@@ -58,11 +56,16 @@ namespace :deploy do
       puts "deploying to #{deploy_to}"
       puts "releasing to #{release_path}"
       run "ln -fs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml && ln -fs #{deploy_to}/shared/config/api_keys.yml #{release_path}/config/api_keys.yml"
+    end
+    desc "Compile asets"
+    task :assets do
       run "cd #{release_path}; RAILS_ENV=#{rails_env} bundle exec rake assets:precompile"
     end
 end
 
-after 'deploy:symlink', 'deploy:symlink_db'
 
+after 'deploy:symlink', 'deploy:symlink_db'
+after "deploy", "deploy:assets";
+#after 'deploy:update_code', 'deploy:precompile_assets'
 
 after "deploy", "deploy:cleanup"
