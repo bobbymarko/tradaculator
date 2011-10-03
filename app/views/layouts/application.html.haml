@@ -5,7 +5,6 @@
     %meta{:name=>"viewport", :content=>"width=device-width,initial-scale=1,maximum-scale=1"}
     %title Tradaculator
     = stylesheet_link_tag    "application"
-    = javascript_include_tag "application"
     = javascript_include_tag "http://use.typekit.com/eqp1oco.js"
     :javascript
         try{Typekit.load();}catch(e){}
@@ -23,3 +22,9 @@
   = yield(:product_list_meta)
   %footer
     = "From #{link_to "@bobbymarko", "http://twitter.com/bobbymarko"} and #{link_to "@nathanmueller", "http://twitter.com/nathanmueller"}. Follow the project #{link_to "@tradaculator", "http://twitter.com/tradaculator"}.".html_safe
+  = javascript_include_tag "application"
+  :javascript
+    var _gaq=[['_setAccount','UA-6089161-18'],['_trackPageview'],['_trackPageLoadTime']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g,s)}(document,'script'));
