@@ -1,4 +1,5 @@
 (function() {
+  $('html').removeClass('no-js');
   var page = 1,
       loading = false;
 

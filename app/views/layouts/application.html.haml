@@ -1,22 +1,22 @@
 !!!
-%html{:lang=>"en"}
-  %head
-    %meta{:charset=>"utf-8"}
-    %meta{:name=>"viewport", :content=>"width=device-width,initial-scale=1,maximum-scale=1"}
-    %title 
-      = !yield(:title).blank? ? yield(:title) : "Calculating the best game trade-in values from across the web"
-      | Tradaculator"
-    = stylesheet_link_tag    "application"
-    %link{:rel => 'shortcut icon', :href => image_path('favicon.ico')}
-    %link{:rel => 'apple-touch-icon-precomposed', :sizes => "114x114", :href => image_path('apple-touch-icon-114x114.png')}
-    %link{:rel => 'apple-touch-icon-precomposed', :sizes => "72x72", :href => image_path('apple-touch-icon-72x72.png')}
-    %link{:rel => 'apple-touch-icon-precomposed', :href => image_path('apple-touch-icon-57x57.png')}  
-    = javascript_include_tag "http://use.typekit.com/eqp1oco.js"
-    :javascript
-        try{Typekit.load();}catch(e){}
-    /[if lt IE 9]
-      = javascript_include_tag "//html5shiv.googlecode.com/svn/trunk/html5.js"
-    = csrf_meta_tags
+- conditional_html 'en'
+%head
+  %meta{:charset=>"utf-8"}
+  %meta{:name=>"viewport", :content=>"width=device-width,initial-scale=1,maximum-scale=1"}
+  %title 
+    = !yield(:title).blank? ? yield(:title) : "Calculating the best game trade-in values from across the web"
+    | Tradaculator
+  = stylesheet_link_tag    "application"
+  %link{:rel => 'shortcut icon', :href => image_path('favicon.ico')}
+  %link{:rel => 'apple-touch-icon-precomposed', :sizes => "114x114", :href => image_path('apple-touch-icon-114x114.png')}
+  %link{:rel => 'apple-touch-icon-precomposed', :sizes => "72x72", :href => image_path('apple-touch-icon-72x72.png')}
+  %link{:rel => 'apple-touch-icon-precomposed', :href => image_path('apple-touch-icon-57x57.png')}  
+  = javascript_include_tag "http://use.typekit.com/eqp1oco.js"
+  :javascript
+      try{Typekit.load();}catch(e){}
+  /[if lt IE 9]
+    = javascript_include_tag "//html5shiv.googlecode.com/svn/trunk/html5.js"
+  = csrf_meta_tags
 %body
   %header#mh
     %div
@@ -38,4 +38,4 @@
     var _gaq=[['_setAccount','UA-6089161-18'],['_trackPageview'],['_trackPageLoadTime']];
     (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
     g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-    s.parentNode.insertBefore(g,s)}(document,'script'));
+      s.parentNode.insertBefore(g,s)}(document,'script'));
