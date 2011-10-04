@@ -2,7 +2,7 @@
 .p>
   .pw
     .f
-      %img{:src=>game[:image]}
+      %img{:src=>game[:image] || image_path('image_not_available.gif')}
     %header
       %h1= game[:title]
       %p= game[:platform]

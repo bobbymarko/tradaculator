@@ -38,7 +38,7 @@ class TradeInValue < ActiveRecord::Base
     	amazon.each('Item') do |game|
         if game["ItemAttributes"]["IsEligibleForTradeIn"] == "1"
           upcs << game["ItemAttributes"]["UPC"]
-          image = game['MediumImage'] ? game['MediumImage']['URL'] : "" #some products don't have images?
+          image = game['MediumImage'] ? game['MediumImage']['URL'] : nil #some products don't have images?
           response[:products] << {
             :upc            =>  game["ItemAttributes"]["UPC"],
             :image          =>  image,
