@@ -1,5 +1,11 @@
 (function() {
   $('html').removeClass('no-js');
+  
+  $('.tv').live('click',function(e){
+		$(this).closest('.p').toggleClass('active').siblings().removeClass('active');
+		e.preventDefault();
+	});
+	
   var page = 1,
       loading = false;
 
