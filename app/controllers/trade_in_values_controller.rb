@@ -18,6 +18,7 @@ class TradeInValuesController < ApplicationController
     @query = params[:query] || ''
   	@page = params[:page] || 1
     @results = TradeInValue.retrieve(@query,@page)
+    # logger.info("NEXT PAGE = #{@results[:next_page]}");
     respond_with(@results) do |format|
         format.html{
           render "index"

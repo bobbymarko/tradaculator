@@ -5,4 +5,5 @@
 // the compiled file.
 //
 //= require jquery_ujs
-//= require_tree .
+//= require spin
+//= require trade_in_values

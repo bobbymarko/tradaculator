@@ -32,6 +32,7 @@ class TradeInValue < ActiveRecord::Base
   	amazon = req.get
   	
   	if amazon.valid? && !amazon.has_errors? && amazon["TotalResults"][0].to_i > 0
+  	  #Rails.logger.info("Total pages = #{amazon["TotalPages"][0].to_i}")
     	next_page = amazon["TotalPages"][0].to_i > page.to_i ? page.to_i + 1 : false
       response = {:next_page => next_page, :products => []}
       upcs = []
@@ -39,13 +40,16 @@ class TradeInValue < ActiveRecord::Base
         if game["ItemAttributes"]["IsEligibleForTradeIn"] == "1"
           upcs << game["ItemAttributes"]["UPC"]
           image = game['MediumImage'] ? game['MediumImage']['URL'] : nil #some products don't have images?
+          value = game["ItemAttributes"]["TradeInValue"] ? currency(game["ItemAttributes"]["TradeInValue"]["Amount"].to_i / 100.0) : nil
+          url = value ? "https://www.amazon.com/gp/tradein/add-to-cart.html/ref=trade_new_dp_trade_btn?ie=UTF8&asin=#{game['ASIN']}" : nil
+          platform = game['ItemAttributes']['Platform']
           response[:products] << {
             :upc            =>  game["ItemAttributes"]["UPC"],
             :image          =>  image,
             :title          =>  game['ItemAttributes']['Title'],
-            :platform       =>  game['ItemAttributes']['Platform'],
+            :platform       =>  platform,
             :trade_in_value =>  {
-              :amazon       =>  {:value => currency(game["ItemAttributes"]["TradeInValue"]["Amount"].to_i / 100.0), :url => "https://www.amazon.com/gp/tradein/add-to-cart.html/ref=trade_new_dp_trade_btn?ie=UTF8&asin=#{game['ASIN']}"},
+              :amazon       =>  {:value => value, :url => url},
               :best_buy     =>  {:value => nil, :url => nil},
               :glyde        =>  {:value => nil, :url => nil}
           }}
@@ -81,9 +85,9 @@ class TradeInValue < ActiveRecord::Base
   end
   
   def self.get_glyde(upc)
-    glyde = JSON.parse(Nokogiri::HTML(open("http://api.glyde.com/price/upc/#{upc}?api_key=#{API_KEYS["glyde"]["key"]}&v=1&responseType=application/json")))
-    	if glyde['is_sellable']
-    		glyde_value = "#{currency(  (glyde['suggested_price']['cents'] * 0.88  - 125)  / 100.0 )}"
+    glyde = JSON.parse(Nokogiri::HTML(open("http://api.glyde.com/price/upc/#{upc}?api_key=#{API_KEYS["glyde"]["key"]}&v=1&responseType=application/json"))) rescue false
+    	if  glyde && glyde['is_sellable']
+    		glyde_value = "#{currency(  (glyde['suggested_price']['cents'] * 0.88  - 125)  / 100.0 )}" rescue nil
     		{:value => glyde_value, :url => "http://glyde.com/sell?hash=%21by%2Fproduct%2Flineup%2Fgames%2F#{glyde['glu_id']}#!show/product/#{glyde['glu_id']}"}
     	else
     	 {:value => nil, :url => nil}
