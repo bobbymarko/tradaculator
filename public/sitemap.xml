@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<url>
+  <loc>http://tradaculator.com/</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://tradaculator.com/search?page=2&amp;query=</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://tradaculator.com/search?page=3&amp;query=</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://tradaculator.com/search?page=4&amp;query=</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://tradaculator.com/search?page=5&amp;query=</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://tradaculator.com/search?page=6&amp;query=</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://tradaculator.com/search?page=7&amp;query=</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://tradaculator.com/search?page=8&amp;query=</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://tradaculator.com/search?page=9&amp;query=</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://tradaculator.com/search?page=10&amp;query=</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://tradaculator.com/search?page=11&amp;query=</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://tradaculator.com/search/borderlands</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://tradaculator.com/search/call%20of%20duty</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://tradaculator.com/search/gears%20of%20war</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://tradaculator.com/search/battlefield</loc>
+  <changefreq>daily</changefreq>
+</url>
+</urlset>
