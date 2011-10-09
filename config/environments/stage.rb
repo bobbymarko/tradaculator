@@ -57,9 +57,4 @@ Tradaculator::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
-  
-  config.middleware.use Rack::Cache,
-     :verbose => true,
-     :metastore   => 'file:/var/cache/rack/meta',
-     :entitystore => 'file:/var/cache/rack/body'
 end

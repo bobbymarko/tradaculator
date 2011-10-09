@@ -12,11 +12,27 @@
   
   
   $('html').removeClass('no-js');
+  alert('hey');
+  $('body').click(function(){
+    console.log('cik');
+    $('.active').removeClass('active');
+	});
   
   $('.tv').live('click',function(e){
 		$(this).closest('.p').toggleClass('active').siblings().removeClass('active');
+    //$('.dd').click(function(e){ e.preventDefault(); });
+    //$(document).one("click", function(e) {
+    //  console.log(e);
+    //  console.log($(e.currentTarget));
+    //  $('.active').removeClass('active');
+    //});
 		e.preventDefault();
+		e.stopPropagation();
 	});
+	
+	
+	
+
 	
   var page = 1,
       loading = false;
