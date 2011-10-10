@@ -12,11 +12,10 @@
   
   
   $('html').removeClass('no-js');
-  alert('hey');
+
   $('body').click(function(){
-    console.log('cik');
     $('.active').removeClass('active');
-	});
+  });
   
   $('.tv').live('click',function(e){
 		$(this).closest('.p').toggleClass('active').siblings().removeClass('active');
