@@ -4,8 +4,7 @@ class Hash
     self.class[sort(&block)]   # Hash[ [[key1, value1], [key2, value2]] ]
   end
 end
-class TradeInValue < ActiveRecord::Base
-  
+class TradeInValue
   def self.retrieve(query,page)
     self.get_amazon(query,page)
   end
@@ -39,20 +38,32 @@ class TradeInValue < ActiveRecord::Base
     	amazon.each('Item') do |game|
         if game["ItemAttributes"]["IsEligibleForTradeIn"] == "1"
           upcs << game["ItemAttributes"]["UPC"]
+          vendor = "amazon"
+          upc = game["ItemAttributes"]["UPC"]
           image = game['MediumImage'] ? game['MediumImage']['URL'] : nil #some products don't have images?
+          title = game['ItemAttributes']['Title']
+          platform = game['ItemAttributes']['Platform']
           value = game["ItemAttributes"]["TradeInValue"] ? currency(game["ItemAttributes"]["TradeInValue"]["Amount"].to_i / 100.0) : nil
           url = value ? "https://www.amazon.com/gp/tradein/add-to-cart.html/ref=trade_new_dp_trade_btn?ie=UTF8&asin=#{game['ASIN']}" : nil
-          platform = game['ItemAttributes']['Platform']
           response[:products] << {
-            :upc            =>  game["ItemAttributes"]["UPC"],
+            :upc            =>  upc,
             :image          =>  image,
-            :title          =>  game['ItemAttributes']['Title'],
+            :title          =>  title,
             :platform       =>  platform,
             :trade_in_value =>  {
               :amazon       =>  {:value => value, :url => url},
               :best_buy     =>  {:value => nil, :url => nil},
               :glyde        =>  {:value => nil, :url => nil}
           }}
+          
+          game = Game.find_or_create_by(:upc => upc)
+          game.image = image
+          game.title = title
+          game.platform = platform
+          unless game.values.all_of(:vendor => vendor, :value => value, :created_at.gt => 12.hours.ago).exists?
+            game.values.create(:vendor => vendor, :value => value)
+          end
+          game.save!
           #raise response.inspect
         end
       end
@@ -61,9 +72,17 @@ class TradeInValue < ActiveRecord::Base
       best_buy_skus['products'].each do |game|
         response[:products].each do |r|
           if r[:upc] == game["upc"]
-            r[:trade_in_value][:best_buy][:value] = currency(game["tradeInValue"])
+            value = currency(game["tradeInValue"])
+            r[:trade_in_value][:best_buy][:value] = value
             # we shouldn't return a url if the game isn't trade inable
             r[:trade_in_value][:best_buy][:url] = "http://www.bestbuytradein.com/bb/QuoteCalculatorVideoGames.cfm?kw=#{game["upc"]}&pf=all&af=9a029aae-d650-44f8-a1c7-c33aa7fd0e27"
+            
+            vendor = "best_buy"
+            game = Game.first(conditions: {:upc => game["upc"]})
+            unless game.values.all_of(:vendor => vendor, :value => value, :created_at.gt => 12.hours.ago).exists?
+              game.values.create(:vendor => vendor, :value => value)
+            end
+            
             break
           end
         end 
@@ -71,6 +90,14 @@ class TradeInValue < ActiveRecord::Base
       
       response[:products].each do |game|
         game[:trade_in_value][:glyde] = get_glyde(game[:upc])
+        
+        vendor = "glyde"
+        value = game[:trade_in_value][:glyde][:value]
+        game = Game.first(conditions: {:upc => game[:upc]})
+        unless game.values.all_of(:vendor => vendor, :value => value, :created_at.gt => 12.hours.ago).exists?
+          game.values.create(:vendor => vendor, :value => value)
+        end
+        
       end
     else
       response = false
