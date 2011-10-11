@@ -13,26 +13,22 @@
   
   $('html').removeClass('no-js');
 
-  $('body').click(function(){
-    $('.active').removeClass('active');
+  $('body').click(function(e){
+    if ($(e.target).closest('.pbw').length > 0){
+    }else{
+      $('.active').removeClass('active');
+    }
   });
   
   $('.tv').live('click',function(e){
-		$(this).closest('.p').toggleClass('active').siblings().removeClass('active');
-    //$('.dd').click(function(e){ e.preventDefault(); });
-    //$(document).one("click", function(e) {
-    //  console.log(e);
-    //  console.log($(e.currentTarget));
-    //  $('.active').removeClass('active');
-    //});
-		e.preventDefault();
-		e.stopPropagation();
-	});
+    $(this).closest('.p').toggleClass('active').siblings().removeClass('active');
+    e.stopPropagation();
+  });
 	
-	
-	
+  $('a','.dd').live('click', function(e){
+    e.stopPropagation();
+  });
 
-	
   var page = 1,
       loading = false;
 
