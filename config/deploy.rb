@@ -67,20 +67,9 @@ namespace :deploy do
     end 
 end
 
-namespace :rails do
-  desc "Repair permissions to allow user to perform all actions"
-  task :repair_permissions, :roles => :app do
-    puts "Applying correct permissions to allow for proper command execution"
-    try_sudo "chmod -R 744 #{current_path}/log #{current_path}/tmp"
-    try_sudo "chown -R #{user}:#{user} #{current_path}"
-    try_sudo "chown -R #{user}:#{user} #{current_path}/tmp"
-  end
-end
-
 after 'deploy:symlink', 'deploy:symlink_db'
 after "deploy", "deploy:assets";
 after "deploy", "deploy:chown_to_wwwdata";
 #after 'deploy:update_code', 'deploy:precompile_assets'
 
 after "deploy", "deploy:cleanup"
-after "deploy:restart"    , "rails:repair_permissions" # fix the permissions to work properly
