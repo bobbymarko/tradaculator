@@ -61,6 +61,10 @@ namespace :deploy do
     task :assets do
       run "cd #{release_path}; RAILS_ENV=#{rails_env} bundle exec rake assets:precompile"
     end
+    desc "Change group to www-data" 
+    task :chown_to_wwwdata, :roles => [ :app, :db, :web ] do 
+            sudo "chown -R #{user}:www-data #{deploy_to}" 
+    end 
 end
 
 namespace :rails do
@@ -75,6 +79,7 @@ end
 
 after 'deploy:symlink', 'deploy:symlink_db'
 after "deploy", "deploy:assets";
+after "deploy", "deploy:chown_to_wwwdata";
 #after 'deploy:update_code', 'deploy:precompile_assets'
 
 after "deploy", "deploy:cleanup"
