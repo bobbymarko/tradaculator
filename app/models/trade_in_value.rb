@@ -60,7 +60,7 @@ class TradeInValue
           game.image = image
           game.title = title
           game.platform = platform
-          unless game.values.all_of(:vendor => vendor, :value => value, :created_at.gt => 12.hours.ago).exists?
+          unless !value || game.values.all_of(:vendor => vendor, :value => value, :created_at.gt => 12.hours.ago).exists?
             game.values.create(:vendor => vendor, :value => value)
           end
           game.save!
@@ -79,7 +79,7 @@ class TradeInValue
             
             vendor = "best_buy"
             game = Game.first(conditions: {:upc => game["upc"]})
-            unless game.values.all_of(:vendor => vendor, :value => value, :created_at.gt => 12.hours.ago).exists?
+            unless !value || game.values.all_of(:vendor => vendor, :value => value, :created_at.gt => 12.hours.ago).exists?
               game.values.create(:vendor => vendor, :value => value)
             end
             
@@ -94,7 +94,7 @@ class TradeInValue
         vendor = "glyde"
         value = game[:trade_in_value][:glyde][:value]
         game = Game.first(conditions: {:upc => game[:upc]})
-        unless game.values.all_of(:vendor => vendor, :value => value, :created_at.gt => 12.hours.ago).exists?
+        unless !value || game.values.all_of(:vendor => vendor, :value => value, :created_at.gt => 12.hours.ago).exists?
           game.values.create(:vendor => vendor, :value => value)
         end
         
