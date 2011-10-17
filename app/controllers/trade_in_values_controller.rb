@@ -1,7 +1,9 @@
 class TradeInValuesController < ApplicationController
   respond_to :html, :json, :js
   caches_page :index
-  caches_action :show, :cache_path => Proc.new { |controller| controller.params }
+  caches_action :show, :cache_path => Proc.new { |c|
+    "#{c.params} #{c.request.xml_http_request?}"
+  }
   
   def index
     expires_in 4.hours, :public => true
