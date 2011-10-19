@@ -9,43 +9,39 @@
   <changefreq>daily</changefreq>
 </url>
 <url>
-  <loc>http://tradaculator.com/search?page=2&amp;query=</loc>
+  <loc>http://tradaculator.com/page/2</loc>
   <changefreq>daily</changefreq>
 </url>
 <url>
-  <loc>http://tradaculator.com/search?page=3&amp;query=</loc>
+  <loc>http://tradaculator.com/page/3</loc>
   <changefreq>daily</changefreq>
 </url>
 <url>
-  <loc>http://tradaculator.com/search?page=4&amp;query=</loc>
+  <loc>http://tradaculator.com/page/4</loc>
   <changefreq>daily</changefreq>
 </url>
 <url>
-  <loc>http://tradaculator.com/search?page=5&amp;query=</loc>
+  <loc>http://tradaculator.com/page/5</loc>
   <changefreq>daily</changefreq>
 </url>
 <url>
-  <loc>http://tradaculator.com/search?page=6&amp;query=</loc>
+  <loc>http://tradaculator.com/page/6</loc>
   <changefreq>daily</changefreq>
 </url>
 <url>
-  <loc>http://tradaculator.com/search?page=7&amp;query=</loc>
+  <loc>http://tradaculator.com/page/7</loc>
   <changefreq>daily</changefreq>
 </url>
 <url>
-  <loc>http://tradaculator.com/search?page=8&amp;query=</loc>
+  <loc>http://tradaculator.com/page/8</loc>
   <changefreq>daily</changefreq>
 </url>
 <url>
-  <loc>http://tradaculator.com/search?page=9&amp;query=</loc>
+  <loc>http://tradaculator.com/page/9</loc>
   <changefreq>daily</changefreq>
 </url>
 <url>
-  <loc>http://tradaculator.com/search?page=10&amp;query=</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>http://tradaculator.com/search?page=11&amp;query=</loc>
+  <loc>http://tradaculator.com/page/10</loc>
   <changefreq>daily</changefreq>
 </url>
 <url>
@@ -62,6 +58,10 @@
 </url>
 <url>
   <loc>http://tradaculator.com/search/battlefield</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://tradaculator.com/search/mario</loc>
   <changefreq>daily</changefreq>
 </url>
 </urlset>
