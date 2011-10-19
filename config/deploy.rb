@@ -6,7 +6,6 @@
 
 $:.unshift(File.expand_path('./lib', ENV['rvm_path']))
 require 'rvm/capistrano'
-load 'deploy/assets'
 set :rvm_ruby_string, 'ruby-1.9.2-p180@tradaculator'
 set :rvm_type, :root
 
@@ -70,7 +69,7 @@ end
 
 after 'deploy:symlink', 'deploy:symlink_db'
 # after "deploy", "deploy:assets";
-after "deploy", "deploy:chown_to_wwwdata";
+after "deploy:symlink", "deploy:chown_to_wwwdata";
 # after 'deploy:update_code', 'deploy:precompile_assets'
 
 after "deploy", "deploy:cleanup"
