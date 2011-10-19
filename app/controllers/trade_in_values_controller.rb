@@ -6,7 +6,7 @@ class TradeInValuesController < ApplicationController
   }
   
   def index
-    expires_in 4.hours, :public => true
+    expires_in 30.minutes, :public => true
     if params[:query]
       redirect_to trade_in_values_path( params[:query]) #make pretty urls
     else
@@ -18,7 +18,7 @@ class TradeInValuesController < ApplicationController
   end
   
   def show
-    expires_in 4.hours, :public => true
+    expires_in 30.minutes, :public => true
     @query = params[:query] || ''
   	@page = params[:page] || 1
     @results = TradeInValue.retrieve(@query,@page)
