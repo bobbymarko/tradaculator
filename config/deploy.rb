@@ -26,7 +26,7 @@ task :production do
   set :rails_env, "production"
   set :deploy_to, "/srv/www/tradaculator.com"
   # Production nodes 
-  role :app, "tradaculator.com"
+  role :web, "tradaculator.com"
   role :app, "tradaculator.com"
   role :db,  "tradaculator.com", :primary => true
 end 
