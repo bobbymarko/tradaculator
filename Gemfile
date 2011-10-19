@@ -45,3 +45,7 @@ group :test do
   # Pretty printed test output
   gem 'turn', :require => false
 end
+
+group :stage, :production do
+  gem 'memcache-client'
+end
