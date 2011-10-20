@@ -1,7 +1,7 @@
 class TradeInValuesController < ApplicationController
   respond_to :html, :json, :js
   caches_page :index # expired with a cron job on server
-  caches_action :index, :show, :cache_path => Proc.new { |c|
+  caches_action :show, :cache_path => Proc.new { |c|
     "#{Rails.env} #{c.params} #{c.request.xml_http_request?}"
   }
   
