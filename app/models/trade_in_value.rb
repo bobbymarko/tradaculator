@@ -41,6 +41,8 @@ class TradeInValue
           vendor = "amazon"
           upc = game["ItemAttributes"]["UPC"]
           image = game['MediumImage'] ? game['MediumImage']['URL'] : nil #some products don't have images?
+          large_image = game['LargeImage'] ? game['LargeImage']['URL'] : nil
+          small_image = game['SmallImage'] ? game['SmallImage']['URL'] : nil
           title = game['ItemAttributes']['Title']
           platform = game['ItemAttributes']['Platform']
           value = game["ItemAttributes"]["TradeInValue"] ? currency(game["ItemAttributes"]["TradeInValue"]["Amount"].to_i / 100.0) : nil
@@ -56,12 +58,17 @@ class TradeInValue
               :glyde        =>  {:value => nil, :url => nil}
           }}
           
-          game = Game.find_or_create_by(:upc => upc)
+          game = Game.find_or_create_by_upc(upc)
           game.image = image
+          game.large_image = large_image
+          game.small_image = small_image
           game.title = title
           game.platform = platform
-          unless !value || game.values.all_of(:vendor => vendor, :value => value, :created_at.gt => 12.hours.ago).exists?
-            game.values.create(:vendor => vendor, :value => value)
+          if value && game.values.where(:vendor => vendor, :value => value.gsub!(/[^\d.,]/,'').to_f).recent.exists?
+            Rails.logger.info game.values.where(:vendor => vendor, :value => value).recent.inspect
+            #Rails.logger.info(Time.now)
+          elsif value
+            game.values.build(:vendor => vendor, :value => value )
           end
           game.save!
           #raise response.inspect
@@ -78,9 +85,11 @@ class TradeInValue
             r[:trade_in_value][:best_buy][:url] = "http://www.bestbuytradein.com/bb/QuoteCalculatorVideoGames.cfm?kw=#{game["upc"]}&pf=all&af=9a029aae-d650-44f8-a1c7-c33aa7fd0e27"
             
             vendor = "best_buy"
-            game = Game.first(conditions: {:upc => game["upc"]})
-            unless !value || game.values.all_of(:vendor => vendor, :value => value, :created_at.gt => 12.hours.ago).exists?
+            game = Game.where(:upc => game["upc"]).first
+            if value && game.values.where(:vendor => vendor, :value => value.gsub!(/[^\d.,]/,'').to_f).recent.exists?
+            elsif value
               game.values.create(:vendor => vendor, :value => value)
+              Rails.logger.info("creating best buy with value #{value.gsub!(/[^\d.,]/,'')}")
             end
             
             break
@@ -93,8 +102,9 @@ class TradeInValue
         
         vendor = "glyde"
         value = game[:trade_in_value][:glyde][:value]
-        game = Game.first(conditions: {:upc => game[:upc]})
-        unless !value || game.values.all_of(:vendor => vendor, :value => value, :created_at.gt => 12.hours.ago).exists?
+        game = Game.where(:upc => game[:upc]).first
+        if value && game.values.where(:vendor => vendor, :value => value.gsub!(/[^\d.,]/,'').to_f).recent.exists?
+        elsif value
           game.values.create(:vendor => vendor, :value => value)
         end
         
@@ -134,6 +144,5 @@ class TradeInValue
     parts[0].gsub!(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1#{separator}")
     parts.join('.')
   end
-
   
 end

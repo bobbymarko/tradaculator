@@ -5,8 +5,7 @@ gem 'rails', '3.1.1.rc2'
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
-gem "mongoid", "~> 2.3"
-gem "bson_ext", "~> 1.4"
+gem 'mysql2'
 
 # Gems used only for assets and not required
 # in production environments by default.
