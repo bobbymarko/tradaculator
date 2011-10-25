@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.1'
+gem 'rails', '3.1.1.rc2'
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
@@ -44,4 +44,8 @@ gem 'rack-cache'
 group :test do
   # Pretty printed test output
   gem 'turn', :require => false
+end
+
+group :stage, :production do
+  gem 'memcache-client'
 end

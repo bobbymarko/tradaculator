@@ -50,9 +50,9 @@
       loading = true;
       page++;
       $.ajax({
-        url: toLoad,
+        url: toLoad + ".js",
         type: 'get',
-        cache: 'true',
+        cache: 'false',
         dataType: 'script',
         success: function(data) {
           $('#loading').remove();
