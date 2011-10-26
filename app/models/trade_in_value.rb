@@ -1,10 +1,7 @@
 require 'open-uri'
-class Hash
-  def sorted_hash(&block)
-    self.class[sort(&block)]   # Hash[ [[key1, value1], [key2, value2]] ]
-  end
-end
 class TradeInValue
+  include ValuesHelper
+
   def self.retrieve(query,page)
     self.get_amazon(query,page)
   end
@@ -45,7 +42,8 @@ class TradeInValue
           small_image = game['SmallImage'] ? game['SmallImage']['URL'] : nil
           title = game['ItemAttributes']['Title']
           platform = game['ItemAttributes']['Platform']
-          value = game["ItemAttributes"]["TradeInValue"] ? currency(game["ItemAttributes"]["TradeInValue"]["Amount"].to_i / 100.0) : nil
+          value = game["ItemAttributes"]["TradeInValue"] ? game["ItemAttributes"]["TradeInValue"]["Amount"].to_i : nil
+
           url = value ? "https://www.amazon.com/gp/tradein/add-to-cart.html/ref=trade_new_dp_trade_btn?ie=UTF8&asin=#{game['ASIN']}" : nil
           response[:products] << {
             :upc            =>  upc,
@@ -64,9 +62,7 @@ class TradeInValue
           game.small_image = small_image
           game.title = title
           game.platform = platform
-          if value && game.values.where(:vendor => vendor, :value => value.gsub!(/[^\d.,]/,'').to_f).recent.exists?
-            Rails.logger.info game.values.where(:vendor => vendor, :value => value).recent.inspect
-            #Rails.logger.info(Time.now)
+          if value && game.values.where(:vendor => vendor, :value => value).recent.exists?
           elsif value
             game.values.build(:vendor => vendor, :value => value )
           end
@@ -79,17 +75,16 @@ class TradeInValue
       best_buy_skus['products'].each do |game|
         response[:products].each do |r|
           if r[:upc] == game["upc"]
-            value = currency(game["tradeInValue"])
+            value = game["tradeInValue"] * 100
             r[:trade_in_value][:best_buy][:value] = value
-            # we shouldn't return a url if the game isn't trade inable
+            #TODO we shouldn't return a url if the game isn't trade inable
             r[:trade_in_value][:best_buy][:url] = "http://www.bestbuytradein.com/bb/QuoteCalculatorVideoGames.cfm?kw=#{game["upc"]}&pf=all&af=9a029aae-d650-44f8-a1c7-c33aa7fd0e27"
             
             vendor = "best_buy"
             game = Game.where(:upc => game["upc"]).first
-            if value && game.values.where(:vendor => vendor, :value => value.gsub!(/[^\d.,]/,'').to_f).recent.exists?
+            if value && game.values.where(:vendor => vendor, :value => value).recent.exists?
             elsif value
               game.values.create(:vendor => vendor, :value => value)
-              Rails.logger.info("creating best buy with value #{value.gsub!(/[^\d.,]/,'')}")
             end
             
             break
@@ -99,11 +94,10 @@ class TradeInValue
       
       response[:products].each do |game|
         game[:trade_in_value][:glyde] = get_glyde(game[:upc])
-        
         vendor = "glyde"
         value = game[:trade_in_value][:glyde][:value]
         game = Game.where(:upc => game[:upc]).first
-        if value && game.values.where(:vendor => vendor, :value => value.gsub!(/[^\d.,]/,'').to_f).recent.exists?
+        if value && game.values.where(:vendor => vendor, :value => value).recent.exists?
         elsif value
           game.values.create(:vendor => vendor, :value => value)
         end
@@ -124,25 +118,11 @@ class TradeInValue
   def self.get_glyde(upc)
     glyde = JSON.parse(Nokogiri::HTML(open("http://api.glyde.com/price/upc/#{upc}?api_key=#{API_KEYS["glyde"]["key"]}&v=1&responseType=application/json"))) rescue false
     	if  glyde && glyde['is_sellable']
-    		glyde_value = "#{currency(  (glyde['suggested_price']['cents'] * 0.88  - 125)  / 100.0 )}" rescue nil
+    		glyde_value = glyde['suggested_price']['cents'] * 0.88  - 125 rescue nil
     		{:value => glyde_value, :url => "http://glyde.com/sell?hash=%21by%2Fproduct%2Flineup%2Fgames%2F#{glyde['glu_id']}#!show/product/#{glyde['glu_id']}"}
     	else
     	 {:value => nil, :url => nil}
     	end
-  end
-  
-
-  def self.currency(number, opts = {})
-    return if number.to_s.empty?
-  
-    unit      = opts[:unit]      || '$'
-    precision = opts[:precision] || 2
-    separator = opts[:separator] || ', '
-  
-    ret = "%s%.#{Integer(precision)}f" % [unit,number]
-    parts = ret.split('.')
-    parts[0].gsub!(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1#{separator}")
-    parts.join('.')
   end
   
 end

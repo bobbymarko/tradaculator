@@ -12,7 +12,7 @@
         %a.vn{:href=>sorted.first[1][:url]}
           Trade It In
         %a.tv
-          = sorted.first[1][:value]
+          = currency sorted.first[1][:value]
       %ul.dd
         - sorted.each do |item|
           - unless item[1][:value].blank?
@@ -20,4 +20,4 @@
               %a{:href=>item[1][:url] }
                 = item[0].to_s.gsub('_',' ')
                 %span
-                  = item[1][:value]
+                  = currency item[1][:value]

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111025034925) do
+ActiveRecord::Schema.define(:version => 20111026033119) do
 
   create_table "games", :force => true do |t|
     t.string   "title"
@@ -32,9 +32,9 @@ ActiveRecord::Schema.define(:version => 20111025034925) do
   end
 
   create_table "values", :force => true do |t|
-    t.integer  "game_id",                                  :null => false
-    t.string   "vendor",                                   :null => false
-    t.decimal  "value",      :precision => 8, :scale => 2
+    t.integer  "game_id",    :null => false
+    t.string   "vendor",     :null => false
+    t.integer  "value"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
