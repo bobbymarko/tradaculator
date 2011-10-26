@@ -95,7 +95,7 @@ class TradeInValue
       response[:products].each do |game|
         game[:trade_in_value][:glyde] = get_glyde(game[:upc])
         vendor = "glyde"
-        value = game[:trade_in_value][:glyde][:value]
+        value = game[:trade_in_value][:glyde][:value].to_i
         game = Game.where(:upc => game[:upc]).first
         if value && game.values.where(:vendor => vendor, :value => value).recent.exists?
         elsif value

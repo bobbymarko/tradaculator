@@ -13,7 +13,7 @@ class Value < ActiveRecord::Base
   
   
   def self.recent
-    where("values.created_at > ?", 2.hours)
+    where("values.created_at > ?", 2.hours.ago)
   end
   
   def value_as_currency
