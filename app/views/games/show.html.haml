@@ -1,0 +1,11 @@
+%div{:style=> "font-size:16px;"}
+  %h1
+    = @game.title
+    = @game.platform
+  = image_tag @game.image
+  %table
+    - @game.values.each do |v|
+      %tr
+        %td= v.vendor.gsub('_',' ')
+        %td= v.value_as_currency
+        %td= distance_of_time_in_words_to_now v.created_at
