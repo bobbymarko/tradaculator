@@ -15,4 +15,8 @@ class Value < ActiveRecord::Base
   def value_as_currency
     currency value
   end
+  
+  def value_as_decimal
+    value.to_f/100
+  end
 end

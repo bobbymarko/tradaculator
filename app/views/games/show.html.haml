@@ -6,15 +6,15 @@
 
   - amazon_values = []
   - @game.values.where(:vendor=>'amazon').each do |v|
-    - amazon_values << "[#{v.created_at.to_f.to_i * 1000},#{v.value / 100}]"
+    - amazon_values << "[#{v.created_at.to_f.to_i * 1000},#{v.value_as_decimal}]"
 
   - best_buy_values = []
   - @game.values.where(:vendor=>'best_buy').each do |v|
-    - best_buy_values << "[#{v.created_at.to_f.to_i * 1000},#{v.value / 100}]"
+    - best_buy_values << "[#{v.created_at.to_f.to_i * 1000},#{v.value_as_decimal}]"
 
   - glyde_values = []
   - @game.values.where(:vendor=>'glyde').each do |v|
-    - glyde_values << "[#{v.created_at.to_f.to_i * 1000},#{v.value / 100}]"
+    - glyde_values << "[#{v.created_at.to_f.to_i * 1000},#{v.value_as_decimal}]"
 
   #graph
   - content_for :footer do
