@@ -80,11 +80,12 @@ class TradeInValue
             #TODO we shouldn't return a url if the game isn't trade inable
             r[:trade_in_value][:best_buy][:url] = "http://www.bestbuytradein.com/bb/QuoteCalculatorVideoGames.cfm?kw=#{game["upc"]}&pf=all&af=9a029aae-d650-44f8-a1c7-c33aa7fd0e27"
             
-            vendor = "best_buy"
-            game = Game.where(:upc => game["upc"]).first
-            if value && game.values.where(:vendor => vendor, :value => value).recent.exists?
-            elsif value
-              game.values.create(:vendor => vendor, :value => value)
+            if value
+              vendor = "best_buy"
+              game = Game.where(:upc => game["upc"]).first
+              unless game.values.where(:vendor => vendor, :value => value).recent.exists?
+                game.values.create(:vendor => vendor, :value => value)
+              end
             end
             
             break
@@ -94,12 +95,13 @@ class TradeInValue
       
       response[:products].each do |game|
         game[:trade_in_value][:glyde] = get_glyde(game[:upc])
-        vendor = "glyde"
-        value = game[:trade_in_value][:glyde][:value].to_i
-        game = Game.where(:upc => game[:upc]).first
-        if value && game.values.where(:vendor => vendor, :value => value).recent.exists?
-        elsif value
-          game.values.create(:vendor => vendor, :value => value)
+        value = game[:trade_in_value][:glyde][:value]
+        if value
+          vendor = "glyde"
+          game = Game.where(:upc => game[:upc]).first
+          unless game.values.where(:vendor => vendor, :value => value).recent.exists?
+            game.values.create(:vendor => vendor, :value => value)
+          end
         end
         
       end
@@ -118,7 +120,7 @@ class TradeInValue
   def self.get_glyde(upc)
     glyde = JSON.parse(Nokogiri::HTML(open("http://api.glyde.com/price/upc/#{upc}?api_key=#{API_KEYS["glyde"]["key"]}&v=1&responseType=application/json"))) rescue false
     	if  glyde && glyde['is_sellable']
-    		glyde_value = glyde['suggested_price']['cents'] * 0.88  - 125 rescue nil
+    		glyde_value = (glyde['suggested_price']['cents'] * 0.88  - 125).to_i rescue nil
     		{:value => glyde_value, :url => "http://glyde.com/sell?hash=%21by%2Fproduct%2Flineup%2Fgames%2F#{glyde['glu_id']}#!show/product/#{glyde['glu_id']}"}
     	else
     	 {:value => nil, :url => nil}
