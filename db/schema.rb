@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111026033119) do
+ActiveRecord::Schema.define(:version => 20111030211106) do
 
   create_table "games", :force => true do |t|
     t.string   "title"
@@ -22,6 +22,9 @@ ActiveRecord::Schema.define(:version => 20111026033119) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "small_image"
+    t.string   "amazon_id"
+    t.string   "best_buy_id"
+    t.string   "glyde_id"
   end
 
   add_index "games", ["upc"], :name => "index_games_on_upc"

@@ -12,6 +12,10 @@ class Value < ActiveRecord::Base
     where("values.created_at > ?", 2.hours.ago)
   end
   
+  def self.latest
+    first
+  end
+  
   def value_as_currency
     currency value
   end

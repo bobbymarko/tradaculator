@@ -56,17 +56,19 @@ class TradeInValue
               :glyde        =>  {:value => nil, :url => nil}
           }}
           
-          game = Game.find_or_create_by_upc(upc)
-          game.image = image
-          game.large_image = large_image
-          game.small_image = small_image
-          game.title = title
-          game.platform = platform
-          if value && game.values.where(:vendor => vendor, :value => value).recent.exists?
-          elsif value
-            game.values.build(:vendor => vendor, :value => value )
+          game_record = Game.find_or_create_by_upc(upc)
+          game_record.image = image
+          game_record.large_image = large_image
+          game_record.small_image = small_image
+          game_record.title = title
+          game_record.platform = platform
+          game_record.amazon_id = game['ASIN']
+          if value
+            unless game_record.values.where(:vendor => vendor, :value => value).recent.exists?
+              game_record.values.build(:vendor => vendor, :value => value )
+            end
           end
-          game.save!
+          game_record.save!
           #raise response.inspect
         end
       end
@@ -82,9 +84,11 @@ class TradeInValue
             
             if value
               vendor = "best_buy"
-              game = Game.where(:upc => game["upc"]).first
-              unless game.values.where(:vendor => vendor, :value => value).recent.exists?
-                game.values.create(:vendor => vendor, :value => value)
+              game_record = Game.where(:upc => game["upc"]).first
+              game_record.best_buy_id = game["upc"]
+              game_record.save
+              unless game_record.values.where(:vendor => vendor, :value => value).recent.exists?
+                game_record.values.create(:vendor => vendor, :value => value)
               end
             end
             
@@ -98,9 +102,11 @@ class TradeInValue
         value = game[:trade_in_value][:glyde][:value]
         if value
           vendor = "glyde"
-          game = Game.where(:upc => game[:upc]).first
-          unless game.values.where(:vendor => vendor, :value => value).recent.exists?
-            game.values.create(:vendor => vendor, :value => value)
+          game_record = Game.where(:upc => game[:upc]).first
+          game_record.glyde_id = game[:trade_in_value][:glyde][:glyde_id]
+          game_record.save
+          unless game_record.values.where(:vendor => vendor, :value => value).recent.exists?
+            game_record.values.create(:vendor => vendor, :value => value)
           end
         end
         
@@ -119,11 +125,11 @@ class TradeInValue
   
   def self.get_glyde(upc)
     glyde = JSON.parse(Nokogiri::HTML(open("http://api.glyde.com/price/upc/#{upc}?api_key=#{API_KEYS["glyde"]["key"]}&v=1&responseType=application/json"))) rescue false
-    	if  glyde && glyde['is_sellable']
+    	if glyde && glyde['is_sellable']
     		glyde_value = (glyde['suggested_price']['cents'] * 0.88  - 125).to_i rescue nil
-    		{:value => glyde_value, :url => "http://glyde.com/sell?hash=%21by%2Fproduct%2Flineup%2Fgames%2F#{glyde['glu_id']}#!show/product/#{glyde['glu_id']}"}
+    		{:value => glyde_value, :url => "http://glyde.com/sell?hash=%21by%2Fproduct%2Flineup%2Fgames%2F#{glyde['glu_id']}#!show/product/#{glyde['glu_id']}", :glyde_id => glyde['glu_id']}
     	else
-    	 {:value => nil, :url => nil}
+    	 {:value => nil, :url => nil, :glyde_id => nil}
     	end
   end
   

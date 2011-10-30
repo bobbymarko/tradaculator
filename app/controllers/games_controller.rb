@@ -7,6 +7,8 @@ class GamesController < ApplicationController
   def show
     expires_in 30.minutes, :public => true
     @game = Game.find_by_upc(params[:upc])
+    @vendors = Vendor.all
+    
     respond_with @game
   end
 end

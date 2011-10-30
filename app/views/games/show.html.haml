@@ -25,7 +25,7 @@
           var glyde = [#{glyde_values.join(',')}];
           
           var options = {
-              xaxis: { mode: "time", tickLength: 5 },
+              xaxis: { mode: "time", tickLength: 5, timeformat: "%m/%d %h:%M%p" },
               yaxis: { mode: "money", tickDecimals: 2, tickFormatter:
                 function (v, axis) { return "$" + v.toFixed(axis.tickDecimals) }
               },
@@ -80,10 +80,29 @@
           
           $.plot($("#graph"), data, options);
       });
-      
-  %table
-    - @game.values.each do |v|
-      %tr
-        %td= v.vendor.gsub('_',' ')
-        %td= v.value_as_currency
-        %td= distance_of_time_in_words_to_now v.created_at
+        
+  %ul
+    - @vendors.each do |vendor|
+      - url = fill_in(vendor[:url], :id => eval("@game.#{vendor[:permalink]}_id"))
+      - latest_value = @game.values.where(:vendor => vendor[:permalink]).latest
+      - if url && latest_value
+        %li
+          .pbw
+            .b
+              %a.vn{:href=> url }
+                = vendor[:name]
+              %a.tv{:href=> url }
+                = currency latest_value.value
+          = vendor[:conditions]
+        
+  %ul
+    %li
+      %a{:href=>"#"}
+        Add to game library
+    %li
+      %a{:href=>"#"}
+        Share trade-in values
+    %li
+      %a{:href=>"#"}
+        Set price alert
+  

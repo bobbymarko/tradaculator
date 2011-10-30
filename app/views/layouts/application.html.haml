@@ -16,9 +16,9 @@
   /[if lt IE 9]
     = javascript_include_tag "//html5shiv.googlecode.com/svn/trunk/html5.js"
   /[if lte IE 8]
-    %script{:src=>javascript_path('excanvas.js')}
+    %script{:src=>javascript_path('excanvas')}
   = csrf_meta_tags
-%body
+%body{:class=>"#{controller_name}_template"}
   %header#mh
     %div
       %a#b{:href=>root_url} Tradaculator
@@ -33,7 +33,7 @@
     = "Follow the project and give us feedback #{link_to "@tradaculator", "http://twitter.com/tradaculator"}.".html_safe
   = javascript_include_tag "//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"
   :javascript
-    window.jQuery || document.write('<script src="#{javascript_path('jquery.js')}"><\/script>')
+    window.jQuery || document.write('<script src="#{javascript_path('jquery')}"><\/script>')
   = javascript_include_tag "application"
   :javascript
     var _gaq=[['_setAccount','UA-6089161-18'],['_trackPageview'],['_trackPageLoadTime']];
