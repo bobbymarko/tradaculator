@@ -3,9 +3,10 @@ body{background: #eee image-url("bg.jpg"); font:100% sans-serif; color:#444; -we
 header,footer,aside,section,article,figure{display:block;}
 a{color:#4ab;}
 h1{font-size:.875em; color:#078; font-weight: bold; margin:.5em 0 .3em; height:2.3em; max-height:2.3em; overflow: hidden;}
+  h1 a{text-decoration: none; color:#078;}
 h3{ text-align: center; color:#777; text-shadow:0 1px 0 #fff; font:100 italic 3em museo-slab-1,museo-slab-2,Georgia,serif; margin:0 auto 40px;clear:both; }
 
-#loading{ height:30px; margin-bottom:30px;	}
+#loading{ height:50px; margin-bottom:30px; overflow: hidden;	}
 	
 p{margin:0;}
 #mh{background:#555; color:#ddc; padding:10px; font:100 italic 1em museo-slab-1,museo-slab-2,Georgia,serif;-webkit-box-shadow: 0 2px 0 #555, 0 12px 0 #707070, 0 1px 0 #797979; box-shadow: 0 2px 0 #555, 0 12px 0 #707070, 0 1px 0 #797979;}

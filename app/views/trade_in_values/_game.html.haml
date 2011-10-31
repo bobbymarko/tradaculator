@@ -5,7 +5,9 @@
       %a{:href=>game_path(game[:upc])}
         %img{:src=>game[:image] || image_path('image_not_available.gif')}
     %header
-      %h1= game[:title]
+      %h1
+        %a{:href=>game_path(game[:upc])}
+          = game[:title]
       %p= game[:platform]
     .pbw
       .b

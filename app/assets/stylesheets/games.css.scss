@@ -1,1 +1,5 @@
-#graph{width:100%; height:300px;}
+#shutter{background:#49494a; color:#fff; font-size:12px; padding:20px; box-shadow:inset 0 0 20px rgba(0,0,0,0.5); position: relative;}
+  #shutter:before{width:0; height:0; border:20px solid red; border-width:10px 20px; border-color: transparent transparent #3a3a3b; content: ''; position: absolute; top:-20px; left:12%; margin-left: -10px; z-index: 99;}
+  #shutter strong{color:#dedbc1;}
+  #shutter ul{list-style-type: none; padding: 0;}
+  #graph{width:60%; height:300px;}

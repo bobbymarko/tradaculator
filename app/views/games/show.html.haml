@@ -1,9 +1,12 @@
-%div{:style=> "font-size:16px;"}
-  %h1
-    = @game.title
-    = @game.platform
-  = image_tag @game.image
+.p>
+  .pw
+    .f
+      %img{:src => @game.image || image_path('image_not_available.gif')}
+    %header
+      %h1= @game.title
+      %p= @game.platform
 
+#shutter{:style=> "font-size:16px;"}
   - amazon_values = []
   - @game.values.where(:vendor=>'amazon').each do |v|
     - amazon_values << "[#{v.created_at.to_f.to_i * 1000},#{v.value_as_decimal}]"
@@ -80,6 +83,17 @@
           
           $.plot($("#graph"), data, options);
       });
+
+  %ul
+    %li
+      %a{:href=>"#"}
+        Add to game library
+    %li
+      %a{:href=>"#"}
+        Share trade-in values
+    %li
+      %a{:href=>"#"}
+        Set price alert
         
   %ul
     - @vendors.each do |vendor|
@@ -94,15 +108,4 @@
               %a.tv{:href=> url }
                 = currency latest_value.value
           = vendor[:conditions]
-        
-  %ul
-    %li
-      %a{:href=>"#"}
-        Add to game library
-    %li
-      %a{:href=>"#"}
-        Share trade-in values
-    %li
-      %a{:href=>"#"}
-        Set price alert
   
