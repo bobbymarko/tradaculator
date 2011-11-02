@@ -20,6 +20,29 @@
     }
   });
   
+  $('.game-link').live('click',function(e){
+    var me = $(this);
+    $.ajax({
+      url: $(this).attr('href'),
+      cache: 'false',
+      success: function(data){
+        $('#shutter').remove();
+        
+        //FIND WHERE TO POSITION BY FINDING NEXT ELEMENT WITH A DIFFERENT Y POSITION AND PREPENDING
+        var positionTop = me.offset().top;
+        me.closest('.p').nextAll().each(function(){
+          if (positionTop !== $(this).offset().top){
+            $(this).before(data);
+            render_graph();
+            return false;
+          }
+        });
+      }
+    })
+    e.preventDefault();
+  });
+  
+  
   $('.tv').live('click',function(e){
     $(this).closest('.p').toggleClass('active').siblings().removeClass('active');
     e.stopPropagation();
@@ -69,5 +92,65 @@
       });
     }
   });
+  
 
+  if ($('#graph').length > 0){
+    render_graph();
+  }
+  
+  function render_graph(){
+    var options = {
+        xaxis: { mode: "time", tickLength: 5, timeformat: "%m/%d" },
+        yaxis: { mode: "money", tickDecimals: 2, tickFormatter:
+          function (v, axis) { return "$" + v.toFixed(axis.tickDecimals) }
+        },
+        points: {
+          radius: 2,
+          symbol: "circle"
+        },
+        series: {
+          lines: { show: true, fill: false },
+          points: { show: true, fill: true }
+        },
+        grid: {clickable: true, hoverable: true, color:'#383838', borderWidth:1},
+        colors: [ '#d58103', '#4c85d2', '#d4c125' ],
+        legend: {backgroundOpacity:0, noColumns:3,margin:[0,-25]}
+    };
+    
+    function showTooltip(x, y, contents) {
+        $('<div id="tooltip">' + contents + '</div>').css( {
+            position: 'absolute',
+            top: y,
+            left: x,
+        }).appendTo("body");
+    }
+    
+    var previousPoint = null;
+    
+    $("#graph").bind("plothover", function (event, pos, item) {
+        if (item) {
+            if (previousPoint != item.dataIndex) {
+                previousPoint = item.dataIndex;
+                
+                $("#tooltip").remove();
+                var x = item.datapoint[0].toFixed(2),
+                    y = item.datapoint[1].toFixed(2);
+                
+                showTooltip(item.pageX, item.pageY, item.series.label + ": $" + y);
+            }
+        }
+        else {
+            $("#tooltip").remove();
+            previousPoint = null;            
+        }
+    });
+    
+    var data = [
+      { label: "Amazon", data: amazon },
+      { label: "Best Buy", data: best_buy },
+      { label: "Glyde", data: glyde }
+    ];
+    
+    $.plot($("#graph"), data, options);
+  }
 }());

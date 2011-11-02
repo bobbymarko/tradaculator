@@ -1,0 +1,45 @@
+#shutter{:style=> "font-size:16px;"}
+  - amazon_values = []
+  - @game.values.where(:vendor=>'amazon').each do |v|
+    - amazon_values << "[#{v.created_at.to_f.to_i * 1000},#{v.value_as_decimal}]"
+
+  - best_buy_values = []
+  - @game.values.where(:vendor=>'best_buy').each do |v|
+    - best_buy_values << "[#{v.created_at.to_f.to_i * 1000},#{v.value_as_decimal}]"
+
+  - glyde_values = []
+  - @game.values.where(:vendor=>'glyde').each do |v|
+    - glyde_values << "[#{v.created_at.to_f.to_i * 1000},#{v.value_as_decimal}]"
+  .column-primary
+    #graph
+      :javascript
+        var amazon = [#{amazon_values.join(',')}];
+        var best_buy = [#{best_buy_values.join(',')}];
+        var glyde = [#{glyde_values.join(',')}];
+                  
+    %ul.side-by-side
+      - @vendors.each do |vendor|
+        - url = fill_in(vendor[:url], :id => eval("@game.#{vendor[:permalink]}_id"))
+        - latest_value = @game.values.where(:vendor => vendor[:permalink]).latest
+        - if url && latest_value
+          %li
+            .pbw
+              .b
+                %a.vn{:href=> url }
+                  = vendor[:name]
+                %a.tv
+                  = currency latest_value.value
+            .description
+              = vendor[:conditions]
+            
+  .column-secondary
+    %ul.tool-list
+      %li
+        %a{:href=>"#"}
+          Add to game library
+      %li
+        %a{:href=>"#"}
+          Share trade-in values
+      %li
+        %a{:href=>"#"}
+          Set price alert

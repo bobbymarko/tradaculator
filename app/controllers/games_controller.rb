@@ -9,6 +9,11 @@ class GamesController < ApplicationController
     @game = Game.find_by_upc(params[:upc])
     @vendors = Vendor.all
     
-    respond_with @game
+    if request.xhr?
+      render "_shutter", :layout => false
+      return
+    else
+      respond_with(@game)
+    end
   end
 end
