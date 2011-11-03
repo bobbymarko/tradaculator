@@ -8,5 +8,6 @@
 //= require jquery.flot
 //= require jquery.flot.resize
 //= require spin
+//= require jquery.scrollTo-1.4.2
 //= require trade_in_values
 //= require games

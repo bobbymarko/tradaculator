@@ -18,22 +18,35 @@
     }else{
       $('.active').removeClass('active');
     }
+    
+    if ($(e.target).closest('#shutter').length > 0 || $(e.target).closest('.current').length > 0){ // check if we're clicking inside the shutter or our product
+    }else{
+      closeShutter();
+    }
+
   });
   
   $('.game-link').live('click',function(e){
     var me = $(this);
+    var product = me.closest('.p');
+    var url = $(this).attr('href');
     $.ajax({
-      url: $(this).attr('href'),
+      url: url + "?ajax=true",
       cache: 'false',
       success: function(data){
-        $('#shutter').remove();
-        
+        clicky.log('url','PDP Ajax Load');
+        closeShutter(product);
+        product.addClass('current');
+        $('body').addClass('shuttered');
         //FIND WHERE TO POSITION BY FINDING NEXT ELEMENT WITH A DIFFERENT Y POSITION AND PREPENDING
-        var positionTop = me.offset().top;
-        me.closest('.p').nextAll().each(function(){
+        var positionTop = product.offset().top;
+        $(window).scrollTo(positionTop, {duration:500});
+
+        product.nextAll().each(function(){
           if (positionTop !== $(this).offset().top){
             $(this).before(data);
-            render_graph();
+            renderGraph();
+            moveArrow(product);
             return false;
           }
         });
@@ -42,9 +55,21 @@
     e.preventDefault();
   });
   
+  function moveArrow(el){
+    var positionLeft = el.position().left + (el.width()/2);
+    $('#arrow').css('left', positionLeft+'px');
+  }
+  
+  function closeShutter(){
+    $('#shutter').remove();
+    $('.current').removeClass('current');
+    $('.shuttered').removeClass('shuttered');
+  }
+  
   
   $('.tv').live('click',function(e){
     $(this).closest('.p').toggleClass('active').siblings().removeClass('active');
+    clicky.log('#dropdown','Product Dropdown Clicked');
     e.stopPropagation();
   });
 	
@@ -95,10 +120,10 @@
   
 
   if ($('#graph').length > 0){
-    render_graph();
+    renderGraph();
   }
   
-  function render_graph(){
+  function renderGraph(){
     var options = {
         xaxis: { mode: "time", tickLength: 5, timeformat: "%m/%d" },
         yaxis: { mode: "money", tickDecimals: 2, tickFormatter:

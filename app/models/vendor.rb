@@ -10,13 +10,13 @@ class Vendor
       {
         :name => "Best Buy",
         :permalink => "best_buy",
-        :conditions => "<strong>Price payed in Cash.</strong> Disc plays perfectly. May have minor scratches. Case has no more than a few minor scratches. No damage to game instructions. No personal markings. Not a previous rental.".html_safe,
+        :conditions => "<strong>Price payed in Best Buy Gift Cards.</strong> Discs have no chips/cracks and do not have any writing or other personalization on them.".html_safe,
         :url => "http://www.bestbuytradein.com/bb/QuoteCalculatorVideoGames.cfm?kw={{id}}&pf=all&af=9a029aae-d650-44f8-a1c7-c33aa7fd0e27"
       },
       {
         :name => "Glyde",
         :permalink => "glyde",
-        :conditions => "<strong>Price payed in Best Buy Gift Cards.</strong> Discs have no chips/cracks and do not have any writing or other personalization on them.".html_safe,
+        :conditions => "<strong>Price payed in Cash.</strong> Disc plays perfectly. May have minor scratches. Case has no more than a few minor scratches. No damage to game instructions. No personal markings. Not a previous rental.".html_safe,
         :url => "http://glyde.com/sell?hash=%21by%2Fproduct%2Flineup%2Fgames%2F{{id}}#!show/product/{{id}}"
       }
     ]

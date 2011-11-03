@@ -8,7 +8,6 @@ class GamesController < ApplicationController
     expires_in 30.minutes, :public => true
     @game = Game.find_by_upc(params[:upc])
     @vendors = Vendor.all
-    
     if request.xhr?
       render "_shutter", :layout => false
       return

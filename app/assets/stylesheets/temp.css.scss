@@ -2,6 +2,7 @@ html,body{margin:0; padding:0;}
 body{background: #eee image-url("bg.jpg"); font:100% sans-serif; color:#444; -webkit-text-size-adjust:100%;}
 header,footer,aside,section,article,figure{display:block;}
 a{color:#4ab;}
+a img{border:none;}
 h1{font-size:.875em; color:#078; font-weight: bold; margin:.5em 0 .3em; height:2.3em; max-height:2.3em; overflow: hidden;}
   h1 a{text-decoration: none; color:#078;}
 h3{ text-align: center; color:#777; text-shadow:0 1px 0 #fff; font:100 italic 3em museo-slab-1,museo-slab-2,Georgia,serif; margin:0 auto 40px;clear:both; }
@@ -20,7 +21,10 @@ p{margin:0;}
 		#s:focus{outline:none;background: #fff;}
 	#m{position: absolute; right: 5px; top:50%; margin-top:-7px}
 #pl{position: relative; margin:20px auto; padding:0; width:890px; font-size:0;}
-.p{position:relative; text-align: center; width:220px; display: inline-block; vertical-align: top; margin:0; padding:20px 0;  border-bottom:1px solid #f7f5f5; border-top:1px solid #d4d3d3; font-size:16px;}
+.p{position:relative; text-align: center; width:220px; display: inline-block; vertical-align: top; margin:0; padding:20px 0;  border-bottom:1px solid #f7f5f5; border-top:1px solid #d4d3d3; font-size:16px; -webkit-transition:opacity 300ms ease-in; -moz-transition:opacity 300ms ease-in; transition:opacity 300ms ease-in;}
+
+.shuttered .p{opacity:.4}
+.shuttered .current{opacity:1;}
 	
 .pw{border-right:1px solid #d4d3d3; border-left:1px solid #f7f5f5; padding:0 10px;}
 

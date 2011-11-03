@@ -76,7 +76,7 @@ class TradeInValue
       best_buy_skus = get_best_buy(upcs)
       best_buy_skus['products'].each do |game|
         response[:products].each do |r|
-          if r[:upc] == game["upc"]
+          if game["tradeInValue"] && r[:upc] == game["upc"]
             value = game["tradeInValue"] * 100
             r[:trade_in_value][:best_buy][:value] = value
             #TODO we shouldn't return a url if the game isn't trade inable
