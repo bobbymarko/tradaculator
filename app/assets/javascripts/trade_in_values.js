@@ -38,6 +38,7 @@
   });
   
   $('.game-link').live('click',function(e){
+    e.preventDefault();
     var me = $(this);
     var product = me.closest('.p');
     var url = $(this).attr('href');
@@ -58,11 +59,10 @@
         
         product.addClass('current');
         $('body').addClass('shuttered');
-        //FIND WHERE TO POSITION BY FINDING NEXT ELEMENT WITH A DIFFERENT Y POSITION AND PREPENDING
         var positionTop = product.offset().top;
-        $(window).scrollTo(positionTop, {duration:500});
+        $(window).scrollTop(positionTop);
 
-        product.nextAll().each(function(){
+        product.nextAll().each(function(){ //FIND WHERE TO POSITION BY FINDING NEXT ELEMENT WITH A DIFFERENT Y POSITION AND PREPENDING
           if (positionTop !== $(this).offset().top){
             $(this).before(data);
             renderGraph();
@@ -72,7 +72,6 @@
         });
       }
     })
-    e.preventDefault();
   });
   
   function moveArrow(el){
