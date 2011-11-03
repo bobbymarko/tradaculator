@@ -10,6 +10,17 @@
     shadow: false // Whether to render a shadow
   });
   
+  var miniSpinner = new Spinner({
+    lines: 10, // The number of lines to draw
+    length: 7, // The length of each line
+    width: 6, // The line thickness
+    radius: 10, // The radius of the inner circle
+    color: '#fff', // #rgb or #rrggbb
+    speed: 1, // Rounds per second
+    trail: 46, // Afterglow percentage
+    shadow: true // Whether to render a shadow
+  });
+  
   
   $('html').removeClass('no-js');
 
@@ -30,12 +41,21 @@
     var me = $(this);
     var product = me.closest('.p');
     var url = $(this).attr('href');
+    // add shutter loader
+    miniSpinner.spin();
+    product.find('.f').prepend('<div class="loading"></div>');
+    product.find('.loading').append(miniSpinner.el);
+    
     $.ajax({
       url: url + "?ajax=true",
       cache: 'false',
       success: function(data){
         clicky.log('url','PDP Ajax Load');
         closeShutter(product);
+        
+        miniSpinner.stop();
+        product.find('.loading').remove();
+        
         product.addClass('current');
         $('body').addClass('shuttered');
         //FIND WHERE TO POSITION BY FINDING NEXT ELEMENT WITH A DIFFERENT Y POSITION AND PREPENDING
