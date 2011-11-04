@@ -1,8 +1,8 @@
-#shutter{background:#49494a; color:#fff; font-size:12px; padding:4%; box-shadow:inset 0 0 20px rgba(0,0,0,0.5); position: relative; clear:both; float:left;}
+#shutter{background:#49494a; color:#fff; font-size:12px; padding:20px; box-shadow:inset 0 0 20px rgba(0,0,0,0.5); position: relative; clear:both; float:left;}
   #arrow{width:0; height:0; border:10px solid red; border-color: transparent transparent #3a3a3b; content: ''; position: absolute; top:-20px; left:11.5%; margin-left: -5px;}
   #shutter strong{color:#dedbc1;}
   #shutter ul{list-style-type: none; padding: 0;}
-  #graph{width:100%; height:250px; margin:10px 0 30px; -webkit-tap-highlight-color: rgba(0,0,0,0);}
+  #graph{width:100%; height:250px; margin:20px 0 30px; -webkit-tap-highlight-color: rgba(0,0,0,0);}
     .tickLabel,.legendLabel{color:#dedbc1; font-size:12px;}
     .legendColorBox>div{border:none!important; padding:0!important;}
     #tooltip{padding:10px; background:#fff; margin:-60px 0 0 -75px; width:150px; text-align: center;}
@@ -22,8 +22,8 @@
       .side-by-side a.vn{width:49px; text-align: center;}
     .side-by-side .description{margin-left:150px;}
     
-.column-primary{width:60%; float:left;}
-.column-secondary{width:36%; float:left; margin:0 0 0 4%;}
+.column-primary{width:65%; float:left;}
+.column-secondary{width:31%; float:left; margin:0 0 0 4%;}
 
 @media (max-width:550px){
   .column-primary,.column-secondary{width:auto; float:none;}

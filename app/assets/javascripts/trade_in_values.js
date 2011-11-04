@@ -23,6 +23,9 @@
   
   
   $('html').removeClass('no-js');
+  
+  $.getScript("//platform.twitter.com/widgets.js");
+  $.getScript("https://apis.google.com/js/plusone.js");
 
   $('body').click(function(e){
     if ($(e.target).closest('.pbw').length > 0){
@@ -62,7 +65,8 @@
         var positionTop = product.offset().top;
         $(window).scrollTop(positionTop);
 
-        product.nextAll().each(function(){ //FIND WHERE TO POSITION BY FINDING NEXT ELEMENT WITH A DIFFERENT Y POSITION AND PREPENDING
+        var nextProducts = product.nextAll();
+        nextProducts.each(function(index){ //FIND WHERE TO POSITION BY FINDING NEXT ELEMENT WITH A DIFFERENT Y POSITION AND PREPENDING
           if (positionTop !== $(this).offset().top){
             $(this).before(data);
             renderGraph();

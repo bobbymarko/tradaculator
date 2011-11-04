@@ -30,8 +30,11 @@
     = yield
   = yield(:product_list_meta)
   %footer
-    = "Follow the project and give us feedback #{link_to "@tradaculator", "http://twitter.com/tradaculator"}.".html_safe
-    
+    %a{:href=>"https://twitter.com/share", :class=>"twitter-share-button", :data=>{:url=>"http://tradaculator.com", :text=>"Find the best trade-in values", :count=>"horizontal", :via=>"tradaculator", :related=>"bobbymarko:nathanmueller"}}
+      Tweet
+    .g-plusone{:data=>{:size=>"medium", :href=>"http://tradaculator.com"}}
+    .fb-like{:data=>{:href=>"http://tradaculator.com", :send=>"false", :layout=>"button_count"}}
+
   = javascript_include_tag "//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"
   :javascript
     window.jQuery || document.write('<script src="#{javascript_path('jquery.js')}"><\/script>')
@@ -55,4 +58,14 @@
   %noscript
     %p
       %img{:alt=>"Clicky", :width=>"1", :height=>"1", :src=>"//in.getclicky.com/66488119ns.gif"}
+      
+  #fb-root
+  :javascript
+    (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=201115493289816";
+    fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
   = yield(:footer)
