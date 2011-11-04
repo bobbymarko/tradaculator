@@ -31,6 +31,7 @@
   = yield(:product_list_meta)
   %footer
     = "Follow the project and give us feedback #{link_to "@tradaculator", "http://twitter.com/tradaculator"}.".html_safe
+    
   = javascript_include_tag "//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"
   :javascript
     window.jQuery || document.write('<script src="#{javascript_path('jquery.js')}"><\/script>')
