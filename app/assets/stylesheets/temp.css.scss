@@ -126,4 +126,6 @@ footer{text-align: center;font:bold .825em sans-serif; color:#989797; padding:6p
 @media (max-width:550px){
 	.p:first-child{border-top:none;}
 	.p:last-child{border-bottom: none;}
+	#mh{position: absolute;}
+	footer{position: static;}
 }
