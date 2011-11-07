@@ -55,24 +55,24 @@
       cache: 'false',
       success: function(data){
         clicky.log('url','PDP Ajax Load');
-        closeShutter(product);
-        
-        miniSpinner.stop();
-        product.find('.loading').remove();
-        
-        product.addClass('current');
-        $('body').addClass('shuttered');
-        var positionTop = product.offset().top;
-        $(window).scrollTop(positionTop);
-
-        var nextProducts = product.nextAll();
-        nextProducts.each(function(index){ //FIND WHERE TO POSITION BY FINDING NEXT ELEMENT WITH A DIFFERENT Y POSITION AND PREPENDING
-          if (positionTop !== $(this).offset().top){
-            $(this).before(data);
-            renderGraph();
-            moveArrow(product);
-            return false;
-          }
+        closeShutter(function(){
+          miniSpinner.stop();
+          product.find('.loading').remove();
+          
+          product.addClass('current');
+          $('body').addClass('shuttered');
+          var positionTop = product.offset().top;
+          $(window).scrollTop(positionTop);
+  
+          var nextProducts = product.nextAll();
+          nextProducts.each(function(index){ //FIND WHERE TO POSITION BY FINDING NEXT ELEMENT WITH A DIFFERENT Y POSITION AND PREPENDING
+            if (positionTop !== $(this).offset().top){
+              $(this).before(data);
+              renderGraph();
+              moveArrow(product);
+              return false;
+            }
+          });
         });
       }
     })
@@ -83,10 +83,14 @@
     $('#arrow').css('left', positionLeft+'px');
   }
   
-  function closeShutter(){
-    $('#shutter').remove();
-    $('.current').removeClass('current');
-    $('.shuttered').removeClass('shuttered');
+  function closeShutter(callback){
+    $('#shutter').addClass('fade-out');
+    setTimeout(function(){
+      $('#shutter').remove();
+      $('.current').removeClass('current');
+      $('body').removeClass('shuttered');
+      callback();
+    },400)
   }
   
   

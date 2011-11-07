@@ -7,11 +7,10 @@ h1{font-size:.875em; color:#078; font-weight: bold; margin:.5em 0 .3em; height:2
   h1 a{text-decoration: none; color:#078;}
 h3{ text-align: center; color:#777; text-shadow:0 1px 0 #fff; font:100 italic 3em museo-slab-1,museo-slab-2,Georgia,serif; margin:0 auto 40px;clear:both; }
 
-#loading{ height:50px; margin-bottom:30px; overflow: hidden;	}
+#loading{ height:50px; margin-bottom:60px; overflow: hidden;	}
 	
 p{margin:0;}
-#mh{background:#555; color:#ddc; padding:10px; font:100 italic 1em museo-slab-1,museo-slab-2,Georgia,serif;-webkit-box-shadow: 0 2px 0 #555, 0 12px 0 #707070, 0 1px 0 #797979; box-shadow: 0 2px 0 #555, 0 12px 0 #707070, 0 1px 0 #797979; 
-position: fixed; top:0; left:0; right:0; z-index:99;}
+#mh{background:#555; color:#ddc; padding:10px; font:100 italic 1em museo-slab-1,museo-slab-2,Georgia,serif;-webkit-box-shadow: 0 2px 0 #555, 0 12px 0 #707070, 0 1px 0 #797979; box-shadow: 0 2px 0 #555, 0 12px 0 #707070, 0 1px 0 #797979;}
 	#mh div{width:890px; margin:0 auto; position: relative; overflow: hidden;}
 #b{font:bold italic 300% museo-slab-1,museo-slab-2,Georgia,serif; float: left; text-shadow: 0 1px 0 #3a3a3a; color:#dedbc1; text-decoration:none;}
 #mh p{width:250px;position: relative;float:left; left:30px; padding-left:20px; top:10px; border-left:1px solid #707070;}
@@ -21,7 +20,7 @@ position: fixed; top:0; left:0; right:0; z-index:99;}
 	#s{width:200px; font-size:.875em; background: #ececec; -webkit-appearance: none; border-radius:.8em; border:none; padding-left:10px; color:#444;}
 		#s:focus{outline:none;background: #fff;}
 	#m{position: absolute; right: 5px; top:50%; margin-top:-7px}
-#pl{position: relative; margin:100px auto 20px; padding:0; width:890px; font-size:0;}
+#pl{position: relative; margin:20px auto; padding:0; width:890px; font-size:0;}
 .p{position:relative; text-align: center; width:220px; display: inline-block; vertical-align: top; margin:0; padding:20px 0;  border-bottom:1px solid #f7f5f5; border-top:1px solid #d4d3d3; font-size:16px; -webkit-transition:opacity 300ms ease-in; -moz-transition:opacity 300ms ease-in; transition:opacity 300ms ease-in;}
 
 .shuttered .p{opacity:.4}
@@ -89,9 +88,10 @@ font-weight: bold; color:#252a32; border-left:1px solid #198b9f; float:left; pad
 			.dd a:hover{text-decoration: underline;}
 			.dd span{float:right;}
 			
-footer{text-align: center;font:bold .825em sans-serif; color:#989797; padding:6px 5px 5px; clear:both; background: #595959; position: fixed; bottom:0; left:0; right:0; -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.6); box-shadow: 0 0 10px rgba(0,0,0,0.6);}
+footer{font:bold .825em sans-serif; color:#989797; padding:6px 5px 5px; clear:both; background: #595959; position: fixed; bottom:0; left:0; right:0; -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.6); box-shadow: 0 0 10px rgba(0,0,0,0.6); line-height: 0;}
 	footer a{text-decoration: none;}
 .twitter-share-button, .fb-like, #___plusone_0 { vertical-align:top; opacity:.5; -webkit-transition: opacity 300ms ease-in; -moz-transition: opacity 300ms ease-in; transition: opacity 300ms ease-in;}
+  #___plusone_0{width:70px!important;}
   footer:hover .twitter-share-button, footer:hover .fb-like, footer:hover #___plusone_0{opacity:1;}
 @media(min-width:769px){
 	.p:nth-child(-n+4){border-top:none;}
@@ -109,7 +109,7 @@ footer{text-align: center;font:bold .825em sans-serif; color:#989797; padding:6p
 		#b{float:none; font-size:2.2em;}
 		#mh form{float: none; width:280px; margin:0 auto;}
 		#s{width:270px;  }
-	#pl{margin:12px 0 0; width:auto; margin-top:95px;}
+	#pl{margin:12px 0 0; width:auto;}
 		#pl:after{content:""; display:table; clear:both;}
 	.p{text-align: left; float:none;  width:92%; margin:0 4%; padding:10px 0; display: block; float:left;}
 		.pw{border-left:none; border-right:none; padding:0;}
@@ -126,6 +126,6 @@ footer{text-align: center;font:bold .825em sans-serif; color:#989797; padding:6p
 @media (max-width:550px){
 	.p:first-child{border-top:none;}
 	.p:last-child{border-bottom: none;}
-	#mh{position: absolute;}
+	#loading{margin:10px 0 30px;}
 	footer{position: static;}
 }
