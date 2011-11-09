@@ -1,6 +1,6 @@
 html,body{margin:0; padding:0;}
 body{background: #eee image-url("bg.jpg"); font:100% sans-serif; color:#444; -webkit-text-size-adjust:100%;}
-header,footer,aside,section,article,figure{display:block;}
+header,#footer,aside,section,article,figure{display:block;}
 a{color:#4ab;}
 a img{border:none;}
 h1{font-size:.875em; color:#078; font-weight: bold; margin:.5em 0 .3em; height:2.3em; max-height:2.3em; overflow: hidden;}
@@ -88,11 +88,12 @@ font-weight: bold; color:#252a32; border-left:1px solid #198b9f; float:left; pad
 			.dd a:hover{text-decoration: underline;}
 			.dd span{float:right;}
 			
-footer{font:bold .825em sans-serif; color:#989797; padding:6px 5px 5px; clear:both; background: #595959; position: fixed; bottom:0; left:0; right:0; -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.6); box-shadow: 0 0 10px rgba(0,0,0,0.6); line-height: 0;}
-	footer a{text-decoration: none;}
+#footer{font:.6em sans-serif; color:#989797; padding:6px 5px 5px; clear:both; background: #595959; position: fixed; bottom:0; left:0; right:0; -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.6); box-shadow: 0 0 10px rgba(0,0,0,0.6); line-height: 0; z-index:2000000001;}
+	#footer a{text-decoration: none; color:#DEDBC1;}
+	.typekit{float:right; padding:8px;}
 .twitter-share-button, .fb-like, #___plusone_0 { vertical-align:top; opacity:.5; -webkit-transition: opacity 300ms ease-in; -moz-transition: opacity 300ms ease-in; transition: opacity 300ms ease-in;}
   #___plusone_0{width:70px!important;}
-  footer:hover .twitter-share-button, footer:hover .fb-like, footer:hover #___plusone_0{opacity:1;}
+  #footer:hover .twitter-share-button, #footer:hover .fb-like, #footer:hover #___plusone_0{opacity:1;}
 @media(min-width:769px){
 	.p:nth-child(-n+4){border-top:none;}
 	.p:nth-last-child(-n+4){border-bottom: none;}
@@ -127,5 +128,5 @@ footer{font:bold .825em sans-serif; color:#989797; padding:6px 5px 5px; clear:bo
 	.p:first-child{border-top:none;}
 	.p:last-child{border-bottom: none;}
 	#loading{margin:10px 0 30px;}
-	footer{position: static;}
+	#footer{position: static;}
 }
