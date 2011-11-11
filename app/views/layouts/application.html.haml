@@ -30,35 +30,21 @@
     = yield
   = yield(:product_list_meta)
   %footer#footer
+    %a#back-to-top.exit-stage-right{:href=>"#mh"}
+      Back to top
     %a.typekit{:href=>"https://typekit.com/colophons/eqp1oco"} Fonts from Typekit
-    %a{:href=>"https://twitter.com/share", :class=>"twitter-share-button", :data=>{:url=>"http://tradaculator.com", :text=>"Find the best trade-in values", :count=>"horizontal", :via=>"tradaculator", :related=>"bobbymarko:nathanmueller"}}
-      Tweet
-    .g-plusone{:data=>{:size=>"medium", :href=>"http://tradaculator.com"}}
-    .fb-like{:data=>{:href=>"http://tradaculator.com", :send=>"false", :layout=>"button_count"}}
+    #social-buttons
+      %a{:href=>"https://twitter.com/share", :class=>"twitter-share-button", :data=>{:url=>"http://tradaculator.com", :text=>"Find the best trade-in values", :count=>"horizontal", :via=>"tradaculator", :related=>"bobbymarko:nathanmueller"}}
+        Tweet
+      .g-plusone{:data=>{:size=>"medium", :href=>"http://tradaculator.com"}}
+      .fb-like{:data=>{:href=>"http://tradaculator.com", :send=>"false", :layout=>"button_count"}}
      
   = javascript_include_tag "//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"
   :javascript
     window.jQuery || document.write('<script src="#{javascript_path('jquery.js')}"><\/script>')
   = javascript_include_tag "application"
-  :javascript
-    var _gaq=[['_setAccount','UA-6089161-18'],['_trackPageview'],['_trackPageLoadTime']];
-    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-      s.parentNode.insertBefore(g,s)}(document,'script'));
-  :javascript
-    var clicky_site_ids = clicky_site_ids || [];
-    clicky_site_ids.push(66488119);
-    (function() {
-    var s = document.createElement('script');
-    s.type = 'text/javascript';
-    s.async = true;
-    s.src = '//static.getclicky.com/js';
-    ( document.getElementsByTagName('head')[0] ||
-    document.getElementsByTagName('body')[0] ).appendChild( s );
-    })();
   %noscript
     %p
       %img{:alt=>"Clicky", :width=>"1", :height=>"1", :src=>"//in.getclicky.com/66488119ns.gif"}
-      
   #fb-root
   = yield(:footer)

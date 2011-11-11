@@ -1,4 +1,4 @@
-(function() {
+$(function() {
   var spinner = new Spinner({
     lines: 10, // The number of lines to draw
     length: 7, // The length of each line
@@ -23,16 +23,6 @@
   
   
   $('html').removeClass('no-js');
-  
-  $.getScript("//platform.twitter.com/widgets.js");
-  $.getScript("https://apis.google.com/js/plusone.js");
-  (function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) {return;}
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=201115493289816";
-    fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
 
   $('body').click(function(e){
     if ($(e.target).closest('.pbw').length > 0){
@@ -45,6 +35,19 @@
       closeShutter();
     }
 
+  });
+  
+  $('#back-to-top').click(function(e){
+    $(window).scrollTop(0);
+    e.preventDefault();
+  });
+  
+  $(window).scroll(function(e){
+    if ($(window).scrollTop() > 200){
+      $('#back-to-top').removeClass('exit-stage-right');
+    }else{
+      $('#back-to-top').addClass('exit-stage-right');
+    }
   });
   
   $('.game-link').live('click',function(e){
