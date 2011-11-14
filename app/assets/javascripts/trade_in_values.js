@@ -60,6 +60,9 @@ $(function() {
     product.find('.f').prepend('<div class="loading"></div>');
     product.find('.loading').append(miniSpinner.el);
     
+    var positionTop = product.offset().top;
+    $(window).scrollTop(positionTop);
+    
     $.ajax({
       url: url + "?ajax=true",
       cache: 'false',
@@ -71,15 +74,18 @@ $(function() {
           
           product.addClass('current');
           $('body').addClass('shuttered');
-          var positionTop = product.offset().top;
-          $(window).scrollTop(positionTop);
-  
+
           var nextProducts = product.nextAll();
           nextProducts.each(function(index){ //FIND WHERE TO POSITION BY FINDING NEXT ELEMENT WITH A DIFFERENT Y POSITION AND PREPENDING
             if (positionTop !== $(this).offset().top){
               $(this).before(data);
               renderGraph();
               moveArrow(product);
+              $('#shutter').append('<a href="#close" class="close" title="Close">&times;</a>');
+              $('.close').click(function(e){
+                closeShutter()
+                e.preventDefault();
+              });
               return false;
             }
           });
@@ -99,7 +105,8 @@ $(function() {
       $('#shutter').remove();
       $('.current').removeClass('current');
       $('body').removeClass('shuttered');
-      callback();
+      if (callback)
+        callback();
     },400)
   }
   

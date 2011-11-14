@@ -68,7 +68,7 @@ class TradeInValue
               game_record.values.build(:vendor => vendor, :value => value )
             end
           end
-          game_record.save!
+          game_record.save
           #raise response.inspect
         end
       end
