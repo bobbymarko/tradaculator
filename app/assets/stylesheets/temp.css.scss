@@ -30,7 +30,7 @@ p{margin:0;}
 	
 .pw{border-right:1px solid #d4d3d3; border-left:1px solid #f7f5f5; padding:0 10px;}
 
-.f{height:160px; display: table-cell; vertical-align: bottom; width:200px; line-height: 0;}
+.f{height:160px; display: table-cell; vertical-align: bottom; width:200px; line-height: 0; position: relative;}
 
 .p header p{font-size:.75em; font-weight: bold; margin:0 0 .5em; height:1em;}
 
@@ -109,6 +109,8 @@ background: linear-gradient(#1b95aa,#06687a); /* W3C */
 #back-to-top:before{border-color:transparent transparent #6bb0bc; top:8px;}
 .exit-stage-right{-webkit-transform:translate(0, 50px); -webkit-transform:translate3d(0, 50px, 0); -moz-transform:translate(0, 50px); -moz-transform:translate3d(0, 50px, 0); transform:translate(0, 50px); transform:translate3d(0, 50px, 0); opacity:0;}
 
+#error-message{background:purple; color:#fff; font-size:20px; font-weight: bold; text-align: center; position: fixed; top:0; left:0; right:0; padding:10px; z-index: 999;}
+
 @media(min-width:769px){
 	.p:nth-child(-n+4){border-top:none;}
 	.p:nth-last-child(-n+4){border-bottom: none;}
@@ -130,7 +132,7 @@ background: linear-gradient(#1b95aa,#06687a); /* W3C */
 	.p{text-align: left; float:none;  width:92%; margin:0 4%; padding:10px 0; display: block; float:left;}
 		.pw{border-left:none; border-right:none; padding:0;}
 		.p header p{margin-bottom:.75em;}
-		
+		.p .loading>div{top:40px;}
 	.f{float:left; width:80px; height: auto; min-height: 80px; margin:0 20px 0 0;}
 		.f img{max-width:100%; display: block;}
 	.dd{font-size:1em; line-height: 2; width:160px;}

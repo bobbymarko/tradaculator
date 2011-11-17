@@ -61,7 +61,7 @@ $(function() {
     product.find('.loading').append(miniSpinner.el);
     
     var positionTop = product.offset().top;
-    $(window).scrollTop(positionTop);
+    //$(window).scrollTop(product.offset().top);
     
     $.ajax({
       url: url + "?ajax=true",
@@ -69,30 +69,64 @@ $(function() {
       success: function(data){
         clicky.log('url','PDP Ajax Load');
         closeShutter(function(){
-          miniSpinner.stop();
-          product.find('.loading').remove();
+          removeLoadingUI(miniSpinner,product);
           
           product.addClass('current');
           $('body').addClass('shuttered');
 
           var nextProducts = product.nextAll();
+          var isAppended = false;
           nextProducts.each(function(index){ //FIND WHERE TO POSITION BY FINDING NEXT ELEMENT WITH A DIFFERENT Y POSITION AND PREPENDING
             if (positionTop !== $(this).offset().top){
-              $(this).before(data);
-              renderGraph();
-              moveArrow(product);
-              $('#shutter').append('<a href="#close" class="close" title="Close">&times;</a>');
-              $('.close').click(function(e){
-                closeShutter()
-                e.preventDefault();
-              });
+              isAppended = true;
+              addShutter(data, product, $(this))
               return false;
             }
           });
+          if (!isAppended){
+          /* TODO: DRY */
+            addShutter(data, product, false);
+          }
         });
+      },
+      error: function(){
+        removeLoadingUI(miniSpinner,product);
+        showAlert('loadError');
       }
     })
   });
+  
+  function removeLoadingUI(spinner, product){
+    spinner.stop();
+    product.find('.loading').remove();
+  }
+  
+  function showAlert(state){
+    var message;
+    switch(state){
+      case 'loadError':
+        message = "Looks like a tradaculasaur ate that game :("
+      break;
+    }
+    $('body').prepend('<div id="error-message">' + message + '</div>');
+    $('#error-message').hide().slideDown(400).delay(2000).slideUp(400, function(){$(this).remove();});
+  }
+  
+  function addShutter(data, product, priorTo){
+    if (priorTo){
+      priorTo.before(data);
+    } else {
+      var lastProduct = $('.p').last();
+      lastProduct.after(data);
+    }
+    renderGraph();
+    moveArrow(product);
+    $('#shutter').append('<a href="#close" class="close" title="Close">&times;</a>');
+    $('.close').click(function(e){
+      closeShutter()
+      e.preventDefault();
+    });
+  }
   
   function moveArrow(el){
     var positionLeft = el.position().left + (el.width()/2);
