@@ -61,7 +61,6 @@ $(function() {
     product.find('.loading').append(miniSpinner.el);
     
     var positionTop = product.offset().top;
-    //$(window).scrollTop(product.offset().top);
     
     $.ajax({
       url: url + "?ajax=true",
@@ -70,7 +69,7 @@ $(function() {
         clicky.log('url','PDP Ajax Load');
         closeShutter(function(){
           removeLoadingUI(miniSpinner,product);
-          
+          $(window).scrollTop(product.offset().top);
           product.addClass('current');
           $('body').addClass('shuttered');
 
@@ -84,7 +83,6 @@ $(function() {
             }
           });
           if (!isAppended){
-          /* TODO: DRY */
             addShutter(data, product, false);
           }
         });

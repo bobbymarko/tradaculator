@@ -1,6 +1,5 @@
 require 'open-uri'
 class TradeInValue
-  include ValuesHelper
 
   def self.retrieve(query,page)
     self.get_amazon(query,page)
@@ -86,10 +85,10 @@ class TradeInValue
               vendor = "best_buy"
               game_record = Game.where(:upc => game["upc"]).first
               game_record.best_buy_id = game["upc"]
-              game_record.save
               unless game_record.values.where(:vendor => vendor, :value => value).recent.exists?
-                game_record.values.create(:vendor => vendor, :value => value)
+                game_record.values.build(:vendor => vendor, :value => value)
               end
+              game_record.save
             end
             
             break
@@ -104,10 +103,10 @@ class TradeInValue
           vendor = "glyde"
           game_record = Game.where(:upc => game[:upc]).first
           game_record.glyde_id = game[:trade_in_value][:glyde][:glyde_id]
-          game_record.save
           unless game_record.values.where(:vendor => vendor, :value => value).recent.exists?
-            game_record.values.create(:vendor => vendor, :value => value)
+            game_record.values.build(:vendor => vendor, :value => value)
           end
+          game_record.save
         end
         
       end
