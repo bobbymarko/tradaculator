@@ -64,7 +64,7 @@ class TradeInValue
           game_record.amazon_id = game['ASIN']
           if value
             unless game_record.values.where(:vendor => vendor, :value => value).recent.exists?
-              game_record.values.build(:vendor => vendor, :value => value )
+              game_record.values.create(:vendor => vendor, :value => value )
             end
           end
           game_record.save
@@ -86,7 +86,7 @@ class TradeInValue
               game_record = Game.where(:upc => game["upc"]).first
               game_record.best_buy_id = game["upc"]
               unless game_record.values.where(:vendor => vendor, :value => value).recent.exists?
-                game_record.values.build(:vendor => vendor, :value => value)
+                game_record.values.create(:vendor => vendor, :value => value)
               end
               game_record.save
             end
@@ -104,7 +104,7 @@ class TradeInValue
           game_record = Game.where(:upc => game[:upc]).first
           game_record.glyde_id = game[:trade_in_value][:glyde][:glyde_id]
           unless game_record.values.where(:vendor => vendor, :value => value).recent.exists?
-            game_record.values.build(:vendor => vendor, :value => value)
+            game_record.values.create(:vendor => vendor, :value => value)
           end
           game_record.save
         end
