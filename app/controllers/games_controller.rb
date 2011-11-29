@@ -8,6 +8,22 @@ class GamesController < ApplicationController
     expires_in 30.minutes, :public => true
     @game = Game.find_by_upc(params[:upc])
     @vendors = Vendor.all
+    
+    @amazon_values = []
+    @game.values.where(:vendor=>'amazon').group("date(created_at)").each do |v|
+      @amazon_values << "[#{v.created_at.to_f.to_i * 1000},#{v.value_as_decimal}]"
+    end
+
+    @best_buy_values = []
+    @game.values.where(:vendor=>'best_buy').group("date(created_at)").each do |v|
+      @best_buy_values << "[#{v.created_at.to_f.to_i * 1000},#{v.value_as_decimal}]"
+    end
+
+    @glyde_values = []
+    @game.values.where(:vendor=>'glyde').group("date(created_at)").each do |v|
+      @glyde_values << "[#{v.created_at.to_f.to_i * 1000},#{v.value_as_decimal}]"
+    end
+    
     if request.xhr?
       render "_shutter", :layout => false
       return

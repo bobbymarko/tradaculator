@@ -28,7 +28,8 @@ class TradeInValue
   	
   	if amazon.valid? && !amazon.has_errors? && amazon["TotalResults"][0].to_i > 0
   	  #Rails.logger.info("Total pages = #{amazon["TotalPages"][0].to_i}")
-    	next_page = amazon["TotalPages"][0].to_i > page.to_i ? page.to_i + 1 : false
+  	  total_pages_returned = amazon["TotalPages"][0].to_i
+    	next_page = total_pages_returned > page.to_i && page.to_i < 10 ? page.to_i + 1 : false #amazon api only returns 10 pages of results
       response = {:next_page => next_page, :products => []}
       upcs = []
     	amazon.each('Item') do |game|

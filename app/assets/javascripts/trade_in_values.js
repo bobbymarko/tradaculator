@@ -24,7 +24,7 @@ $(function() {
   
   $('html').removeClass('no-js');
 
-  $('body').click(function(e){
+  $('body.trade_in_values_template').click(function(e){
     if ($(e.target).closest('.pbw').length > 0){
     }else{
       $('.active').removeClass('active');
@@ -42,6 +42,17 @@ $(function() {
     e.preventDefault();
   });
   
+  $('a','.share').live('click', function(e){
+    $(this).closest('li').toggleClass('active');
+    e.preventDefault();
+  });
+  
+  $('.popup').live('click', function(e){
+    window.open($(this).attr('href'),'popup_window','height=300,width=600');
+    if (window.focus) {popup_window.focus()}
+    e.preventDefault();
+  });
+  
   $(window).scroll(function(e){
     if ($(window).scrollTop() > 200){
       $('#back-to-top').removeClass('exit-stage-right');
@@ -50,7 +61,7 @@ $(function() {
     }
   });
   
-  $('.game-link').live('click',function(e){
+  $('.game-link', 'body.trade_in_values_template').live('click',function(e){
     e.preventDefault();
     var me = $(this);
     var product = me.closest('.p');
@@ -168,7 +179,7 @@ $(function() {
       var toLoad = $('#load_more').attr('href');
       $('#load_more').remove();
 
-      $('#pl').after('<div id="loading"></div>');
+      $('#pl').append('<div class="p" id="loading"></div>');
       spinner.spin(document.getElementById('loading'));
 
       loading = true;

@@ -1,22 +1,11 @@
 #shutter
   #arrow
-  - amazon_values = []
-  - @game.values.where(:vendor=>'amazon').each do |v|
-    - amazon_values << "[#{v.created_at.to_f.to_i * 1000},#{v.value_as_decimal}]"
-
-  - best_buy_values = []
-  - @game.values.where(:vendor=>'best_buy').each do |v|
-    - best_buy_values << "[#{v.created_at.to_f.to_i * 1000},#{v.value_as_decimal}]"
-
-  - glyde_values = []
-  - @game.values.where(:vendor=>'glyde').each do |v|
-    - glyde_values << "[#{v.created_at.to_f.to_i * 1000},#{v.value_as_decimal}]"
   .column-primary
     #graph
       :javascript
-        var amazon = [#{amazon_values.join(',')}];
-        var best_buy = [#{best_buy_values.join(',')}];
-        var glyde = [#{glyde_values.join(',')}];
+        var amazon = [#{@amazon_values.join(',')}];
+        var best_buy = [#{@best_buy_values.join(',')}];
+        var glyde = [#{@glyde_values.join(',')}];
                   
     %ul.side-by-side
       - @vendors.each do |vendor|
@@ -41,6 +30,16 @@
       %li.share
         %a{:href=>"#"}
           Share trade-in values
+        %ul
+          %li
+            %a{:href=>"mailto:?body=Trade%20in%20#{@game.title}%20for%20a%20ton%20of%20cash!%20#{CGI::escape game_url(@game.upc)}", :class=>"popup"}
+              Email
+          %li
+            %a{:href=>"https://twitter.com/share?url=#{game_url(@game.upc)}&text=Trade%20in%20#{@game.title}%20for%20a%20ton%20of%20cash!%20#{CGI::escape game_url(@game.upc)}%20via%20@tradaculator", :class=>"popup"}
+              Twitter
+          %li
+            %a{:href=>"https://www.facebook.com/sharer.php?u=#{CGI::escape game_url(@game.upc)}&t=Trade%20in%20#{@game.title}%20for%20a%20ton%20of%20cash!", :class=>"popup"}
+              Facebook
       -#%li
         -#%a{:href=>"#"}
           -#Set price alert
