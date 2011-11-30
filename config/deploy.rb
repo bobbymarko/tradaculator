@@ -17,7 +17,7 @@ default_run_options[:pty] = true  # Must be set for the password prompt from git
 set :scm, "git"
 set :repository, "git@github.com:bobbymarko/tradaculator.git"  # Your clone URL
 set :deploy_via, :remote_cache
-set :branch, 'feature/price-history'
+set :branch, 'develop'
 
 set :user, "root"  # The server's user for deploys
 
