@@ -5,11 +5,15 @@ class Value < ActiveRecord::Base
 
   validates_presence_of :vendor
   validates_presence_of :value
-  default_scope order("vendor ASC, created_at DESC")
+  default_scope order("created_at DESC")
   
   
   def self.recent
     where("values.created_at > ?", 2.hours.ago)
+  end
+  
+  def self.top_current_value
+    order("created_at DESC, value DESC").limit(1)[0]
   end
   
   def self.latest

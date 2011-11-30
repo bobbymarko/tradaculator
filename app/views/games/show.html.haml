@@ -7,3 +7,6 @@
       %p= @game.platform
       
 = render :partial => "shutter"
+
+- content_for :title do
+  Get up to #{currency @top_value.value} for trade-in of #{@game.title} on #{@game.platform} from #{@top_value.vendor.humanize}

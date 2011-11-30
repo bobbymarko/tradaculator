@@ -7,7 +7,7 @@ h1{font-size:.875em; color:#078; font-weight: bold; margin:.5em 0 .3em; height:2
   h1 a{text-decoration: none; color:#078;}
 h3{ text-align: center; color:#777; text-shadow:0 1px 0 #fff; font:100 italic 3em museo-slab-1,museo-slab-2,Georgia,serif; margin:0 auto 40px;clear:both; }
 
-#loading{ height:50px; margin-bottom:60px; overflow: hidden;	}
+#loading{ height:50px; margin-bottom:60px; overflow: hidden;	border-bottom:0;}
 	
 p{margin:0;}
 #mh{background:#555; color:#ddc; padding:10px; font:100 italic 1em museo-slab-1,museo-slab-2,Georgia,serif;-webkit-box-shadow: 0 2px 0 #555, 0 12px 0 #707070, 0 1px 0 #797979; box-shadow: 0 2px 0 #555, 0 12px 0 #707070, 0 1px 0 #797979;}
@@ -82,8 +82,8 @@ font-weight: bold; color:#252a32; border-left:1px solid #198b9f; float:left; pad
 .no-js #load_more{display: block; text-align: center;}
 
 .p.active .dd{display: block;}
-.dd{position: absolute; top:43px; left:50%; background: #f2f2f2;-webkit-box-shadow: 0 2px 10px rgba(0,0,0,.2); box-shadow: 0 2px 10px rgba(0,0,0,.2); z-index:98;border-radius: 4px; font-size:.75em; line-height: 1.6; font-weight: bold; list-style-type: none; text-align: left; margin:0 0 0 -6em; padding:1em; width:10em; display: none; text-transform: capitalize;}
-	.dd_li{font-size:100%;}
+.dd{position: absolute; top:43px; left:50%; background: #f2f2f2;-webkit-box-shadow: 0 2px 10px rgba(0,0,0,.2); box-shadow: 0 2px 10px rgba(0,0,0,.2); z-index:2000000002;border-radius: 4px; font-size:.75em; line-height: 1.6; font-weight: bold; list-style-type: none; text-align: left; margin:0 0 0 -6em; padding:1em; width:10em; display: none; text-transform: capitalize;}
+	.dd li{font-size:100%;}
 		.dd a{color:#234a56; text-decoration: none; display: block;}
 			.dd a:hover{text-decoration: underline;}
 			.dd span{float:right;}
@@ -127,14 +127,14 @@ background: linear-gradient(#1b95aa,#06687a); /* W3C */
 		#b{float:none; font-size:2.2em;}
 		#mh form{float: none; width:280px; margin:0 auto;}
 		#s{width:270px;  }
-	#pl{margin:12px 0 0; width:auto;}
+	#pl{margin:12px 0 100px; width:auto;}
 		#pl:after{content:""; display:table; clear:both;}
 	.p{text-align: left; float:none;  width:92%; margin:0 4%; padding:10px 0; display: block; float:left;}
 		.pw{border-left:none; border-right:none; padding:0;}
 		.p header p{margin-bottom:.75em;}
 		.p .loading>div{top:40px;}
 	.f{float:left; width:80px; height: auto; min-height: 80px; margin:0 20px 0 0;}
-		.f img{max-width:100%; display: block;}
+		.f img{max-width:100%; max-height:100px; display: block;}
 	.dd{font-size:1em; line-height: 2; width:160px;}
 }
 @media (min-width:551px) and (max-width:768px) {

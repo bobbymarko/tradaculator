@@ -23,7 +23,7 @@ animation:          fadeOut 400ms 1 ease-in;
       #tooltip:before{content:''; position:absolute; bottom:-20px; left:50%; margin-left:-20px; border:10px solid white; border-color:white transparent transparent transparent; }
     
 .tool-list li{border-bottom:1px solid #383838;border-top:1px solid #585859; font-size: 16px;}
-  .tool-list li.active ul{display: block;}
+  .tool-list li.toggled ul{display: block;}
   .tool-list li:first-child{border-top:none;}
   .tool-list li:last-child{border-bottom:none;}
   .tool-list a{display: block; padding:20px 30px; font-weight:bold; text-decoration: none;}

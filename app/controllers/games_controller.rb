@@ -8,6 +8,7 @@ class GamesController < ApplicationController
     expires_in 30.minutes, :public => true
     @game = Game.find_by_upc(params[:upc])
     @vendors = Vendor.all
+    @top_value = @game.values.top_current_value
     
     @amazon_values = []
     @game.values.where(:vendor=>'amazon').group("date(created_at)").each do |v|

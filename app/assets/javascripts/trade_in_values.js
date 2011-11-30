@@ -43,7 +43,7 @@ $(function() {
   });
   
   $('a','.share').live('click', function(e){
-    $(this).closest('li').toggleClass('active');
+    $(this).closest('li').toggleClass('toggled');
     e.preventDefault();
   });
   
