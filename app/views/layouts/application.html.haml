@@ -4,7 +4,7 @@
   %meta{:charset=>"utf-8"}
   %meta{:name=>"viewport", :content=>"width=device-width,initial-scale=1,maximum-scale=1"}
   %title 
-    = !yield(:title).blank? ? "#{yield(:title)} | Tradaculator" : "Tradaculator | Finding the best game trade-in values from across the web"
+    = !yield(:title).blank? ? "#{yield(:title)} | Tradaculator" : "Tradaculator | Finding the best game trade-in values from Amazon, Best Buy and Glyde"
   = stylesheet_link_tag    "application"
   %link{:rel => 'shortcut icon', :href => image_path('favicon.ico')}
   %link{:rel => 'apple-touch-icon-precomposed', :sizes => "114x114", :href => image_path('apple-touch-icon-114x114.png')}
@@ -15,8 +15,10 @@
       try{Typekit.load();}catch(e){}
   /[if lt IE 9]
     = javascript_include_tag "//html5shiv.googlecode.com/svn/trunk/html5.js"
+  /[if lte IE 8]
+    %script{:src=>javascript_path('excanvas.js')}
   = csrf_meta_tags
-%body
+%body{:class=>"#{controller_name}_template"}
   %header#mh
     %div
       %a#b{:href=>root_url} Tradaculator
@@ -27,28 +29,22 @@
   %section#pl
     = yield
   = yield(:product_list_meta)
-  %footer
-    = "Follow the project and give us feedback #{link_to "@tradaculator", "http://twitter.com/tradaculator"}.".html_safe
+  %footer#footer
+    %a#back-to-top.exit-stage-right{:href=>"#mh"}
+      Back to top
+    %a.typekit{:href=>"https://typekit.com/colophons/eqp1oco"} Fonts from Typekit
+    #social-buttons
+      %a{:href=>"https://twitter.com/share", :class=>"twitter-share-button", :data=>{:url=>"http://tradaculator.com", :text=>"Find the best trade-in values", :count=>"horizontal", :via=>"tradaculator", :related=>"bobbymarko:nathanmueller"}}
+        Tweet
+      .g-plusone{:data=>{:size=>"medium", :href=>"http://tradaculator.com"}}
+      .fb-like{:data=>{:href=>"http://tradaculator.com", :send=>"false", :layout=>"button_count"}}
+     
   = javascript_include_tag "//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"
   :javascript
-    window.jQuery || document.write('<script src="#{javascript_path('jquery')}"><\/script>')
+    window.jQuery || document.write('<script src="#{javascript_path('jquery.js')}"><\/script>')
   = javascript_include_tag "application"
-  :javascript
-    var _gaq=[['_setAccount','UA-6089161-18'],['_trackPageview'],['_trackPageLoadTime']];
-    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-      s.parentNode.insertBefore(g,s)}(document,'script'));
-  :javascript
-    var clicky_site_ids = clicky_site_ids || [];
-    clicky_site_ids.push(66488119);
-    (function() {
-    var s = document.createElement('script');
-    s.type = 'text/javascript';
-    s.async = true;
-    s.src = '//static.getclicky.com/js';
-    ( document.getElementsByTagName('head')[0] ||
-    document.getElementsByTagName('body')[0] ).appendChild( s );
-    })();
   %noscript
     %p
       %img{:alt=>"Clicky", :width=>"1", :height=>"1", :src=>"//in.getclicky.com/66488119ns.gif"}
+  #fb-root
+  = yield(:footer)

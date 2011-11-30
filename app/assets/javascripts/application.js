@@ -5,5 +5,10 @@
 // the compiled file.
 //
 //= require jquery_ujs
+//= require tracking
+//= require jquery.flot
+//= require jquery.flot.resize
 //= require spin
 //= require trade_in_values
+//= require games
+//= require social

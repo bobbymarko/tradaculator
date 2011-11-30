@@ -11,9 +11,33 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110926030905) do
+ActiveRecord::Schema.define(:version => 20111030211106) do
+
+  create_table "games", :force => true do |t|
+    t.string   "title"
+    t.string   "upc"
+    t.string   "platform"
+    t.string   "image"
+    t.string   "large_image"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "small_image"
+    t.string   "amazon_id"
+    t.string   "best_buy_id"
+    t.string   "glyde_id"
+  end
+
+  add_index "games", ["upc"], :name => "index_games_on_upc"
 
   create_table "trade_in_values", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "values", :force => true do |t|
+    t.integer  "game_id",    :null => false
+    t.string   "vendor",     :null => false
+    t.integer  "value"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

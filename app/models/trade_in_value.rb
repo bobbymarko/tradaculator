@@ -1,11 +1,6 @@
 require 'open-uri'
-class Hash
-  def sorted_hash(&block)
-    self.class[sort(&block)]   # Hash[ [[key1, value1], [key2, value2]] ]
-  end
-end
-class TradeInValue < ActiveRecord::Base
-  
+class TradeInValue
+
   def self.retrieve(query,page)
     self.get_amazon(query,page)
   end
@@ -33,26 +28,47 @@ class TradeInValue < ActiveRecord::Base
   	
   	if amazon.valid? && !amazon.has_errors? && amazon["TotalResults"][0].to_i > 0
   	  #Rails.logger.info("Total pages = #{amazon["TotalPages"][0].to_i}")
-    	next_page = amazon["TotalPages"][0].to_i > page.to_i ? page.to_i + 1 : false
+  	  total_pages_returned = amazon["TotalPages"][0].to_i
+    	next_page = total_pages_returned > page.to_i && page.to_i < 10 ? page.to_i + 1 : false #amazon api only returns 10 pages of results
       response = {:next_page => next_page, :products => []}
       upcs = []
     	amazon.each('Item') do |game|
         if game["ItemAttributes"]["IsEligibleForTradeIn"] == "1"
           upcs << game["ItemAttributes"]["UPC"]
+          vendor = "amazon"
+          upc = game["ItemAttributes"]["UPC"]
           image = game['MediumImage'] ? game['MediumImage']['URL'] : nil #some products don't have images?
-          value = game["ItemAttributes"]["TradeInValue"] ? currency(game["ItemAttributes"]["TradeInValue"]["Amount"].to_i / 100.0) : nil
-          url = value ? "https://www.amazon.com/gp/tradein/add-to-cart.html/ref=trade_new_dp_trade_btn?ie=UTF8&asin=#{game['ASIN']}" : nil
+          large_image = game['LargeImage'] ? game['LargeImage']['URL'] : nil
+          small_image = game['SmallImage'] ? game['SmallImage']['URL'] : nil
+          title = game['ItemAttributes']['Title']
           platform = game['ItemAttributes']['Platform']
+          value = game["ItemAttributes"]["TradeInValue"] ? game["ItemAttributes"]["TradeInValue"]["Amount"].to_i : nil
+
+          url = value ? "https://www.amazon.com/gp/tradein/add-to-cart.html/ref=trade_new_dp_trade_btn?ie=UTF8&asin=#{game['ASIN']}" : nil
           response[:products] << {
-            :upc            =>  game["ItemAttributes"]["UPC"],
+            :upc            =>  upc,
             :image          =>  image,
-            :title          =>  game['ItemAttributes']['Title'],
+            :title          =>  title,
             :platform       =>  platform,
             :trade_in_value =>  {
               :amazon       =>  {:value => value, :url => url},
               :best_buy     =>  {:value => nil, :url => nil},
               :glyde        =>  {:value => nil, :url => nil}
           }}
+          
+          game_record = Game.find_or_create_by_upc(upc)
+          game_record.image = image
+          game_record.large_image = large_image
+          game_record.small_image = small_image
+          game_record.title = title
+          game_record.platform = platform
+          game_record.amazon_id = game['ASIN']
+          game_record.save
+          if value
+            unless game_record.values.where(:vendor => vendor, :value => value).recent.exists?
+              game_record.values.create(:vendor => vendor, :value => value )
+            end
+          end
           #raise response.inspect
         end
       end
@@ -60,10 +76,22 @@ class TradeInValue < ActiveRecord::Base
       best_buy_skus = get_best_buy(upcs)
       best_buy_skus['products'].each do |game|
         response[:products].each do |r|
-          if r[:upc] == game["upc"]
-            r[:trade_in_value][:best_buy][:value] = currency(game["tradeInValue"])
-            # we shouldn't return a url if the game isn't trade inable
+          if game["tradeInValue"] && r[:upc] == game["upc"]
+            value = game["tradeInValue"] * 100
+            r[:trade_in_value][:best_buy][:value] = value
+            #TODO we shouldn't return a url if the game isn't trade inable
             r[:trade_in_value][:best_buy][:url] = "http://www.bestbuytradein.com/bb/QuoteCalculatorVideoGames.cfm?kw=#{game["upc"]}&pf=all&af=9a029aae-d650-44f8-a1c7-c33aa7fd0e27"
+            
+            if value
+              vendor = "best_buy"
+              game_record = Game.where(:upc => game["upc"]).first
+              game_record.best_buy_id = game["upc"]
+              game_record.save
+              unless game_record.values.where(:vendor => vendor, :value => value).recent.exists?
+                game_record.values.create(:vendor => vendor, :value => value)
+              end
+            end
+            
             break
           end
         end 
@@ -71,6 +99,17 @@ class TradeInValue < ActiveRecord::Base
       
       response[:products].each do |game|
         game[:trade_in_value][:glyde] = get_glyde(game[:upc])
+        value = game[:trade_in_value][:glyde][:value]
+        if value
+          vendor = "glyde"
+          game_record = Game.where(:upc => game[:upc]).first
+          game_record.glyde_id = game[:trade_in_value][:glyde][:glyde_id]
+          game_record.save
+          unless game_record.values.where(:vendor => vendor, :value => value).recent.exists?
+            game_record.values.create(:vendor => vendor, :value => value)
+          end
+        end
+        
       end
     else
       response = false
@@ -86,27 +125,12 @@ class TradeInValue < ActiveRecord::Base
   
   def self.get_glyde(upc)
     glyde = JSON.parse(Nokogiri::HTML(open("http://api.glyde.com/price/upc/#{upc}?api_key=#{API_KEYS["glyde"]["key"]}&v=1&responseType=application/json"))) rescue false
-    	if  glyde && glyde['is_sellable']
-    		glyde_value = "#{currency(  (glyde['suggested_price']['cents'] * 0.88  - 125)  / 100.0 )}" rescue nil
-    		{:value => glyde_value, :url => "http://glyde.com/sell?hash=%21by%2Fproduct%2Flineup%2Fgames%2F#{glyde['glu_id']}#!show/product/#{glyde['glu_id']}"}
+    	if glyde && glyde['is_sellable']
+    		glyde_value = (glyde['suggested_price']['cents'] * 0.88  - 125).to_i rescue nil
+    		{:value => glyde_value, :url => "http://glyde.com/sell?hash=%21by%2Fproduct%2Flineup%2Fgames%2F#{glyde['glu_id']}#!show/product/#{glyde['glu_id']}", :glyde_id => glyde['glu_id']}
     	else
-    	 {:value => nil, :url => nil}
+    	 {:value => nil, :url => nil, :glyde_id => nil}
     	end
   end
-  
-
-  def self.currency(number, opts = {})
-    return if number.to_s.empty?
-  
-    unit      = opts[:unit]      || '$'
-    precision = opts[:precision] || 2
-    separator = opts[:separator] || ', '
-  
-    ret = "%s%.#{Integer(precision)}f" % [unit,number]
-    parts = ret.split('.')
-    parts[0].gsub!(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1#{separator}")
-    parts.join('.')
-  end
-
   
 end

@@ -9,4 +9,12 @@ module ApplicationHelper
     HTML
     haml_concat capture( &block ) << Haml::Util::html_safe( "\n</html>" ) if block_given?
   end
+  
+  def self.fill_in(template, data)
+    template.gsub(/\{\{(\w+)\}\}/) { data[$1.to_sym] }
+  end
+  
+  def fill_in(template, data)
+    template.gsub(/\{\{(\w+)\}\}/) { data[$1.to_sym] }
+  end
 end

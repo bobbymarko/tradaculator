@@ -1,0 +1,12 @@
+.p>
+  .pw
+    .f
+      %img{:src => @game.image || image_path('image_not_available.gif')}
+    %header
+      %h1= @game.title
+      %p= @game.platform
+      
+= render :partial => "shutter"
+
+- content_for :title do
+  Get up to #{currency @top_value.value} for trade-in of #{@game.title} on #{@game.platform} from #{@top_value.vendor.humanize}

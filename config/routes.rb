@@ -2,6 +2,7 @@ Tradaculator::Application.routes.draw do
   # match 'search(/page/:page)' => 'trade_in_values#show', :as => 'trade_in_values'
   match 'page/:page' => 'trade_in_values#show', :as => 'trade_in_values_no_query'
   match 'search(/:query(/page/:page))' => 'trade_in_values#show', :as => 'trade_in_values'
+  match 'game/:upc' => 'games#show', :as => 'game'
 #  match "search/:query" => "trade_in_values#index", :as => :trade_in_values, :via => [:post]
   # The priority is based upon order of creation:
   # first created -> highest priority.

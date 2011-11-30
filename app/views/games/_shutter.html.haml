@@ -1,0 +1,46 @@
+#shutter
+  #arrow
+  .column-primary
+    #graph
+      :javascript
+        var amazon = [#{@amazon_values.join(',')}];
+        var best_buy = [#{@best_buy_values.join(',')}];
+        var glyde = [#{@glyde_values.join(',')}];
+                  
+    %ul.side-by-side
+      - @vendors.each do |vendor|
+        - url = fill_in(vendor[:url], :id => eval("@game.#{vendor[:permalink]}_id"))
+        - latest_value = @game.values.where(:vendor => vendor[:permalink]).latest
+        - if url && latest_value
+          %li
+            .pbw
+              .b
+                %a.vn{:href=> url }
+                  = vendor[:name]
+                %a.tv
+                  = currency latest_value.value
+            .description
+              = vendor[:conditions]
+            
+  .column-secondary
+    %ul.tool-list
+      -#%li
+        -#%a{:href=>"#"}
+          -#Add to game library
+      %li.share
+        - share_message = "Trade%20in%20#{@game.title}%20for%20up%20to%20#{currency @top_value.value}%20from%20#{@top_value.vendor.humanize}"
+        %a{:href=>"#"}
+          Share trade-in values
+        %ul
+          %li
+            %a{:href=>"mailto:?body=#{share_message}%20#{CGI::escape game_url(@game.upc)}"}
+              Email
+          %li
+            %a{:href=>"https://twitter.com/share?url=#{CGI::escape game_url(@game.upc)}&text=#{share_message}&via=tradaculator", :class=>"popup"}
+              Twitter
+          %li
+            %a{:href=>"https://www.facebook.com/sharer.php?u=#{CGI::escape game_url(@game.upc)}&t=#{share_message}", :class=>"popup"}
+              Facebook
+      -#%li
+        -#%a{:href=>"#"}
+          -#Set price alert
