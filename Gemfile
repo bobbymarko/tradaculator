@@ -18,6 +18,8 @@ end
 gem 'haml-rails'
 gem 'jquery-rails'
 
+gem 'devise'
+
 gem 'remixr'
 gem 'amazon_product'
 gem 'json'

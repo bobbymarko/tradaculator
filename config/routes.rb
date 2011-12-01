@@ -1,4 +1,6 @@
 Tradaculator::Application.routes.draw do
+  devise_for :users
+
   # match 'search(/page/:page)' => 'trade_in_values#show', :as => 'trade_in_values'
   match 'page/:page' => 'trade_in_values#show', :as => 'trade_in_values_no_query'
   match 'search(/:query(/page/:page))' => 'trade_in_values#show', :as => 'trade_in_values'

@@ -24,9 +24,9 @@
             
   .column-secondary
     %ul.tool-list
-      -#%li
-        -#%a{:href=>"#"}
-          -#Add to game library
+      %li.library
+        %a{:href=>"#"}
+          Add to game library
       %li.share
         - share_message = "Trade%20in%20#{@game.title}%20for%20up%20to%20#{currency @top_value.value}%20from%20#{@top_value.vendor.humanize}"
         %a{:href=>"#"}

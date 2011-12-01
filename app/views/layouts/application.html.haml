@@ -26,6 +26,11 @@
       = form_tag root_url do
         %input{:type=>"text", :id=>"s", :name=>"query", :placeholder=> "search…", :value=>@query}
         %input{:id=>"m", :type=>"image", :src=>asset_path('search.png')}
+      .hmenu
+        = render 'devise/menu/registration_items'
+        = render 'devise/menu/sign_in_items'
+  - flash.each do |name, msg|
+    = content_tag :div, msg, :class => name
   %section#pl
     = yield
   = yield(:product_list_meta)
