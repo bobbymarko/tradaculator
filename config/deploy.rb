@@ -67,9 +67,9 @@ namespace :deploy do
     end 
 end
 
-before 'deploy:assets:precompile', 'deploy:symlink_db'
-before 'deploy:migrate', 'deploy:symlink_db' #when running migrations they fail because the files aren't linked yet
-after 'deploy:symlink', 'deploy:symlink_db'
+before 'deploy:assets:precompile', 'deploy:symlink_db' # when running migrations they fail because the files aren't linked yet
+# before 'deploy:migrate', 'deploy:symlink_db' 
+# after 'deploy:symlink', 'deploy:symlink_db'
 # after "deploy", "deploy:assets";
 after "deploy:symlink", "deploy:chown_to_wwwdata";
 # after 'deploy:update_code', 'deploy:precompile_assets'
