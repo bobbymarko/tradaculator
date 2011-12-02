@@ -1,8 +1,16 @@
 class TradeInValuesController < ApplicationController
   respond_to :html, :json, :js
-  caches_page :index, :expires_in=>30.minutes # expired with a cron job on server
-  caches_action :show, :expires_in=>30.minutes, :cache_path => Proc.new { |c|
-    "#{Rails.env} #{c.params} #{c.request.xml_http_request?}"
+  # caches_page :index, :expires_in=>30.minutes # expired with a cron job on server
+  caches_action :index, :expires_in => 30.minutes, :cache_path => Proc.new { |c|
+      "#{Rails.env} #{c.params} #{c.request.xml_http_request?}"
+  }, :unless => Proc.new { |c|
+    current_user
+  }
+  
+  caches_action :show, :expires_in => 30.minutes, :cache_path => Proc.new { |c|
+      "#{Rails.env} #{c.params} #{c.request.xml_http_request?}"
+  }, :unless => Proc.new { |c|
+    current_user
   }
   
   def index
