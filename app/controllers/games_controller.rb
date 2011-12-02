@@ -2,7 +2,7 @@ class GamesController < ApplicationController
   respond_to :html, :json, :js
   caches_action :show, :expires_in => 2.minutes, :cache_path => Proc.new { |c|
     if current_user
-      # "#{Rails.env} #{c.params} #{c.request.xml_http_request?} #{current_user.id}"
+      "#{Rails.env} #{c.params} #{c.request.xml_http_request?} #{current_user.id}"
     else
       "#{Rails.env} #{c.params} #{c.request.xml_http_request?}"
     end
