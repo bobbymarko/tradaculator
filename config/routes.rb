@@ -1,6 +1,11 @@
 Tradaculator::Application.routes.draw do
   devise_for :users
-
+  
+  #resources :library_items, :path => "/library"
+  match 'library' => 'library_items#index', :via => :get, :as => 'library_items'
+  match 'library/:game_id' => 'library_items#destroy', :via => :delete, :as => 'library_item'
+  match 'library/:game_id' => 'library_items#create', :via => :post, :as => 'library_item'
+  
   # match 'search(/page/:page)' => 'trade_in_values#show', :as => 'trade_in_values'
   match 'page/:page' => 'trade_in_values#show', :as => 'trade_in_values_no_query'
   match 'search(/:query(/page/:page))' => 'trade_in_values#show', :as => 'trade_in_values'

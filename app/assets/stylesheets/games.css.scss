@@ -26,10 +26,12 @@ animation:          fadeOut 400ms 1 ease-in;
   .tool-list li.toggled ul{display: block;}
   .tool-list li:first-child{border-top:none;}
   .tool-list li:last-child{border-bottom:none;}
-  .tool-list a{display: block; padding:20px 30px; font-weight:bold; text-decoration: none;}
+  .tool-list a{display: block; padding:20px 30px; font-weight:bold; text-decoration: none; background:image-url("icon-sprite.png") no-repeat}
     .tool-list a:hover{color:#fff;}
-  .share a{background:image-url("icon-sprite.png") no-repeat 0 21px;}
+  .share a{background-position: 0 21px;}
     .share a:hover{background-position: 0 -43px;}
+  .library-toggle a{background-position: 1px -104px;}
+    .library-toggle a:hover{background-position: 1px -168px;}
   
   .tool-list li ul{margin:-10px 0 0; display: none;}
   .tool-list li li{font-size: 13px; border: none;}

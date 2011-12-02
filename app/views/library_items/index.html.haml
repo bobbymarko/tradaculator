@@ -1,0 +1,10 @@
+- if @games
+  %h1
+    In #{current_user.username}'s library
+  %ul
+    - @games.each do |game|
+      %li
+        %a{:href=>game_path(game.upc)}
+          #{game.title} for #{game.platform}
+- else
+  You don't have anything in your library

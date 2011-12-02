@@ -24,9 +24,14 @@
             
   .column-secondary
     %ul.tool-list
-      %li.library
-        %a{:href=>"#"}
-          Add to game library
+      - if current_user && is_library_item?(@game.id)
+        %li.library-toggle
+          %a{:href => library_item_path(@game.id), :class=>"current-user-library"}
+            You own this!
+      - else
+        %li.library-toggle
+          %a{:href => library_item_path(@game.id)}
+            Add to game library
       %li.share
         - share_message = "Trade%20in%20#{@game.title}%20for%20up%20to%20#{currency @top_value.value}%20from%20#{@top_value.vendor.humanize}"
         %a{:href=>"#"}
