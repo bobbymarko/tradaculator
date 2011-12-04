@@ -4,32 +4,34 @@ class TradeInValuesController < ApplicationController
   caches_action :index, :expires_in => 30.minutes, :cache_path => Proc.new { |c|
       "#{Rails.env} #{c.params} #{c.request.xml_http_request?}"
   }, :unless => Proc.new { |c|
-    current_user
+    c.send(:current_user)
   }
   
   caches_action :show, :expires_in => 30.minutes, :cache_path => Proc.new { |c|
       "#{Rails.env} #{c.params} #{c.request.xml_http_request?}"
   }, :unless => Proc.new { |c|
-    current_user
+    c.send(:current_user)
   }
   
   def index
-    expires_in 30.minutes, :public => true
+    # expires_in 30.minutes, :public => true
     if params[:query]
       redirect_to trade_in_values_path( params[:query]) #make pretty urls
     else
     	@query = ''
     	@page = 1
-      @results = TradeInValue.retrieve(@query,@page)
+    	@results = Rails.cache.fetch('#{@query} #{@page}', :expires_in => 30.minutes) { TradeInValue.retrieve(@query,@page) }
+      #@results = TradeInValue.retrieve(@query,@page)
       respond_with(@results)
     end
   end
   
   def show
-    expires_in 30.minutes, :public => true
+    # expires_in 30.minutes, :public => true
     @query = params[:query] || ''
   	@page = params[:page] || 1
-    @results = TradeInValue.retrieve(@query,@page)
+    #@results = TradeInValue.retrieve(@query,@page)
+    @results = Rails.cache.fetch('#{@query} #{@page}', :expires_in => 30.minutes) { TradeInValue.retrieve(@query,@page) }
     # logger.info("NEXT PAGE = #{@results[:next_page]}");
     respond_with(@results) do |format|
         format.html{

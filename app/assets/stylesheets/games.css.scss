@@ -1,4 +1,4 @@
-#shutter{background:#49494a; color:#fff; font-size:12px; padding:20px; box-shadow:inset 0 0 20px rgba(0,0,0,0.5); position: relative; clear:both; float:left;
+#shutter{background:#49494a; color:#fff; font-size:13px; padding:20px; box-shadow:inset 0 0 20px rgba(0,0,0,0.5); position: relative; clear:both; float:left;
 -webkit-animation:  fadeIn 400ms 1 ease-in;
 -moz-animation:     fadeIn 400ms 1 ease-in;
 animation:          fadeIn 400ms 1 ease-in;
@@ -34,9 +34,9 @@ animation:          fadeOut 400ms 1 ease-in;
     .library-toggle a:hover{background-position: 1px -168px;}
   
   .tool-list li ul{margin:-10px 0 0; display: none;}
-  .tool-list li li{font-size: 13px; border: none;}
+  .tool-list li li{border: none;}
     .tool-list li li a{background: none; padding:10px 30px;}
-.side-by-side{font-size:12px;}
+.side-by-side{}
   .side-by-side li{margin:0 0 30px;}
     .side-by-side .pbw{float:left}
       .side-by-side a.vn{width:49px; text-align: center;}

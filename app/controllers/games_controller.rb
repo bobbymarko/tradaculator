@@ -3,11 +3,11 @@ class GamesController < ApplicationController
   caches_action :show, :expires_in => 30.minutes, :cache_path => Proc.new { |c|
       "#{Rails.env} #{c.params} #{c.request.xml_http_request?}"
   }, :unless => Proc.new { |c|
-    current_user
+    c.send(:current_user)
   }
   
   def show
-    expires_in 30.minutes, :public => true
+    # expires_in 30.minutes, :public => true
     @game = Game.find_by_upc(params[:upc])
     @vendors = Vendor.all
     @top_value = @game.values.top_current_value

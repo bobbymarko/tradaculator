@@ -28,7 +28,7 @@ var Game = {
 						//$('#like-section').replaceWith(responseHtml);
 					},
 					error: function(){
-					 $link.text('Error. Try clicking me again.');
+					 $link.text('Sorry, Try again!');
 					}
 				});
 			}
