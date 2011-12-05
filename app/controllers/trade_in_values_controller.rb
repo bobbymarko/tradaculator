@@ -16,11 +16,11 @@ class TradeInValuesController < ApplicationController
   def index
     # expires_in 30.minutes, :public => true
     if params[:query]
-      redirect_to trade_in_values_path( params[:query]) #make pretty urls
+      redirect_to trade_in_values_path(params[:query]) #make pretty urls
     else
     	@query = ''
     	@page = 1
-    	@results = Rails.cache.fetch('#{@query} #{@page}', :expires_in => 30.minutes) { TradeInValue.retrieve(@query,@page) }
+    	@results = Rails.cache.fetch("#{@query} #{@page}", :expires_in => 30.minutes) { TradeInValue.retrieve(@query,@page) }
       #@results = TradeInValue.retrieve(@query,@page)
       respond_with(@results)
     end
@@ -31,7 +31,7 @@ class TradeInValuesController < ApplicationController
     @query = params[:query] || ''
   	@page = params[:page] || 1
     #@results = TradeInValue.retrieve(@query,@page)
-    @results = Rails.cache.fetch('#{@query} #{@page}', :expires_in => 30.minutes) { TradeInValue.retrieve(@query,@page) }
+    @results = Rails.cache.fetch("#{@query} #{@page}", :expires_in => 30.minutes) { TradeInValue.retrieve(@query,@page) }
     # logger.info("NEXT PAGE = #{@results[:next_page]}");
     respond_with(@results) do |format|
         format.html{
