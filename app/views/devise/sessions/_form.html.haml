@@ -2,7 +2,7 @@
 = form_for("user", :url => user_session_path) do |f|
   .row
     = f.label :login, "Username or email"
-    = f.text_field :login, :autocomplete => "false", :autocapatilize => "false", "tabindex" => 1, "autofocus" => "true"
+    = f.text_field :login, :autocomplete => "false", :autocapatilize => "false", "tabindex" => 1
   .row
     = f.label :password
     %span.helper-text= link_to "forgot?", new_password_path('user')

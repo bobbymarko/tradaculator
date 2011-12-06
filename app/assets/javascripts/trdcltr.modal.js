@@ -8,12 +8,15 @@
                 if (settings.handler){
                   $(settings.handler).live('click',function(e){
                     clickHandler(e);
+                    e.preventDefault();
                   });
                 }else{
                    $(this).click(function(e){
                       clickHandler(e);
+                      e.preventDefault();
                   });
                 }
+                              
             });
             
             function clickHandler(e){
@@ -36,17 +39,16 @@
               } else {
                   renderModal();
               }
-              e.preventDefault();
+
             }
             
             function renderModal(){
-                
-                $('<div class="modal_content"><a href="#" class="close_btn">&times;</a>'+settings.content+'</div><div class="modal_overlay"></div>').appendTo('body');
+                $('<div class="modal_content"><a href="#" class="close_btn">&times;</a>'+settings.content+'</div><div class="modal_overlay"></div').appendTo('body');
                 var modal = $('.modal_content');
                 var overlay = $('.modal_overlay');
                 positionModal(modal,overlay);
                 $(window).resize(function() {
-                    positionModal(modal, overlay)
+                    positionModal(modal, overlay);
                 });
                 $('.close_btn, .modal_overlay').click(function(e){
                     modal.remove();
@@ -55,6 +57,7 @@
                     $(window).unbind('resize');
                     e.preventDefault();
                 });
+                $('input[type="text"]', modal).get(0).focus();
             }
             
             function positionModal(modal, overlay){
