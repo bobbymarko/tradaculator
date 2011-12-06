@@ -1,0 +1,7 @@
+.row{margin:0 0 .45em;}
+.helper-text{font-size:.8125em; }
+  .helper-text a{text-decoration: none; color:#dedbc1;}
+.modal_content{top:0; margin:20px auto; right:20px; left:20px; position:absolute; background:#707070; color:#fff; z-index:1000; padding:20px; border-radius:8px; max-width: 500px;}
+.modal_overlay{top:0; bottom:0; right:0; left:0; position:absolute; background: #eee image-url("bg.jpg"); opacity: .8; z-index:999;}
+.modal_loading{width:100px; height:100px; right:auto; left:50%; margin-left:-50px; background: #fff url(loading.gif) center center no-repeat;}
+.close_btn{position:absolute; top:0; right:0; padding:10px; font:bold 20px sans-serif; color:#252a32; text-decoration:none;}

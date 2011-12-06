@@ -25,12 +25,16 @@
   .column-secondary
     %ul.tool-list
       - if current_user && is_library_item?(@game.id)
-        %li.library-toggle
-          %a{:href => library_items_path(:game_id => @game.id), :class=>"current-user-library", :title => "Remove from library", :rel => "nofollow"}
+        %li.library-item.library-toggle
+          %a.current-user-library{:href => library_items_path(:game_id => @game.id), :title => "Remove from library", :rel => "nofollow"}
             You own this!
-      - else
-        %li.library-toggle
+      - elsif current_user
+        %li.library-item.library-toggle
           %a{:href => library_items_path(:game_id => @game.id), :rel => "nofollow"}
+            Add to game library
+      - else
+        %li.library-item
+          %a.sign-in-required{:href => "#", :rel => "nofollow"}
             Add to game library
       %li.share
         - share_message = "Trade%20in%20#{@game.title}%20for%20up%20to%20#{currency @top_value.value}%20from%20#{@top_value.vendor.humanize}"

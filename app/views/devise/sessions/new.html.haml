@@ -1,16 +1,14 @@
-%h2 Sign in
+%h1 Sign in
 = form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
-  %div
+  .row
     = f.label :login
-    %br/
-    = f.text_field :login
-  %div
+    = f.text_field :login, :autocomplete => "false", :autocapatilize => "false"
+  .row
     = f.label :password
-    %br/
     = f.password_field :password
-  - if devise_mapping.rememberable?
-    %div
-      = f.check_box :remember_me
-      = f.label :remember_me
-  %div= f.submit "Sign in"
+  .row
+    = f.check_box :remember_me
+    = f.label :remember_me
+  .row
+    = f.submit "Sign in", :class => "btn"
 = render :partial => "devise/shared/links"

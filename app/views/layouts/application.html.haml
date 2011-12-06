@@ -43,7 +43,12 @@
         Tweet
       .g-plusone{:data=>{:size=>"medium", :href=>"http://tradaculator.com"}}
       .fb-like{:data=>{:href=>"http://tradaculator.com", :send=>"false", :layout=>"button_count"}}
-     
+  
+  - unless current_user
+    %div{:style => "display:none;"}
+      #sign-in-modal
+        = render "devise/sessions/form"
+  
   = javascript_include_tag "//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"
   :javascript
     window.jQuery || document.write('<script src="#{javascript_path('jquery.js')}"><\/script>')

@@ -20,9 +20,6 @@ $(function() {
     trail: 46, // Afterglow percentage
     shadow: true // Whether to render a shadow
   });
-  
-  
-  $('html').removeClass('no-js');
 
   $('body.trade_in_values_template').click(function(e){
     if ($(e.target).closest('.pbw').length > 0){
@@ -30,11 +27,10 @@ $(function() {
       $('.active').removeClass('active');
     }
     
-    if ($(e.target).closest('#shutter').length > 0 || $(e.target).closest('.current').length > 0){ // check if we're clicking inside the shutter or our product
+    if ($(e.target).closest('#shutter').length > 0 || $(e.target).closest('.current').length > 0 || $(e.target).hasClass('modal_overlay') || $(e.target).closest('.modal_content').length > 0){ // check if we're clicking inside the shutter or our product
     }else{
       closeShutter();
     }
-
   });
   
   $('#back-to-top').click(function(e){
@@ -53,13 +49,7 @@ $(function() {
     e.preventDefault();
   });
   
-  $(window).scroll(function(e){
-    if ($(window).scrollTop() > 200){
-      $('#back-to-top').removeClass('exit-stage-right');
-    }else{
-      $('#back-to-top').addClass('exit-stage-right');
-    }
-  });
+  $('body').trdcltrModal({handler: '.sign-in-required', content:'#sign-in-modal'});
   
   $('.game-link', 'body.trade_in_values_template').live('click',function(e){
     e.preventDefault();
@@ -172,9 +162,16 @@ $(function() {
   }
 
   $(window).scroll(function(){
+    if ($(window).scrollTop() > 200){
+      $('#back-to-top').removeClass('exit-stage-right');
+    }else{
+      $('#back-to-top').addClass('exit-stage-right');
+    }
+    
     if (loading) {
       return;
     }
+    
     if(nearBottomOfPage() && $('#load_more').length > 0) {
       var toLoad = $('#load_more').attr('href');
       $('#load_more').remove();

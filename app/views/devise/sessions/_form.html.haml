@@ -1,0 +1,14 @@
+%h1 Sign in
+= form_for("user", :url => user_session_path) do |f|
+  .row
+    = f.label :login, "Username or email"
+    = f.text_field :login, :autocomplete => "false", :autocapatilize => "false"
+  .row
+    = f.label :password
+    %span.helper-text= link_to "forgot?", new_password_path('user')
+    = f.password_field :password
+  .row
+    = f.submit "Sign in", :class => "btn"
+    %span
+      = f.check_box :remember_me
+      = f.label :remember_me
