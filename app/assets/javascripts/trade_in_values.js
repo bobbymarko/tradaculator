@@ -51,7 +51,7 @@ $(function() {
   
   $('body').trdcltrModal({handler: '.sign-in-required', content:'#sign-in-modal'});
   
-  $('.game-link', 'body.trade_in_values_template').live('click',function(e){
+  $('.game-link').live('click',function(e){
     e.preventDefault();
     var me = $(this);
     var product = me.closest('.p');

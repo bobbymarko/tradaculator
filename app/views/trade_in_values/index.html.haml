@@ -1,10 +1,11 @@
-- if @results
-  - unless @query.blank?
-    - content_for :title do
-      = "Trade-in values for #{@query}"
-  = render :partial => "game", :collection => @results[:products]
-  - content_for :product_list_meta do
-    = next_page(@query,@results[:next_page])
-- else
-  - content_for :product_list_meta do
-    %h3 Nothing to see here
+%section#pl
+  - if @results
+    - unless @query.blank?
+      - content_for :title do
+        = "Trade-in values for #{@query}"
+    = render :partial => "game", :collection => @results[:products]
+    - content_for :product_list_meta do
+      = next_page(@query,@results[:next_page])
+  - else
+    - content_for :product_list_meta do
+      %h3 Nothing to see here

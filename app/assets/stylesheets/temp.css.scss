@@ -40,8 +40,8 @@ p{margin:0;}
 	.hmenu{position: absolute; top:0; right:0;}
     .hmenu li{display: inline-block;}
       .hmenu a{font:bold normal 12px sans-serif; text-transform: lowercase; text-decoration: none;}
-#pl{position: relative; margin:20px auto 120px; padding:0; width:890px;}
-  .trade_in_values_template #pl{font-size:0;}
+#content{position: relative; margin:20px auto 120px; padding:0; width:890px;}
+  #pl{font-size:0;}
 .p{position:relative; text-align: center; width:220px; display: inline-block; vertical-align: top; margin:0; padding:20px 0;  border-bottom:1px solid #f7f5f5; border-top:1px solid #d4d3d3; font-size:16px; -webkit-transition:opacity 300ms ease-in; -moz-transition:opacity 300ms ease-in; transition:opacity 300ms ease-in;}
 
 .shuttered .p{opacity:.4}
@@ -149,8 +149,8 @@ background: linear-gradient(#1b95aa,#06687a); /* W3C */
 		#b{float:none; font-size:2.2em;}
 		#mh form{float: none; width:280px; margin:0 auto;}
 		#s{width:270px;  }
-	#pl{margin:12px 0 100px; width:auto;}
-		#pl:after{content:""; display:table; clear:both;}
+	#content{margin:12px 0 100px; width:auto;}
+		#content:after{content:""; display:table; clear:both;}
 	.p{text-align: left; float:none;  width:92%; margin:0 4%; padding:10px 0; display: block; float:left;}
 		.pw{border-left:none; border-right:none; padding:0;}
 		.p header p{margin-bottom:.75em;}
@@ -161,7 +161,7 @@ background: linear-gradient(#1b95aa,#06687a); /* W3C */
 }
 @media (min-width:551px) and (max-width:768px) {
 	.p{float:left; width:46%; margin:0 2%; height:105px; }
-	#mh div, #pl{width:auto; }
+	#mh div, #content{width:auto; }
 }
 @media (max-width:550px){
 	.p:first-child{border-top:none;}
