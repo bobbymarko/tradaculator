@@ -17,16 +17,17 @@ class LibraryItemsController < ApplicationController
     if is_library_item?(game_id)
       @library_item = LibraryItem.find_by_game_id_and_user_id(game_id, current_user.id)
       if @library_item.destroy
-        flash[:notice] = "Removed from library."
+        flash_message = "Removed from library."
         @library_item = {:deleted => true}
       end
     else
       @library_item = LibraryItem.new(:user_id => current_user.id, :game_id => game_id)    
-      flash[:notice] = "Saved to library." if @library_item.save
+      flash_message = "Removed from library." if @library_item.save
     end
     respond_with(@library_item) do |format|
       format.html {
         @game = Game.find_by_id(game_id)
+        flash[:notice] = flash_message if flash_message
         redirect_to game_path(@game.upc)
       }
     end
