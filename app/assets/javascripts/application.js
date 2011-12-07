@@ -6,6 +6,7 @@
 //
 //= require jquery_ujs
 //= require tracking
+//= require jquery.form
 //= require jquery.flot
 //= require jquery.flot.resize
 //= require spin
@@ -14,3 +15,4 @@
 //= require trade_in_values
 //= require games
 //= require social
+//= require devise

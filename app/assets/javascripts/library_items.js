@@ -6,13 +6,12 @@ var Game = {
 			if ($('.tool-list .library-toggle.processing').length == 0) {
 				var $link = $(this);
 				var url = $link.attr('href');
-				var data = $link.hasClass('current-user-library') ? {_method: 'delete'} : {}
 				
 				$.ajax({
-					type: 'POST',
+					type: 'GET',
 					url: url,
 					cache: false,
-					data: data,
+					dataType: 'json',
 					beforeSend: function() {
 						$('.library-toggle').addClass('processing');
 						$link.text('Wait...');

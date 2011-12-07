@@ -11,6 +11,27 @@ class LibraryItemsController < ApplicationController
   def show
     #@library_item = 
   end
+  
+  def toggle
+    game_id = params[:game_id]
+    if is_library_item?(game_id)
+      @library_item = LibraryItem.find_by_game_id_and_user_id(game_id, current_user.id)
+      if @library_item.destroy
+        flash[:notice] = "Removed from library."
+        @library_item = {:deleted => true}
+      end
+    else
+      @library_item = LibraryItem.new(:user_id => current_user.id, :game_id => game_id)    
+      flash[:notice] = "Saved to library." if @library_item.save
+    end
+    respond_with(@library_item) do |format|
+      format.html {
+        @game = Game.find_by_id(game_id)
+        redirect_to game_path(@game.upc)
+      }
+    end
+    
+  end
     
   # POST /library_item
   def create
@@ -24,7 +45,7 @@ class LibraryItemsController < ApplicationController
     #@library_item = LibraryItem.where("game_id = ? AND user_id = ?", params[:game_id], current_user.id).first
 #    LibraryItem.destroy(@library_item.id)
     if (params[:game_id])
-      @library_item = LibraryItem.find_by_game_id(params[:game_id])
+      @library_item = LibraryItem.find_by_game_id_and_user_id(params[:game_id], current_user.id)
     else
       @library_item = LibraryItem.find_by_id(params[:id])
     end
@@ -32,4 +53,11 @@ class LibraryItemsController < ApplicationController
     @library_item.destroy
 #    respond_with(@library_item)  
   end
+  
+  private
+  
+  def is_library_item?(game_id)
+    !current_user.games.where(:id => game_id).empty?
+  end
+  
 end

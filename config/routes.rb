@@ -5,6 +5,7 @@ Tradaculator::Application.routes.draw do
   match 'library' => 'library_items#index', :via => :get, :as => 'library_items'
   match 'library' => 'library_items#destroy', :via => :delete, :as => 'library_items'
   match 'library' => 'library_items#create', :via => :post, :as => 'library_items'
+  match 'library-toggle' => 'library_items#toggle', :via => :get, :as => 'library_toggle'
 #  match 'library(/:id)' => 'library_items#show', :via => :get, :as => 'library_item'
   
   # match 'search(/page/:page)' => 'trade_in_values#show', :as => 'trade_in_values'
