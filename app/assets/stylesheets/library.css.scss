@@ -1,0 +1,26 @@
+.library-header{
+  background: #fff;
+  border-bottom:2px solid #cacdc7;
+  font:700 italic 1.125em museo-slab-1,museo-slab-2,Georgia,serif;
+  color:#595959;
+  padding:.7em .8em .6em;
+}
+
+.library-header h1{
+  color:inherit;
+  display:inline;
+  font-size:1em;
+  text-shadow: none;
+}
+
+@media (min-width:551px){
+  .library-header h1{
+    float:left;
+  }
+  .library-header{
+    text-align: right;
+    -webkit-border-radius:8px;
+    -moz-border-radius:8px;
+    border-radius:8px;
+  }
+}

@@ -1,6 +1,8 @@
 - if @games
-  %h1
-    In #{current_user.username}'s library
+  .library-header
+    %h1 #{current_user.username}'s Library: #{pluralize @games.count, 'item' }
+    .library-meta
+      Today's value from: Amazon $XX.XX
   %section#pl
     = render :partial => "games/game", :collection => @games
 - else
