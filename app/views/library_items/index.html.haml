@@ -2,7 +2,10 @@
   .library-header
     %h1 #{current_user.username}'s Library: #{pluralize @games.count, 'item' }
     .library-meta
-      Today's value from: Amazon $XX.XX
+      Today's value from:
+      %select#value-selector
+        = options_for_select({'Amazon'=>'amazon','Best Buy'=>'best_buy','Glyde'=>'glyde'}, @vendor)
+      = currency @library_value
   %section#pl
     = render :partial => "games/game", :collection => @games
 - else

@@ -21,7 +21,7 @@ $(function() {
     shadow: true // Whether to render a shadow
   });
 
-  $('body.trade_in_values_template').click(function(e){
+  $('body.trade_in_values_template, body.library_items_template').click(function(e){
     if ($(e.target).closest('.pbw').length > 0){
     }else{
       $('.active').removeClass('active');
@@ -47,6 +47,10 @@ $(function() {
     window.open($(this).attr('href'),'popup_window','height=300,width=600');
     if (window.focus) {popup_window.focus()}
     e.preventDefault();
+  });
+  
+  $('#value-selector').change(function(){
+    window.location = '/library?vendor=' + $(this).val();
   });
   
   $('body').trdcltrModal({handler: '.sign-in-required', content:'#sign-in-modal'});

@@ -44,10 +44,10 @@ p{margin:0;}
 	#m{position: absolute; right: 5px; top:50%; margin-top:-7px}
 	.hmenu{position: absolute; top:0; right:0;}
     .hmenu li{display: inline-block;}
-      .hmenu a{font:bold normal 12px sans-serif; text-transform: lowercase; text-decoration: none;}
+      .hmenu a{font:bold normal .8125em sans-serif; text-transform: lowercase; text-decoration: none; padding:.3em;}
 #content{position: relative; margin:20px auto 120px; padding:0; width:890px;}
   #pl{font-size:0;}
-.p{position:relative; text-align: center; width:220px; display: inline-block; vertical-align: top; margin:0; padding:20px 0;  border-bottom:1px solid #f7f5f5; border-top:1px solid #d4d3d3; font-size:16px; -webkit-transition:opacity 300ms ease-in; -moz-transition:opacity 300ms ease-in; transition:opacity 300ms ease-in;}
+.p{position:relative; text-align: center; width:220px; display: inline-block; vertical-align: top; margin:0; padding:20px 0;  border-bottom:1px solid #d4d3d3; border-top:1px solid #f7f5f5; font-size:16px; -webkit-transition:opacity 300ms ease-in; -moz-transition:opacity 300ms ease-in; transition:opacity 300ms ease-in;}
 
 .shuttered .p{opacity:.4}
 .shuttered .current{opacity:1;}
