@@ -1,4 +1,4 @@
-//fgnass.github.com/spin.js#v1.2.1
+//fgnass.github.com/spin.js#v1.2.3
 (function(window, document, undefined) {
 
 /**
@@ -23,6 +23,17 @@
     }
     return el;
   }
+  
+  function isDescendant(parent, child) {
+    var node = child.parentNode;
+    while (node != null) {
+        if (node == parent) {
+            return true;
+         }
+         node = node.parentNode;
+    }
+    return false;
+  }
 
   /**
    * Inserts child1 before child2. If child2 is not specified,
@@ -30,16 +41,25 @@
    * appended first.
    */
   function ins(parent, child1, child2) {
-    if(child2 && !child2.parentNode) ins(parent, child2);
-    parent.insertBefore(child1, child2||null);
+    if (child2) {
+      if (!child2.parentNode) {
+          ins(parent, child2);
+      } else if (child2.parentNode && !isDescendant(parent, child2)){
+          child2 = null;
+      }    
+    }
+    parent.insertBefore(child1, child2||null);        
     return parent;
   }
 
   /**
    * Insert a new stylesheet to hold the @keyframe or VML rules.
    */
-  ins(document.getElementsByTagName('head')[0], createEl('style'));
-  var sheet = document.styleSheets[document.styleSheets.length-1];
+  var sheet = (function() {
+    var el = createEl('style');
+    ins(document.getElementsByTagName('head')[0], el);
+    return el.sheet || el.styleSheet;
+  })();
 
   /**
    * Creates an opacity keyframe animation rule and returns its name.
@@ -96,9 +116,12 @@
   /**
    * Fills in default values.
    */
-  function defaults(obj, def) {
-    for (var n in def) {
-      if (obj[n] === undefined) obj[n] = def[n];
+  function merge(obj) {
+    for (var i=1; i < arguments.length; i++) {
+      var def = arguments[i];
+      for (var n in def) {
+        if (obj[n] === undefined) obj[n] = def[n];
+      }
     }
     return obj;
   }
@@ -118,17 +141,18 @@
   /** The constructor */
   var Spinner = function Spinner(o) {
     if (!this.spin) return new Spinner(o);
-    this.opts = defaults(o || {}, {
-      lines: 12, // The number of lines to draw
-      length: 7, // The length of each line
-      width: 5, // The line thickness
-      radius: 10, // The radius of the inner circle
-      color: '#000', // #rgb or #rrggbb
-      speed: 1, // Rounds per second
-      trail: 100, // Afterglow percentage
-      opacity: 1/4,
-      fps: 20
-    });
+    this.opts = merge(o || {}, Spinner.defaults, defaults);
+  },
+  defaults = Spinner.defaults = {
+    lines: 12, // The number of lines to draw
+    length: 7, // The length of each line
+    width: 5, // The line thickness
+    radius: 10, // The radius of the inner circle
+    color: '#000', // #rgb or #rrggbb
+    speed: 1, // Rounds per second
+    trail: 100, // Afterglow percentage
+    opacity: 1/4,
+    fps: 20
   },
   proto = Spinner.prototype = {
     spin: function(target) {
@@ -198,7 +222,7 @@
       seg = css(createEl(), {
         position: 'absolute',
         top: 1+~(o.width/2) + 'px',
-        transform: 'translate3d(0,0,0)',
+        transform: o.hwaccel ? 'translate3d(0,0,0)' : '',
         opacity: o.opacity,
         animation: useCssAnimations && addAnimation(o.opacity, o.trail, i, o.lines) + ' ' + 1/o.speed + 's linear infinite'
       });
@@ -215,7 +239,7 @@
   // VML rendering for IE
   /////////////////////////////////////////////////////////////////////////
 
-  /** 
+  /**
    * Check and init VML support
    */
   (function() {
