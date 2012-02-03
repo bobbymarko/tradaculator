@@ -1,5 +1,6 @@
 - if @games
   .library-header
+    = avatar_image_tag({:size=>'large',:type=>'body'})
     %h1 #{current_user.username}'s Library: #{pluralize @games.count, 'item' }
     .library-meta
       Today's value from:

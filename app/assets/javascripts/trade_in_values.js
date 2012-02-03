@@ -191,15 +191,15 @@ $(function() {
         cache: 'false',
         dataType: 'script',
         success: function(data) {
-          $('#loading').remove();
           spinner.stop();
+          $('#loading').remove();
           //$('#pl').append(data.responseText);
           loading = false;
         },
         error: function(data, status, error){
           //console.log(data, status, error);
-          $('#loading').remove();
           spinner.stop();
+          $('#loading').remove();
           $('#pl').after('<h3>Something Exploded!');
         }
       });

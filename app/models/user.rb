@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   attr_accessor :login
   
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :username, :login
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :username, :login, :xbox_live_name, :playstation_network_name
   
   #Overwrite Devise’s find_for_database_authentication method to enable login via username or email
   def self.find_for_authentication(warden_conditions)
