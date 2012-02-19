@@ -77,7 +77,8 @@ $(function() {
       url: url + "?ajax=true",
       cache: 'false',
       success: function(data){
-        clicky.log('url','PDP Ajax Load');
+        clicky.log(url,'PDP Ajax Load');
+        _gaq.push(['_trackEvent', 'Ajax Load', 'PDP', url]);
         closeShutter(function(){
           removeLoadingUI(miniSpinner,product);
           $(window).scrollTop(product.offset().top);
