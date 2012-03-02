@@ -47,6 +47,20 @@ $(function() {
     e.preventDefault();
   });
   
+  $("a").on('click',function(e){
+      var url = $(this).attr("href");
+      if (url && e.currentTarget.host != window.location.host && url !== "#") {
+          _gat._getTrackerByName('demand')._trackEvent("Outbound Links", e.currentTarget.host, url, 0);
+          if (e.metaKey || e.ctrlKey) {
+               var newtab = true;
+          }
+          if (!newtab) {
+               e.preventDefault();
+               setTimeout('document.location = "' + url + '"', 100);
+          }
+      }
+  });
+  
   $('.popup').live('click', function(e){
     window.open($(this).attr('href'),'popup_window','height=300,width=600');
     if (window.focus) {popup_window.focus()}
@@ -156,9 +170,12 @@ $(function() {
   
   
   $('.tv').live('click',function(e){
-    $(this).closest('.p').toggleClass('active').siblings().removeClass('active');
-    clicky.log('#dropdown','Product Dropdown Clicked');
-    e.stopPropagation();
+    if (!$(this).attr('href')){
+      $(this).closest('.p').toggleClass('active').siblings().removeClass('active');
+      clicky.log('#dropdown','Product Dropdown Clicked');
+      _gaq.push(['_trackEvent', 'Ajax Load', 'Product Dropdown', $('h1 a',$(this).closest('.p')).attr('href')]);
+      e.stopPropagation();
+    }
   });
 	
   $('a','.dd').live('click', function(e){
