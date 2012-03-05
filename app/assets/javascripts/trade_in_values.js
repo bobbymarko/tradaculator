@@ -251,7 +251,7 @@ $(function() {
         $('<div id="tooltip">' + contents + '</div>').css( {
             position: 'absolute',
             top: y,
-            left: x,
+            left: x
         }).appendTo("body");
     }
     

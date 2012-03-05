@@ -14,9 +14,9 @@
   :javascript
       try{Typekit.load();}catch(e){}
   /[if lt IE 9]
-    = javascript_include_tag "//html5shiv.googlecode.com/svn/trunk/html5.js"
+    = javascript_include_tag "html5shiv"
   /[if lte IE 8]
-    %script{:src=>javascript_path('excanvas.js')}
+    = javascript_include_tag "excanvas"
   = csrf_meta_tags
 %body{:class=>"#{controller_name}_template"}
   %header#mh

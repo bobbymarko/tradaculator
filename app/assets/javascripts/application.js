@@ -10,5 +10,4 @@
 //= require jquery.flot.resize
 //= require spin
 //= require trade_in_values
-//= require games
 //= require social
