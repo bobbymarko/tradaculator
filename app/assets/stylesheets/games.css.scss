@@ -2,6 +2,7 @@
 -webkit-animation:  fadeIn 400ms 1 ease-in;
 -moz-animation:     fadeIn 400ms 1 ease-in;
 animation:          fadeIn 400ms 1 ease-in;
+z-index: 998;
 }
 
 #shutter.fade-out{
