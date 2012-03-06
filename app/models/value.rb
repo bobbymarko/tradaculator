@@ -16,6 +16,14 @@ class Value < ActiveRecord::Base
     order("created_at DESC, value DESC").limit(1)[0]
   end
   
+  def self.top_current_value_from(vendor)
+    where(:vendor => vendor).order("created_at DESC, value DESC").limit(1)[0]
+  end
+  
+  def self.top_current_value_per_vendor
+    order("created_at DESC, value DESC").group('vendor').limit(3)
+  end
+  
   def self.latest
     first
   end

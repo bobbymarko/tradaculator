@@ -6,8 +6,12 @@
 //
 //= require jquery_ujs
 //= require tracking
+//= require jquery.form
 //= require jquery.flot
 //= require jquery.flot.resize
 //= require spin
+//= require trdcltr.modal
+//= require library_items
 //= require trade_in_values
 //= require social
+//= require devise

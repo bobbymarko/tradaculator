@@ -1,13 +1,8 @@
 class Game < ActiveRecord::Base
   has_many :values, :dependent => :destroy
-  #include Mongoid::Document
-  #include Mongoid::Timestamps
-  #embeds_many :values
-  #field :upc
-  #field :title 
-  #field :platform
-  #field :image
-  #field :large_image
+  has_many :library_items
+  has_many :users, :through => :library_items
+
   validates_uniqueness_of :upc
   validates_presence_of :title
   validates_presence_of :platform

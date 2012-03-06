@@ -1,0 +1,22 @@
+.column
+  %h1 Sign in
+  = form_for("user", :url => user_session_path) do |f|
+    .row
+      = f.label :login, "Username or email"
+      = f.text_field :login, :autocomplete => "off", :autocapatilize => "off", "tabindex" => 1
+    .row
+      = f.label :password
+      %span.helper-text= link_to "forgot?", new_password_path('user')
+      = f.password_field :password, "tabindex" => 2
+    .row
+      = f.submit "Sign in", :class => "btn", "tabindex" => 3
+      %span
+        = f.check_box :remember_me
+        = f.label :remember_me
+
+.column
+  %h1 Sign Up
+  %div
+    %p Don't have an account?
+    %a.btn{:href => new_user_registration_path}
+      Sign Up Now

@@ -1,0 +1,18 @@
+%h1 Sign up
+%p
+  Keep track of all your games trade in value's by adding them to your library.
+%br
+= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
+  = devise_error_messages!
+  .row
+    = f.label :username
+    = f.text_field :username
+  .row
+    = f.label :email
+    = f.email_field :email
+  .row
+    = f.label :password
+    = f.password_field :password
+  .row
+    = f.submit "Sign up", :class => "btn"
+    = link_to "Forgot your password?", new_password_path(resource_name)

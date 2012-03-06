@@ -1,0 +1,28 @@
+.library-header{
+  background: #eff0ee;
+  border-top:2px solid #f8f8f8;
+  border-bottom:2px solid #cacdc7;
+  font:bold .875em sans-serif;
+  color:#595959;
+  padding:.8em 1.5em .6em;
+}
+
+.library-header h1{
+  color:inherit;
+  display:inline;
+  font:inherit;
+  text-shadow: none;
+}
+
+@media (min-width:551px){
+  .library-header h1{
+    float:left;
+  }
+  .library-header{
+    text-align: right;
+    -webkit-border-radius:8px;
+    -moz-border-radius:8px;
+    border-radius:8px;
+    margin:3em 1em 1em;
+  }
+}

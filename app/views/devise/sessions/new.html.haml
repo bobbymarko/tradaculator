@@ -1,0 +1,14 @@
+%h1 Sign in
+= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+  .row
+    = f.label :login
+    = f.text_field :login, :autocomplete => "false", :autocapatilize => "false"
+  .row
+    = f.label :password
+    = f.password_field :password
+  .row
+    = f.check_box :remember_me
+    = f.label :remember_me
+  .row
+    = f.submit "Sign in", :class => "btn"
+= render :partial => "devise/shared/links"

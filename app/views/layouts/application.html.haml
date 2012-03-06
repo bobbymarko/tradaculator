@@ -26,7 +26,11 @@
       = form_tag root_url do
         %input{:type=>"text", :id=>"s", :name=>"query", :placeholder=> "search…", :value=>@query}
         %input{:id=>"m", :type=>"image", :src=>asset_path('search.png')}
-  %section#pl
+      %ul.hmenu
+        = render 'devise/menu/user_menu'
+  - flash.each do |name, msg|
+    = content_tag :div, msg, :class => name
+  #content
     = yield
   = yield(:product_list_meta)
   %footer#footer
@@ -38,7 +42,11 @@
         Tweet
       .g-plusone{:data=>{:size=>"medium", :href=>"http://tradaculator.com"}}
       .fb-like{:data=>{:href=>"http://tradaculator.com", :send=>"false", :layout=>"button_count"}}
-     
+  - unless current_user
+    %div{:style => "display:none;"}
+      #sign-in-modal
+        = render "devise/sessions/form"
+  
   = javascript_include_tag "//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
   :javascript
     window.jQuery || document.write('<script src="#{javascript_path('jquery.js')}"><\/script>')

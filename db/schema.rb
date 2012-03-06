@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111030211106) do
+ActiveRecord::Schema.define(:version => 20120103040352) do
 
   create_table "games", :force => true do |t|
     t.string   "title"
@@ -29,10 +29,38 @@ ActiveRecord::Schema.define(:version => 20111030211106) do
 
   add_index "games", ["upc"], :name => "index_games_on_upc"
 
+  create_table "library_items", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "game_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "trade_in_values", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "users", :force => true do |t|
+    t.string   "email",                                   :default => "", :null => false
+    t.string   "encrypted_password",       :limit => 128, :default => "", :null => false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",                           :default => 0
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "username"
+    t.string   "xbox_live_name"
+    t.string   "playstation_network_name"
+  end
+
+  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
   create_table "values", :force => true do |t|
     t.integer  "game_id",    :null => false

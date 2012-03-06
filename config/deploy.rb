@@ -17,7 +17,7 @@ default_run_options[:pty] = true  # Must be set for the password prompt from git
 set :scm, "git"
 set :repository, "git@github.com:bobbymarko/tradaculator.git"  # Your clone URL
 set :deploy_via, :remote_cache
-set :branch, 'develop'
+set :branch, $1 if `git branch` =~ /\* (\S+)\s/m
 
 set :user, "root"  # The server's user for deploys
 
@@ -67,8 +67,9 @@ namespace :deploy do
     end 
 end
 
-before 'deploy:migrate', 'deploy:symlink_db' #when running migrations they fail because the files aren't linked yet
-after 'deploy:symlink', 'deploy:symlink_db'
+before 'deploy:assets:precompile', 'deploy:symlink_db' # when running migrations they fail because the files aren't linked yet
+# before 'deploy:migrate', 'deploy:symlink_db' 
+# after 'deploy:symlink', 'deploy:symlink_db'
 # after "deploy", "deploy:assets";
 after "deploy:symlink", "deploy:chown_to_wwwdata";
 # after 'deploy:update_code', 'deploy:precompile_assets'

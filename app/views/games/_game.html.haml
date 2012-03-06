@@ -1,0 +1,10 @@
+.p>
+  .pw
+    .f
+      %a.game-link{:href=>game_path(game.upc)}
+        %img{:src=>game.image || image_path('image_not_available.gif')}
+    %header
+      %h1
+        %a.game-link{:href=>game_path(game.upc)}
+          = game.title
+      %p= game.platform

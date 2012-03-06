@@ -1,4 +1,4 @@
-#shutter{background:#49494a; color:#fff; font-size:12px; padding:20px; box-shadow:inset 0 0 20px rgba(0,0,0,0.5); position: relative; clear:both; float:left;
+#shutter{background:#49494a; color:#fff; font-size:13px; padding:20px; box-shadow:inset 0 0 20px rgba(0,0,0,0.5); position: relative; clear:both; float:left;
 -webkit-animation:  fadeIn 400ms 1 ease-in;
 -moz-animation:     fadeIn 400ms 1 ease-in;
 animation:          fadeIn 400ms 1 ease-in;
@@ -11,7 +11,7 @@ z-index: 998;
 animation:          fadeOut 400ms 1 ease-in;
 }
 
-#shutter .close{position: absolute; display: block; bottom:-16px; left:50%; width:32px; height:32px; margin:0 0 0 -16px; background: #eee image-url("bg.jpg"); color:#000; font-size:24px; line-height: 1; font-weight:bold; text-decoration: none; text-align: center; border-radius: 16px; -webkit-transition:all 200ms ease-in; z-index: 999;}
+#shutter .close{position: absolute; display: block; bottom:-16px; left:50%; width:32px; height:32px; margin:0 0 0 -16px; background: #eee image-url("bg.jpg"); color:#555; font-size:24px; line-height: 1; font-weight:bold; text-decoration: none; text-align: center; border-radius: 16px; -webkit-transition:all 200ms ease-in; z-index: 999;}
   #shutter .close:hover{color:#49494a; -webkit-transform:scale(1.3);}
 
   #arrow{width:0; height:0; border:10px solid red; border-color: transparent transparent #3a3a3b; content: ''; position: absolute; top:-20px; left:11.5%; margin-left: -5px;}
@@ -27,15 +27,17 @@ animation:          fadeOut 400ms 1 ease-in;
   .tool-list li.toggled ul{display: block;}
   .tool-list li:first-child{border-top:none;}
   .tool-list li:last-child{border-bottom:none;}
-  .tool-list a{display: block; padding:20px 30px; font-weight:bold; text-decoration: none;}
+  .tool-list a{display: block; padding:20px 30px; font-weight:bold; text-decoration: none; background:image-url("icon-sprite.png") no-repeat}
     .tool-list a:hover{color:#fff;}
-  .share a{background:image-url("icon-sprite.png") no-repeat 0 21px;}
+  .share a{background-position: 0 21px;}
     .share a:hover{background-position: 0 -43px;}
+  .library-item a{background-position: 1px -104px;}
+    .library-item a:hover{background-position: 1px -168px;}
   
   .tool-list li ul{margin:-10px 0 0; display: none;}
-  .tool-list li li{font-size: 13px; border: none;}
+  .tool-list li li{border: none;}
     .tool-list li li a{background: none; padding:10px 30px;}
-.side-by-side{font-size:12px;}
+.side-by-side{}
   .side-by-side li{margin:0 0 30px;}
     .side-by-side .pbw{float:left}
       .side-by-side a.vn{width:49px; text-align: center;}
