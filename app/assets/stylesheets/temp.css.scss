@@ -44,6 +44,7 @@ p{margin:0;}
     #m{position: absolute; right: 5px; top:50%; margin-top:-7px}
     .hmenu{position: absolute; top:0; right:0; margin:0;}
     .hmenu li{display: inline-block;}
+      .lt-ie8 .hmenu li { display: inline; }
       .hmenu a{font:bold normal .8125em sans-serif; text-transform: lowercase; text-decoration: none; padding:.3em;}
 #content{position: relative; margin:20px auto 120px; padding:0; width:890px;}
   #pl{font-size:0;}

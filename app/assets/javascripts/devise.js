@@ -12,9 +12,7 @@ $(function(){
         //console.log('Welcome, ' + username);
         enableElement(button);
         removeModal();
-        $('#mh .hmenu').load('/ #mh .hmenu li', function(e){
-          console.log(e);
-        });
+        $('#mh .hmenu').load('/ #mh .hmenu li');
         $('.sign-in-required').removeClass('sign-in-required');
         $('.library-item').addClass('library-toggle');
         $('.library-item a', '#shutter').trigger('click'); //this is all wrong. should pass this through instead of assuming
