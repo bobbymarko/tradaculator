@@ -13,6 +13,5 @@
 //= require trdcltr.modal
 //= require library_items
 //= require trade_in_values
-//= require games
 //= require social
 //= require devise

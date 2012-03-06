@@ -2,6 +2,7 @@
 -webkit-animation:  fadeIn 400ms 1 ease-in;
 -moz-animation:     fadeIn 400ms 1 ease-in;
 animation:          fadeIn 400ms 1 ease-in;
+z-index: 998;
 }
 
 #shutter.fade-out{
@@ -42,8 +43,8 @@ animation:          fadeOut 400ms 1 ease-in;
       .side-by-side a.vn{width:49px; text-align: center;}
     .side-by-side .description{margin-left:150px;}
     
-.column-primary{width:65%; float:left;}
-.column-secondary{width:31%; float:left; margin:0 0 0 4%;}
+.column-primary{width:65%; float:left; position: relative;}
+.column-secondary{width:31%; float:left; margin:0 0 0 4%; position: relative;}
 
 @media (max-width:550px){
   .column-primary,.column-secondary{width:auto; float:none;}

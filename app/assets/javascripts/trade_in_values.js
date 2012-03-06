@@ -43,6 +43,20 @@ $(function() {
     e.preventDefault();
   });
   
+  $("a").on('click',function(e){
+      var url = $(this).attr("href");
+      if (url && e.currentTarget.host != window.location.host && url !== "#") {
+          _gat._getTrackerByName('demand')._trackEvent("Outbound Links", e.currentTarget.host, url, 0);
+          if (e.metaKey || e.ctrlKey) {
+               var newtab = true;
+          }
+          if (!newtab) {
+               e.preventDefault();
+               setTimeout('document.location = "' + url + '"', 100);
+          }
+      }
+  });
+  
   $('.popup').live('click', function(e){
     window.open($(this).attr('href'),'popup_window','height=300,width=600');
     if (window.focus) {popup_window.focus()}
@@ -71,7 +85,8 @@ $(function() {
       url: url + "?ajax=true",
       cache: 'false',
       success: function(data){
-        clicky.log('url','PDP Ajax Load');
+        clicky.log(url,'PDP Ajax Load');
+        _gaq.push(['_trackEvent', 'Ajax Load', 'PDP', url]);
         closeShutter(function(){
           removeLoadingUI(miniSpinner,product);
           $(window).scrollTop(product.offset().top);
@@ -149,9 +164,12 @@ $(function() {
   
   
   $('.tv').live('click',function(e){
-    $(this).closest('.p').toggleClass('active').siblings().removeClass('active');
-    clicky.log('#dropdown','Product Dropdown Clicked');
-    e.stopPropagation();
+    if (!$(this).attr('href')){
+      $(this).closest('.p').toggleClass('active').siblings().removeClass('active');
+      clicky.log('#dropdown','Product Dropdown Clicked');
+      _gaq.push(['_trackEvent', 'Ajax Load', 'Product Dropdown', $('h1 a',$(this).closest('.p')).attr('href')]);
+      e.stopPropagation();
+    }
   });
 	
   $('a','.dd').live('click', function(e){
@@ -234,7 +252,7 @@ $(function() {
         $('<div id="tooltip">' + contents + '</div>').css( {
             position: 'absolute',
             top: y,
-            left: x,
+            left: x
         }).appendTo("body");
     }
     

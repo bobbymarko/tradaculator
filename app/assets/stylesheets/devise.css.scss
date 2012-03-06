@@ -1,6 +1,6 @@
 .modal_content{top:0; margin:20px auto; right:20px; left:20px; position:absolute; background:#707070; color:#fff; z-index:1000; border-radius:8px; max-width: 500px; -webkit-box-shadow: 0 0 10px rgba(0,0,0,.5); box-shadow: 0 0 10px rgba(0,0,0,.5); overflow: hidden;}
   .row{margin:0 0 .45em;}
-    .row input[type=text], .row input[type=password]{width:95%; padding:2%;} 
+    .row input[type=text], .row input[type=password], .row input[type=email]{width:95%; padding:2%;} 
     .column>div, .column form{padding:1em;}
   .helper-text, .modal_content p{font-size:.8125em; }
   .modal_content h1{background:#595959; padding:.5em; margin:0; border-top-left-radius:8px; border-top-right-radius:8px;}

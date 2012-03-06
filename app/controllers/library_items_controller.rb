@@ -4,7 +4,7 @@ class LibraryItemsController < ApplicationController
   before_filter :authenticate_user!
   
   def index
-    @games = current_user.games
+    @games = current_user.games.order("library_items.created_at DESC")
     @library_value = 0
     @vendor = params['vendor'] || 'amazon'
     @games.each do |game|
@@ -27,7 +27,7 @@ class LibraryItemsController < ApplicationController
         @library_item = {:deleted => true}
       end
     else
-      @library_item = LibraryItem.new(:user_id => current_user.id, :game_id => game_id)    
+      @library_item = current_user.library_items.build(:game_id => game_id)    
       flash_message = "Removed from library." if @library_item.save
     end
     respond_with(@library_item) do |format|
