@@ -6,7 +6,7 @@ module UsersHelper
     defaults = {:size => 'small', :type => 'pic', :platform => 'xbox', :user=>current_user}
     options = defaults.merge(options)
     
-    username = options[:user].xbox_live_name || 'e'
+    username = options[:user].xbox_live_name || 'muna001'
     if options[:platform] == 'xbox'
       if options[:type] == 'pic'
         if options[:size] == 'small'
