@@ -1,0 +1,13 @@
+- if @users
+  #pl
+    - @users.each do |user|
+      .p
+        .pw
+          .f
+            %a{ :href => user_path(user.username) }
+              = avatar_image_tag({:user=>user,:size=>'large',:type=>'body'})
+          .game-meta
+            %header
+              %h1
+                %a{ :href => user_path(user.username) }
+                  = user.username
