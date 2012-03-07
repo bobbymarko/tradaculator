@@ -4,14 +4,7 @@ class LibraryItemsController < ApplicationController
   before_filter :authenticate_user!
   
   def index
-    @games = current_user.games.order("library_items.created_at DESC")
-    @library_value = 0
-    @vendor = params['vendor'] || 'amazon'
-    @games.each do |game|
-      @library_value += game.values.top_current_value_from(@vendor).value rescue 0
-    end
-
-    respond_with(@games)
+    redirect_to user_path(current_user.username)
   end
   
   def show

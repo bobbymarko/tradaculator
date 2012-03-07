@@ -1,5 +1,7 @@
 Tradaculator::Application.routes.draw do
   devise_for :users
+  match 'gamers' => 'users#index', :via => :get, :as => 'users'
+  match 'gamer/:username' => 'users#show', :via => :get, :as => 'user'
   
   #resources :library_items, :path => "/library"
   match 'library' => 'library_items#index', :via => :get, :as => 'library_items'

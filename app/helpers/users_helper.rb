@@ -3,10 +3,10 @@ module UsersHelper
   # type - body or pic
   # size - small or large (pic type only)
   def avatar_image_tag(options = {})
-    defaults = {:size => 'small', :type => 'pic', :platform => 'xbox'}
+    defaults = {:size => 'small', :type => 'pic', :platform => 'xbox', :user=>current_user}
     options = defaults.merge(options)
     
-    username = current_user.xbox_live_name
+    username = options[:user].xbox_live_name || 'e'
     if options[:platform] == 'xbox'
       if options[:type] == 'pic'
         if options[:size] == 'small'
