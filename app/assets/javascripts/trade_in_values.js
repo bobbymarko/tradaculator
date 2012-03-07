@@ -73,7 +73,7 @@ $(function() {
   });
   
   $('#value-selector').change(function(){
-    window.location = '/library?vendor=' + $(this).val();
+    window.location = '/?vendor=' + $(this).val();
   });
   
   $('body').trdcltrModal({handler: '.sign-in-required', content:'#sign-in-modal'});
