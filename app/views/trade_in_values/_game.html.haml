@@ -4,22 +4,23 @@
     .f
       %a.game-link{:href=>game_path(game[:upc])}
         %img{:src=>game[:image] || image_path('image_not_available.gif')}
-    %header
-      %h1
-        %a.game-link{:href=>game_path(game[:upc])}
-          = game[:title]
-      %p= game[:platform]
-    .pbw
-      .b.split
-        %a.vn{:href=>sorted.first[1][:url]}
-          Trade It In
-        %a.tv
-          = currency sorted.first[1][:value]
-      %ul.dd
-        - sorted.each do |item|
-          - unless item[1][:value].blank?
-            %li
-              %a{:href=>item[1][:url] }
-                = item[0].to_s.gsub('_',' ')
-                %span
-                  = currency item[1][:value]
+    .game-meta
+      %header
+        %h1
+          %a.game-link{:href=>game_path(game[:upc])}
+            = game[:title]
+        %p= game[:platform]
+      .pbw
+        .b.split
+          %a.vn{:href=>sorted.first[1][:url]}
+            Trade It In
+          %a.tv
+            = currency sorted.first[1][:value]
+        %ul.dd
+          - sorted.each do |item|
+            - unless item[1][:value].blank?
+              %li
+                %a{:href=>item[1][:url] }
+                  = item[0].to_s.gsub('_',' ')
+                  %span
+                    = currency item[1][:value]

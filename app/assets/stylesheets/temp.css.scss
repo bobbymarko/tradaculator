@@ -12,8 +12,9 @@ input[type=text], input[type=search], input[type=email], input[type=tel], input[
 input[type=text]:focus, input[type=search]:focus, input[type=email]:focus, input[type=tel]:focus, input[type=number]:focus, input[type=password]:focus{outline:none;background: #fff;}
 label{color:#252a32; font-weight: bold; text-shadow: 0 1px 0 rgba(255,255,255,0.4); font-size:.8125em;}
  
-#loading{ height:50px; margin-bottom:60px; overflow: hidden;    border:none;}
+#loading{ height:50px; margin-bottom:60px; overflow: hidden; border:none;}
 #error-message{background:purple; color:#fff; font-size:20px; font-weight: bold; text-align: center; position: fixed; top:0; left:0; right:0; padding:10px; z-index: 999;}
+
 .notice, .alert{
   clear: both;
   background: #DEDBC1;
@@ -42,7 +43,7 @@ p{margin:0;}
 #mh form{float:right;margin-top: 24px; position: relative;}
     #s{width:200px; padding:0 0 0 10px;}
     #m{position: absolute; right: 5px; top:50%; margin-top:-7px}
-    .hmenu{position: absolute; top:0; right:0; margin:0;}
+    .hmenu{position: absolute; top:0; right:0; margin:0; padding:0;}
     .hmenu li{display: inline-block;}
       .lt-ie8 .hmenu li { display: inline; }
       .hmenu a{font:bold normal .8125em sans-serif; text-transform: lowercase; text-decoration: none; padding:.3em;}
@@ -58,9 +59,14 @@ p{margin:0;}
 	
 .pw{border-right:1px solid #d4d3d3; border-left:1px solid #f7f5f5; padding:0 10px; position: relative;}
 
-.f{height:160px; display: table-cell; vertical-align: bottom; width:200px; line-height: 0; position: relative;}
+.f{height:160px; display: table-cell; vertical-align: bottom; text-align: center; width:200px; line-height: 0; position: relative;}
+
+.game-meta{
+  position: relative;
+  overflow: hidden;
+}
    
-.p h1{font:bold normal .875em sans-serif; color:#078; margin:.5em 0 .3em; height:2.3em; max-height:2.3em; overflow: hidden; text-shadow: none;}
+.p h1{font:bold normal .875em sans-serif; color:#078; margin:.5em 0 .3em; height:2.3em; overflow: hidden; text-shadow: none;}
 .p header p{font-size:.75em; font-weight: bold; margin:0 0 .5em; height:1em;}
  
 .pbw{padding:.4em; background: rgba(0,0,0,.1); display: inline-block; border-radius:1.5em; position: relative; cursor: pointer;}
@@ -170,8 +176,9 @@ background: linear-gradient(#1b95aa,#06687a); /* W3C */
         .p header p{margin-bottom:.75em;}
         .p .loading>div{top:40px;}
     .f{float:left; width:80px; height: auto; min-height: 80px; margin:0 20px 0 0;}
-        .f img{max-width:100%; max-height:100px; display: block;}
+        .f img{max-width:100%; max-height:100px;}
     .dd{font-size:1em; line-height: 2; width:160px;}
+    .hmenu{position:static;}
 }
 @media (min-width:551px) and (max-width:768px) {
     .p{float:left; width:46%; margin:0 2%; height:105px; }
@@ -180,11 +187,12 @@ background: linear-gradient(#1b95aa,#06687a); /* W3C */
 @media (max-width:550px){
     .p:first-child{border-top:none;}
     .p:last-child{border-bottom: none;}
+    .p h1 {height:auto;}
+    .f img{max-height:9999px}
     #loading{margin:10px 0 30px;}
     #footer{position: relative; padding:0 0 9px;}
     #footer #back-to-top{width:auto; padding:16px;}
   #back-to-top:after, #back-to-top:before{display: none;}
     #social-buttons{float:left; position: relative;}
     .typekit{float:right; position: relative;}
-    .hmenu{position:static;}
 }
