@@ -3,7 +3,8 @@
   .pw
     .f
       %a.game-link{:href=>game_path(game[:upc])}
-        %img{:src=>game[:image] || image_path('image_not_available.gif')}
+        %span
+          %img{:src=>game[:image] || image_path('image_not_available.gif')}
     .game-meta
       %header
         %h1
