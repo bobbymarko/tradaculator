@@ -57,10 +57,6 @@ namespace :deploy do
       puts "releasing to #{release_path}"
       run "ln -fs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml && ln -fs #{deploy_to}/shared/config/api_keys.yml #{release_path}/config/api_keys.yml"
     end
-    #desc "Compile asets"
-    #task :assets do
-    #  run "cd #{release_path}; RAILS_ENV=#{rails_env} bundle exec rake assets:precompile"
-    #end
     desc "Change group to www-data" 
     task :chown_to_wwwdata, :roles => [ :app, :db, :web ] do 
             sudo "chown -R #{user}:www-data #{deploy_to}" 
@@ -68,10 +64,6 @@ namespace :deploy do
 end
 
 before 'deploy:assets:precompile', 'deploy:symlink_db' # when running migrations they fail because the files aren't linked yet
-# before 'deploy:migrate', 'deploy:symlink_db' 
-# after 'deploy:symlink', 'deploy:symlink_db'
-# after "deploy", "deploy:assets";
-after "deploy:symlink", "deploy:chown_to_wwwdata";
-# after 'deploy:update_code', 'deploy:precompile_assets'
+after "deploy:create_symlink", "deploy:chown_to_wwwdata";
 
 after "deploy", "deploy:cleanup"
