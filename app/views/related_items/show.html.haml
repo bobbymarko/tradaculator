@@ -1,0 +1,15 @@
+- if @related_items
+  %ul
+    - @related_items.each do |item|
+      %li
+        %a{:href => item["DetailPageURL"]}
+          = image_tag item["SmallImage"]["URL"]
+          %h4
+            = item["ItemAttributes"]["Title"]
+          %p
+            = item["ItemAttributes"]["Platform"]
+          %p
+            = item["ItemAttributes"]["ListPrice"]["FormattedPrice"]
+          -# = item.inspect
+- else
+  No Related Products
