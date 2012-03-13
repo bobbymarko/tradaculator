@@ -19,8 +19,8 @@ ActiveRecord::Schema.define(:version => 20120103040352) do
     t.string   "platform"
     t.string   "image"
     t.string   "large_image"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.string   "small_image"
     t.string   "amazon_id"
     t.string   "best_buy_id"
@@ -32,28 +32,28 @@ ActiveRecord::Schema.define(:version => 20120103040352) do
   create_table "library_items", :force => true do |t|
     t.integer  "user_id"
     t.integer  "game_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "trade_in_values", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email",                                   :default => "", :null => false
-    t.string   "encrypted_password",       :limit => 128, :default => "", :null => false
+    t.string   "email",                    :default => "", :null => false
+    t.string   "encrypted_password",       :default => "", :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                           :default => 0
+    t.integer  "sign_in_count",            :default => 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
     t.string   "username"
     t.string   "xbox_live_name"
     t.string   "playstation_network_name"
@@ -66,8 +66,8 @@ ActiveRecord::Schema.define(:version => 20120103040352) do
     t.integer  "game_id",    :null => false
     t.string   "vendor",     :null => false
     t.integer  "value"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
 end
