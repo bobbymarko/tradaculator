@@ -44,7 +44,8 @@ class TradeInValue
           platform = game['ItemAttributes']['Platform']
           value = game["ItemAttributes"]["TradeInValue"] ? game["ItemAttributes"]["TradeInValue"]["Amount"].to_i : nil
 
-          url = value ? "https://www.amazon.com/gp/tradein/add-to-cart.html/ref=trade_new_dp_trade_btn?ie=UTF8&asin=#{game['ASIN']}" : nil
+          url = value ? "https://www.amazon.com/gp/tradein/add-to-cart.html/ref=trade_new_dp_trade_btn?ie=UTF8&asin=#{game['ASIN']}&tag=wefouadv-20" : nil
+          
           response[:products] << {
             :upc            =>  upc,
             :image          =>  image,

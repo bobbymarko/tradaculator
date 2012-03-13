@@ -5,7 +5,7 @@ class Vendor
         :name => "Amazon",
         :permalink => "amazon",
         :conditions => "<strong>Price payed in Amazon Gift Cards.</strong> Must include the video game (plays perfectly), original manufacturer packaging and all original elements. Can show wear from normal use. Disc may have light scratches. May have personal markings.".html_safe,
-        :url => "https://www.amazon.com/gp/tradein/add-to-cart.html/ref=trade_new_dp_trade_btn?ie=UTF8&asin={{id}}"
+        :url => "https://www.amazon.com/gp/tradein/add-to-cart.html/ref=trade_new_dp_trade_btn?ie=UTF8&asin={{id}}&tag=wefouadv-20"
       },
       {
         :name => "Best Buy",
