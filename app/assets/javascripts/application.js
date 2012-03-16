@@ -9,6 +9,7 @@
 //= require jquery.form
 //= require jquery.flot
 //= require jquery.flot.resize
+//= require moment
 //= require spin
 //= require trdcltr.modal
 //= require library_items

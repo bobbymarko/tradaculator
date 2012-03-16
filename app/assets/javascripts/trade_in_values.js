@@ -275,8 +275,8 @@ $(function() {
                 $("#tooltip").remove();
                 var x = item.datapoint[0].toFixed(2),
                     y = item.datapoint[1].toFixed(2);
-                
-                showTooltip(item.pageX, item.pageY, item.series.label + ": $" + y);
+                    
+                showTooltip(item.pageX, item.pageY - 10, item.series.label + ": $" + y + " @ " + moment(item.datapoint[0]).calendar());
             }
         }
         else {
