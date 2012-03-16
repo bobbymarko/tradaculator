@@ -81,7 +81,7 @@ class TradeInValue
             value = game["tradeInValue"] * 100
             r[:trade_in_value][:best_buy][:value] = value
             #TODO we shouldn't return a url if the game isn't trade inable
-            r[:trade_in_value][:best_buy][:url] = "http://www.bestbuytradein.com/bb/QuoteCalculatorVideoGames.cfm?kw=#{game["upc"]}&pf=all&af=9a029aae-d650-44f8-a1c7-c33aa7fd0e27"
+            r[:trade_in_value][:best_buy][:url] = "http://www.bestbuy.com/site/olspage.jsp?_dyncharset=ISO-8859-1&_dynSessConf=-7830272557940360544&id=pcat17097&searchCatId=pcat17097&type=page&st=#{game["upc"]}&cp=1&nrp=20&sp=buyprice%3Adesc&sc=gameToySP&newsearch=newsearch&platform="
             
             if value
               vendor = "best_buy"
