@@ -3,7 +3,8 @@ Tradaculator::Application.routes.draw do
   match 'gamers' => 'users#index', :via => :get, :as => 'users'
   match 'gamer/:username' => 'users#show', :via => :get, :as => 'user'
   
-  match 'related_items/:id' => 'related_items#show', :as => 'related_item'
+  #match 'related_items/:id' => 'related_items#show', :as => 'related_item'
+  resources :related_items
   
   #resources :library_items, :path => "/library"
   match 'library' => 'library_items#index', :via => :get, :as => 'library_items'
