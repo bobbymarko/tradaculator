@@ -8,19 +8,17 @@
         var glyde = [#{@glyde_values.join(',')}];
                   
     %ul.side-by-side
-      - @vendors.each do |vendor|
-        - url = fill_in(vendor[:url], :id => eval("@game.#{vendor[:permalink]}_id"))
-        - latest_value = @game.values.where(:vendor => vendor[:permalink]).latest
-        - if url && latest_value
-          %li
-            .pbw
-              .b
-                %a.vn{:href=> url }
-                  = vendor[:name]
-                %a.tv{:href=> url }
-                  = currency latest_value.value
-            .description
-              = vendor[:conditions]
+      - @top_values.each do |top_value|
+        %li
+          .pbw
+            .b
+              - url = fill_in(@vendors[top_value[0].to_sym][:url], :id => eval("@game.#{@vendors[top_value[0].to_sym][:permalink]}_id"))
+              %a.vn{:href=> url }
+                = @vendors[top_value[0].to_sym][:name]
+              %a.tv{:href=> url }
+                = currency top_value[1]
+          .description
+            = @vendors[top_value[0].to_sym][:conditions]
             
   .column-secondary
     %ul.tool-list
