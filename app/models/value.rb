@@ -20,8 +20,10 @@ class Value < ActiveRecord::Base
     where(:vendor => vendor).order("created_at DESC, value DESC").limit(1)[0]
   end
   
-  def self.top_current_value_per_vendor
-    order("created_at DESC, value DESC").group('vendor').limit(3)
+  def self.top_current_value_per_vendor(game)
+    #order("created_at ASC, value ASC").group('vendor').limit(3)
+    #order("created_at ASC, value ASC").limit(3).all(:select => 'DISTINCT vendor, value')
+    find_by_sql("SELECT * FROM ( select * from `values` order by created_at desc ) as temp WHERE game_id = #{game.id} GROUP BY vendor ORDER BY `value` DESC LIMIT 3")
   end
   
   def self.latest

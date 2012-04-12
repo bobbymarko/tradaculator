@@ -1,3 +1,4 @@
+= values = Value.top_current_value_per_vendor(game)
 .p>
   .pw
     .f
@@ -9,3 +10,16 @@
         %a.game-link{:href=>game_path(game.upc)}
           = game.title
       %p= game.platform
+      .pbw
+        .b.split
+          %a.vn{:href=> fill_in(Vendor.all[values[0]['vendor'].to_sym][:url], :id => eval("game.#{Vendor.all[values[0]['vendor'].to_sym][:permalink]}_id"))}
+            Trade It In
+          %a.tv
+            = currency values[0]['value']
+        %ul.dd
+          - values.each do |value|
+            %li
+              %a{:href=> fill_in(Vendor.all[value['vendor'].to_sym][:url], :id => eval("game.#{Vendor.all[value['vendor'].to_sym][:permalink]}_id"))}
+                = value[:vendor].to_s.gsub('_',' ')
+                %span
+                  = currency value[:value]

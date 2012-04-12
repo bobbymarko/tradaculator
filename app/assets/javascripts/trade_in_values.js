@@ -30,7 +30,7 @@ $(function() {
     shadow: true // Whether to render a shadow
   });
 
-  $('body.trade_in_values_template, body.library_items_template').click(function(e){
+  $('body.trade_in_values_template, body.library_items_template, body.users_template').click(function(e){
     if ($(e.target).closest('.pbw').length > 0){
     }else{
       $('.active').removeClass('active');
