@@ -20,19 +20,19 @@ class GamesController < ApplicationController
     dataset_length = 150
 
     @amazon_values = []
-    @game.values.where(:vendor=>'amazon').group("date(created_at)").limit(dataset_length).each_with_index do |v,i|
+    @game.values.where(:vendor=>'amazon').limit(dataset_length).each_with_index do |v,i|
       @amazon_values << "[#{v.created_at.to_f.to_i * 1000},#{v.value_as_decimal}]"
       current_amazon_value = v.value if i == 0 # first value is highest
     end
 
     @best_buy_values = []
-    @game.values.where(:vendor=>'best_buy').group("date(created_at)").limit(dataset_length).each_with_index do |v,i|
+    @game.values.where(:vendor=>'best_buy').limit(dataset_length).each_with_index do |v,i|
       @best_buy_values << "[#{v.created_at.to_f.to_i * 1000},#{v.value_as_decimal}]"
       current_best_buy_value = v.value if i == 0 # first value is highest
     end
 
     @glyde_values = []
-    @game.values.where(:vendor=>'glyde').group("date(created_at)").limit(dataset_length).each_with_index do |v,i|
+    @game.values.where(:vendor=>'glyde').limit(dataset_length).each_with_index do |v,i|
       @glyde_values << "[#{v.created_at.to_f.to_i * 1000},#{v.value_as_decimal}]"
       current_glyde_value = v.value if i == 0 # first value is highest
     end
